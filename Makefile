@@ -6,7 +6,7 @@
 #    By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
-#    Updated: 2024/05/18 15:00:46 by aconceic         ###   ########.fr        #
+#    Updated: 2024/05/23 15:56:45 by aconceic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ BLUE = \e[1;034m
 RED = \e[0;31m
 MAGENTA = \033[1;35m
 ORANGE = \033[1;38;5;208m
+GREY = \033[0;37m
 RESET = \e[0m
 
 ##############################################
@@ -46,7 +47,7 @@ SRC_DIR = ./source/
 
 ISA_SRC = isa_test.c \
 
-AM_SRC = am_test.c \
+AM_SRC = am_test.c parsing_1.c prompt.c frees.c\
 
 ##############################################
 #                COMPILATION                 #
@@ -66,7 +67,7 @@ $(OBJ_DIR) :
 
 $(NAME) : $(OBJ) $(LIBFT_LIB)
 	@echo "$(ORANGE)[!]$(RESET) Working on project ... "
-	$(CC) $(CFLAGS) $(OBJ) $(SRC_DIR)main.c $(LIBFT_LIB) $(GNL_LIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -lreadline $(SRC_DIR)main.c $(LIBFT_LIB) $(GNL_LIB) -o $(NAME)
 	@echo "$(GREEN)[✔]$(RESET) $(BLUE)Ok!$(RESET) "
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)
