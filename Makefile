@@ -6,7 +6,7 @@
 #    By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
-#    Updated: 2024/05/27 20:39:30 by aconceic         ###   ########.fr        #
+#    Updated: 2024/05/27 20:53:53 by aconceic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ OBJ_DIR = ./objs/
 OBJ = $(addprefix $(OBJ_DIR), $(ISA_SRC:.c=.o)) $(addprefix $(OBJ_DIR), $(AM_SRC:.c=.o))
 SRC_DIR = ./source/
 
-ISA_SRC = isa_test.c build_in/echo.c build_in/pwd.c\
+ISA_SRC = isa_test.c build_in/echo.c build_in/pwd.c env/env.c \
 
 AM_SRC = am_test.c \
 
@@ -69,7 +69,7 @@ $(NAME) : $(OBJ) $(LIBFT_LIB)
 	$(CC) $(CFLAGS) $(OBJ) $(SRC_DIR)main.c $(LIBFT_LIB) $(GNL_LIB) -o $(NAME)
 	@echo "$(GREEN)[✔]$(RESET) $(BLUE)Ok!$(RESET) "
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR) $(OBJ_DIR)build_in
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR) $(OBJ_DIR)build_in $(OBJ_DIR)env
 	@echo "$(ORANGE)[!]$(RESET) Creating objects ..."
 	$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(GREEN)[✔]$(RESET) $(BLUE)Objects Ok!$(RESET) "
@@ -77,6 +77,10 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR) $(OBJ_DIR)build_in
 $(OBJ_DIR)build_in:
 	@echo "$(ORANGE)[!]$(RESET) Creating directory for build_in objects ..."
 	mkdir -p $(OBJ_DIR)build_in
+
+$(OBJ_DIR)env:
+	@echo "$(ORANGE)[!]$(RESET) Creating directory for build_in objects ..."
+	mkdir -p $(OBJ_DIR)env
 
 $(LIBFT_LIB) : $(LIBFT_DIR)
 	@echo "$(ORANGE)[!]$(RESET) Working on LIBFT_LIB ..."

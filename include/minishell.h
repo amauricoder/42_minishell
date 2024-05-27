@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/05/27 20:42:20 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:07:35 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # define WHITE   "\033[37m"
 
 //main
-int     main(int argc, char **argv);
+int	main(int argc, char **argv, char **envp);
 
 /*********************************************/
 /*     		      AMAURI SPACE	   			 */
@@ -55,6 +55,17 @@ void    am_function(void);
 /*********************************************/
 /*     		       ISA SPACE	   			 */
 /*********************************************/
+//env
+typedef struct s_env
+{
+	int     env_id;
+	char    *env_name;
+	struct s_env    *next;
+}               t_env;
+
+int get_env(char **env, t_env *env_var);
+
+//test
 void    isa_function2(void);
 //build_in
 int    pwd(void);
