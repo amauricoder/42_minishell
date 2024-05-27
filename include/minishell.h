@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/05/18 14:46:12 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:42:20 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,14 @@ void    am_function(void);
 /*********************************************/
 /*     		       ISA SPACE	   			 */
 /*********************************************/
-void    isa_function(void);
+void    isa_function2(void);
+//build_in
+int    pwd(void);
+//echo
+//cd
+//env
+//exit
+//export
+//unset
 
 #endif
