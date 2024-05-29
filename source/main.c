@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/05/29 19:33:32 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/05/29 20:12:39 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,50 +14,41 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_env env_var;
-	get_env(envp, &env_var);
+	t_mini mini_d;
 
-	
-	buildin_env(&env_var);
-	(void)argv;
-	(void)argc;
-	
-	char	*input;
-	char	*prompt;
-
-	input = NULL;
-	prompt = get_prompt_msg(envp);
+	init_main_struct(&mini_d, argv, envp);
 	while (1)
 	{
-		input = readline(prompt);
-		if (!input)
+		mini_d.input = readline(mini_d.prompt);
+		if (!mini_d.input)
 		{
 			printf("exit\n");
 			return (0);
 		}
-		if (!ft_strncmp(input, "exit", 4) && ft_strlen(input) == 4)
+		if (!ft_strncmp(mini_d.input, "exit", 4) && ft_strlen(mini_d.input) == 4)
 		{
 			printf("exit");
 			break ;
 		}
 		else
 		{
-			add_history(input);
+			add_history(mini_d.input);
 			//lexer first
 			//then parsing
-			parsing1(input, envp);
+			parsing1(mini_d.input, envp);
 			//start treating user input(how??)
 			//1 - lexical analisis(lexing)
 			//2 - syntax analisys (parsing the lexings)
 	
 			//Lexer -> Expander -> Parser ->Executor
-
 			//(analise lexical - tokenization) - taking user input and proceding
 			//char by char into "tokens"
 		}
 	}
-	free(input);
-	free(prompt);
+	(void)argv;
+	(void)argc;
+	//free(input);
+	//free(prompt);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/05/29 19:33:17 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/05/29 20:08:14 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,27 @@
 # define CYAN    "\033[36m"
 # define WHITE   "\033[37m"
 
+/*************************/
+/*     		Structs	     */
+/*************************/
+//env
+typedef struct s_env
+{
+	int     env_id;
+	char    *env_name;
+	struct s_env    *next;
+}               t_env;
+
+//main struct
+typedef struct s_mini
+{
+	char	*input;
+	char	*prompt;
+	char	**argv_cp;
+	t_env	*env_d;
+}				t_mini;
+
+/*********************************************/
 //main
 int	main(int argc, char **argv, char **envp);
 
@@ -63,16 +84,12 @@ char	*get_prompt_msg(char **envp);
 //frees.c
 void	free_prompt_msg(char **dp_char);
 
+//init_values.c
+void    init_main_struct(t_mini *mini_d, char **argv, char **envp);
 /*********************************************/
 /*     		       ISA SPACE	   			 */
 /*********************************************/
-//env
-typedef struct s_env
-{
-	int     env_id;
-	char    *env_name;
-	struct s_env    *next;
-}               t_env;
+
 
 int get_env(char **env, t_env *env_var);
 

@@ -6,7 +6,7 @@
 #    By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
-#    Updated: 2024/05/29 19:32:32 by aconceic         ###   ########.fr        #
+#    Updated: 2024/05/29 19:48:16 by aconceic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ OBJ = $(addprefix $(OBJ_DIR), $(ISA_SRC:.c=.o)) $(addprefix $(OBJ_DIR), $(AM_SRC
 SRC_DIR = ./source/
 
 ISA_SRC = isa_test.c build_in/buildin_echo.c build_in/buildin_pwd.c env/env.c \
-		  build_in/buildin_env.c \
+		  build_in/buildin_env.c init_values.c \
 
 AM_SRC = am_test.c parsing_1.c prompt.c frees.c\
 
