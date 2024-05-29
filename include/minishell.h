@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/05/29 14:50:03 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/05/29 19:33:17 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int    pwd(void);
 //echo
 //cd
 //env
+void	buildin_env(t_env *env_var);
 //exit
 //export
 //unset
