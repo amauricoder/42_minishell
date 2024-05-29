@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/05/23 17:43:39 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:50:03 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,25 @@ void	free_prompt_msg(char **dp_char);
 /*********************************************/
 /*     		       ISA SPACE	   			 */
 /*********************************************/
-void    isa_function(void);
+//env
+typedef struct s_env
+{
+	int     env_id;
+	char    *env_name;
+	struct s_env    *next;
+}               t_env;
+
+int get_env(char **env, t_env *env_var);
+
+//test
+void    isa_function2(void);
+//build_in
+int    pwd(void);
+//echo
+//cd
+//env
+//exit
+//export
+//unset
 
 #endif

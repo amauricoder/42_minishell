@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/05/23 18:08:59 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:49:01 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,18 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	
-	//isa_function();
-	//am_function();
+	t_env env_var;
+
+	isa_function2();
+	am_function();
+
+	get_env(envp, &env_var);
+	while(env_var.next != NULL)
+	{
+		printf("variable name on node %s\n", env_var.env_name);
+		env_var = *env_var.next;
+	}
+
 	(void)argv;
 	(void)argc;
 
