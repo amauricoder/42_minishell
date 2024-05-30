@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:16:59 by aconceic          #+#    #+#             */
-/*   Updated: 2024/05/23 18:09:53 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:40:41 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ static char *clean_user_prompt(char *prompt)
 	{
 		free(prompt);
 		prompt = ft_strjoin(prompt_split[1], "minishell ~");
-		free_prompt_msg(prompt_split);
+		free_dp_char(prompt_split);
 		return (prompt);
 	}
-	free_prompt_msg(prompt_split);
+	free_dp_char(prompt_split);
 	return (prompt);
 }
 /**
@@ -138,9 +138,9 @@ static char *clean_pwd_prompt(char *pwd)
 	{
 		free(pwd);
 		pwd = ft_strjoin(pwd_split[1], "$ ");
-		free_prompt_msg(pwd_split);
+		free_dp_char(pwd_split);
 		return (pwd);
 	}
-	free_prompt_msg(pwd_split);
+	free_dp_char(pwd_split);
 	return (pwd);
 }
