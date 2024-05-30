@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/05/30 15:20:36 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/05/30 18:31:45 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,25 @@
 # define WHITE	"\033[37m"
 
 /*************************/
-/*     		Structs	     */
+/*    structs and enun	 */
 /*************************/
+typedef enum e_token
+{
+	WHITE_SPACE
+}	e_token;
+
+//tokens
+typedef struct s_token
+{
+	int				len;
+	char			*content;
+	enum e_token	type;
+	struct s_token	*head;
+	struct s_token	*tail;
+	struct s_token	*next;
+	struct s_token	*prev;
+}	t_token;
+
 //env
 typedef struct s_env
 {
@@ -65,6 +82,7 @@ typedef struct s_mini
 	char	*prompt;
 	char	**argv_cp;
 	t_env	*env_d;
+	t_token	*token;
 }				t_mini;
 
 /*********************************************/
@@ -90,6 +108,12 @@ int		free_env(t_env *env);
 //init_values.c
 void	init_main_struct(t_mini *mini_d, char **argv, char **envp);
 
+//lexing1.c
+int		do_lexing(t_mini *mini_d);
+int		alloc_tokenstruct(t_mini *mini_d);
+int		is_quote(char ch);
+int		is_space(char ch);
+int		init_token(t_mini *mini_d, char *content, e_token type);
 /********************************************************************/
 /*     		       ISA SPACE	   									*/
 /********************************************************************/

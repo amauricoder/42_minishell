@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 19:46:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/05/30 14:34:52 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:46:00 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 static void get_argv_cp(t_mini *mini_d, char **argv);
 
+/**
+ * @brief Initialize the main struct with the values
+ * passed from the main function;
+*/
 void    init_main_struct(t_mini *mini_d, char **argv, char **envp)
 {
     //env
@@ -22,8 +26,13 @@ void    init_main_struct(t_mini *mini_d, char **argv, char **envp)
     //prompt
     mini_d->prompt = get_prompt_msg(envp);
     get_argv_cp(mini_d, argv);
+    //token
+    mini_d->token = NULL;
 }
 
+/**
+ * @brief Get copies of the argv passed from the main function
+*/
 static void get_argv_cp(t_mini *mini_d, char **argv)
 {
     int i;

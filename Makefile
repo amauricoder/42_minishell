@@ -6,7 +6,7 @@
 #    By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
-#    Updated: 2024/05/29 19:48:16 by aconceic         ###   ########.fr        #
+#    Updated: 2024/05/30 16:20:51 by aconceic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ SRC_DIR = ./source/
 ISA_SRC = isa_test.c build_in/buildin_echo.c build_in/buildin_pwd.c env/env.c \
 		  build_in/buildin_env.c init_values.c \
 
-AM_SRC = am_test.c parsing_1.c prompt.c frees.c\
+AM_SRC = am_test.c parsing_1.c prompt.c frees.c lexing/lexing_1.c \
 
 ##############################################
 #                COMPILATION                 #
@@ -71,7 +71,7 @@ $(NAME) : $(OBJ) $(LIBFT_LIB)
 	$(CC) $(CFLAGS) $(OBJ) -lreadline $(SRC_DIR)main.c $(LIBFT_LIB) $(GNL_LIB) -o $(NAME)
 	@echo "$(GREEN)[✔]$(RESET) $(BLUE)Ok!$(RESET) "
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR) $(OBJ_DIR)build_in $(OBJ_DIR)env
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR) $(OBJ_DIR)build_in $(OBJ_DIR)env $(OBJ_DIR)lexing
 	@echo "$(ORANGE)[!]$(RESET) Creating objects ..."
 	$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(GREEN)[✔]$(RESET) $(BLUE)Objects Ok!$(RESET) "
@@ -81,8 +81,12 @@ $(OBJ_DIR)build_in:
 	mkdir -p $(OBJ_DIR)build_in
 
 $(OBJ_DIR)env:
-	@echo "$(ORANGE)[!]$(RESET) Creating directory for build_in objects ..."
+	@echo "$(ORANGE)[!]$(RESET) Creating directory for env objects ..."
 	mkdir -p $(OBJ_DIR)env
+
+$(OBJ_DIR)lexing:
+	@echo "$(ORANGE)[!]$(RESET) Creating directory for lexing objects ..."
+	mkdir -p $(OBJ_DIR)lexing
 
 $(LIBFT_LIB) : $(LIBFT_DIR)
 	@echo "$(ORANGE)[!]$(RESET) Working on LIBFT_LIB ..."
