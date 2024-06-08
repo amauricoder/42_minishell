@@ -6,71 +6,117 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:17:04 by aconceic          #+#    #+#             */
-/*   Updated: 2024/05/30 18:13:23 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/08 19:55:46 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 //special (|, >, <,>>,<<, $, ‘ ‘ )
+//ft_strchr("|>$<" ,mini_d->input[i])
 int do_lexing(t_mini *mini_d)
 {
 	int	i;
+	int state;
+	int word_len;
 
 	i = 0;
+	state = 0;
+	word_len = 0;
 	while(mini_d->input[i])
 	{
-		printf("%c\n", mini_d->input[i]);
-		if (is_space(mini_d->input[i]))
-		{	
-			init_token(mini_d, " ", WHITE_SPACE);
+		if (is_special_char(mini_d->input[i]))
+		{
+			if (is_dquote(mini_d->input[i]) || is_quote(mini_d->input[i]))
+			{
+				create_token(mini_d, &mini_d->input[i], state, 1);
+				state = define_state(mini_d->input[i], state, &i);
+			}
+			if (is_space(mini_d->input[i]))
+				create_token(mini_d, &mini_d->input[i], state, 1);
+			i ++;
 		}
-		i ++;
+		else
+		{
+			//aqui eu busco a palavra e salvo em um token
+			word_len = i;
+			while(!is_special_char(mini_d->input[i]))
+			{
+				printf("%c \n", mini_d->input[i]);
+				i ++;
+			}
+			//tratar erro descentemente
+			create_token(mini_d, &mini_d->input[word_len], state, (i - word_len));
+		}
 	}
 	return (EXIT_SUCCESS);
 }
 
-
-int	is_quote(char ch)
+/**
+ * @brief Create a token with values given from the function do_lexing
+*/
+int	create_token(t_mini *mini_d, char *input, int state, int len)
 {
-	if (ch == 39)
-		return (1);
-	else
-		return (0);
-}
+	t_token *new_token;
+	char	*content;
+	static int id;
 
-int	is_space(char ch)
-{
-	if (ch == ' ')
-		return (1);
-	else
-		return (0);
-}
+	content = ft_strdup_qt(input, len);
+	new_token = init_token(content, get_token_type(content), id);
+	if ((input[0] == '"' && state == 2) || (input[0] == '\'' && state == 1))
+		state = 0;
+	new_token->state = state;
+	token_lstadd_back(mini_d, new_token);
+	new_token->head = set_token_head(mini_d);
+	new_token->tail = set_token_tail(mini_d);
+	id ++;
 
-int	init_token(t_mini *mini_d, char *content, e_token type)
-{
-	//dont forget to clean alloc_tokenstruct
-	alloc_tokenstruct(mini_d);
-	mini_d->token->len = ft_strlen(content);
-	mini_d->token->content = ft_strdup(content);
-	mini_d->token->type = type;
+	free(content);
 	return (EXIT_SUCCESS);
 }
 
-//dont forget to clean this (THIS IS GIVING MEMORY LEAK)
-int	alloc_tokenstruct(t_mini *mini_d)
+/**
+ * @brief Define the state of a word. This means that, if is "word" -> state = DQUOTE,
+ * 'word' -> state = QUOTE, word -> state = general
+*/
+int	define_state(char ch, int state, int *i)
 {
-	mini_d->token = malloc(sizeof(t_token));
-	mini_d->token->head = malloc(sizeof(t_token));
-	mini_d->token->tail = malloc(sizeof(t_token));
-	mini_d->token->next = malloc(sizeof(t_token));
-	mini_d->token->prev = malloc(sizeof(t_token));
-	if (!mini_d->token || !mini_d->token->head || !mini_d->token->tail
-			|| !mini_d->token->next || !mini_d->token->prev)
+	if (is_dquote(ch))
+    {
+        if (state == 0)
+            return (2);
+        else if (state == 2)
+    		return (0);
+    }
+	if (is_quote(ch))
 	{
-		return (EXIT_FAILURE);
+		if (state == 0)
+			return (1);
+		else if (state == 1)
+			return (0);
 	}
-	memset(mini_d->token, 0, sizeof(t_token));
-
-	return (EXIT_SUCCESS);
+	(void)i;
+    return state;
 }
+
+/**
+ * @brief Check the type of the token.
+ * " " = SPACE,
+ * "\"" = DQUOTE,
+ * "word" = WORD
+*/
+int	get_token_type(char *input)
+{
+	int	i;
+
+	if (is_dquote(input[0]) || is_dquote(input[1]))
+		return (DQUOTE);
+	else if (is_space(input[0]))
+		return (WHITE_SPACE);
+
+	i = 0;
+	while (!is_special_char(input[i]))
+		i ++;
+	return (WORD);
+}
+

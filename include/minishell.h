@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/05/30 18:31:45 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:14:58 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <sys/ioctl.h> //ioctl
 # include <readline/readline.h>
 # include <readline/history.h>
-
+#include <stdbool.h>
 /*************************/
 /*     	 LIBFT/GNL 		 */
 /*************************/
@@ -52,15 +52,26 @@
 /*************************/
 typedef enum e_token
 {
-	WHITE_SPACE
+	WHITE_SPACE,
+	WORD,
+	DQUOTE
 }	e_token;
+
+typedef enum e_tstate
+{
+	GENERAL,
+	IN_QUOTE,
+	IN_DQUOTE
+}	e_tstate;
 
 //tokens
 typedef struct s_token
 {
+	int				id;
 	int				len;
 	char			*content;
 	enum e_token	type;
+	enum e_token	state;
 	struct s_token	*head;
 	struct s_token	*tail;
 	struct s_token	*next;
@@ -104,16 +115,34 @@ char	*get_prompt_msg(char **envp);
 void	free_dp_char(char **dp_char);
 int		free_main_struct(t_mini *mini_d);
 int		free_env(t_env *env);
+void	clean_tokens(t_mini *mini_d);
 
 //init_values.c
 void	init_main_struct(t_mini *mini_d, char **argv, char **envp);
 
-//lexing1.c
+//lexing_1.c
 int		do_lexing(t_mini *mini_d);
+int		create_token(t_mini *mini_d, char *input, int state, int len);
+int		define_state(char ch, int state, int *i);
+int		get_token_type(char *input);
+
+//lexing_2.c
+t_token	*init_token(char *content, e_token typem, int id);
+t_token	*set_token_head(t_mini *mini_d);
+t_token *set_token_tail(t_mini *mini_d);
+int		token_lstadd_back(t_mini *mini_d, t_token *new_token);
 int		alloc_tokenstruct(t_mini *mini_d);
+
+//lexing_3.c
 int		is_quote(char ch);
 int		is_space(char ch);
-int		init_token(t_mini *mini_d, char *content, e_token type);
+int		is_dquote(char ch);
+int		is_special_char(char ch);
+
+//support.c
+void	print_nodes(t_mini *mini_d);
+char	*ft_strdup_qt(char *str, int qt);
+
 /********************************************************************/
 /*     		       ISA SPACE	   									*/
 /********************************************************************/

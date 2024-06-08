@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:56:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/05/30 14:50:03 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:05:02 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ void	free_dp_char(char **dp_char)
 	free(dp_char);
 }
 
+/**
+ * @brief Free main struct itens
+*/
 int	free_main_struct(t_mini *mini_d)
 {
 	free(mini_d->input);
@@ -34,6 +37,9 @@ int	free_main_struct(t_mini *mini_d)
 	exit(EXIT_SUCCESS);
 }
 
+/**
+ * @brief Free env nodes
+*/
 int	free_env(t_env *env)
 {
 	t_env	*tmp;
@@ -48,3 +54,17 @@ int	free_env(t_env *env)
 	return (0);
 }
 
+void clean_tokens(t_mini *mini_d) 
+{
+	t_token *current = mini_d->token;
+	t_token *temp;
+
+	while (current) 
+	{
+		temp = current;
+		current = current->next;
+		free(temp->content);
+		free(temp);
+	}
+	mini_d->token = NULL;
+}

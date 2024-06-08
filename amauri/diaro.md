@@ -17,3 +17,11 @@ Dos allocs de
 Da funcao int	alloc_tokenstruct(t_mini *mini_d) do arquivo lexing_1.c
 
 ======================================================================
+
+## 04/06/2023 - terca feira
+
+Hoje comecei a criar os states para o e_num states.
+Estou fazendo baseado nisso
+https://github.com/achrafelkhnissi/minishell?tab=readme-ov-file
+
+Agora so reconhece espaco e ".
