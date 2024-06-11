@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:52:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/05/30 14:35:11 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:25:50 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int get_env(char **env, t_env *env_var)
         new = malloc(sizeof(t_env));
         if (!new)
         {
-            //clean properly
+            //clean properly free_env(env_var)??
             return (EXIT_FAILURE);
         }
         new->env_id = i;
@@ -35,7 +35,7 @@ int get_env(char **env, t_env *env_var)
             env_var = new;
         else
             env_var->next = new;
-        env_var = new;
+        env_var = new;//nao entendi
         i++;
     }
     return (EXIT_SUCCESS);

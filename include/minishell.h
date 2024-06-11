@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/08 16:14:58 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:26:57 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # include <sys/resource.h> //wait3, wait4
 # include <sys/stat.h> //stat
 # include <sys/ioctl.h> //ioctl
-# include <readline/readline.h>
-# include <readline/history.h>
+# include <readline/readline.h>//readline
+# include <readline/history.h>//add_history
 #include <stdbool.h>
 /*************************/
 /*     	 LIBFT/GNL 		 */
@@ -52,9 +52,16 @@
 /*************************/
 typedef enum e_token
 {
-	WHITE_SPACE,
 	WORD,
-	DQUOTE
+	W_SPACE,
+	D_QUOTE,
+	S_QUOTE,
+	PIPE,
+	ENV,
+	REDIR_OUT,//>
+	D_REDIR_OUT,//>>
+	REDIR_IN,//<
+	HEREDOC//<<
 }	e_token;
 
 typedef enum e_tstate
@@ -92,6 +99,7 @@ typedef struct s_mini
 	char	*input;
 	char	*prompt;
 	char	**argv_cp;
+	int		type;
 	t_env	*env_d;
 	t_token	*token;
 }				t_mini;
@@ -161,5 +169,11 @@ void	buildin_env(t_env *env_var);
 //exit
 //export
 //unset
+
+int		is_pipe(char ch);
+int		is_env(char ch);
+int		is_redir_in(char ch);
+int		is_redir_out(char ch);
+void	do_lexing_aux(t_mini *mini_d, int i, int state);
 
 #endif

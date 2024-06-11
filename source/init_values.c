@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_values.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 19:46:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/05/30 16:46:00 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:34:14 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void get_argv_cp(t_mini *mini_d, char **argv)
     while (argv[i])
         i++;
     mini_d->argv_cp = (char **)malloc(sizeof(char *) * (i + 1));
-    //protect malloc
+    //protect malloc pq n usa calloc?
     i = 0;
     while (argv[i])
     {

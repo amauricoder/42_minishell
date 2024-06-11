@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:17:04 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/08 19:55:46 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:36:08 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,17 @@ int do_lexing(t_mini *mini_d)
 				create_token(mini_d, &mini_d->input[i], state, 1);
 				state = define_state(mini_d->input[i], state, &i);
 			}
-			if (is_space(mini_d->input[i]))
+			if (is_space(mini_d->input[i]) || is_pipe(mini_d->input[i])
+				|| is_env(mini_d->input[i]))
 				create_token(mini_d, &mini_d->input[i], state, 1);
-			i ++;
+			if (is_redir_out(mini_d->input[i]) || is_redir_in(mini_d->input[i]))
+			{
+				if (is_redir_out(mini_d->input[i + 1]) || is_redir_in(mini_d->input[i + 1]))
+					create_token(mini_d, &mini_d->input[i++], state, 2);
+				else
+					create_token(mini_d, &mini_d->input[i], state, 1);
+			}
+			i++;
 		}
 		else
 		{
@@ -101,20 +109,40 @@ int	define_state(char ch, int state, int *i)
 
 /**
  * @brief Check the type of the token.
- * " " = SPACE,
- * "\"" = DQUOTE,
- * "word" = WORD
+ * "word" = WORD,
+ * " " = W_SPACE,
+ * "\"" = D_QUOTE,
+ * "\'" = S_QUOTE,
+ * "|" = PIPE,
+ * "$" = ENV,
+ * ">" = REDIR_OUT,
+ * ">>" = D_REDIR_OUT.
+ * "<" = REDIR_IN,
+ * "<<" = HEREDOC,
 */
 int	get_token_type(char *input)
 {
 	int	i;
 
-	if (is_dquote(input[0]) || is_dquote(input[1]))
-		return (DQUOTE);
-	else if (is_space(input[0]))
-		return (WHITE_SPACE);
-
 	i = 0;
+	if (is_space(input[0]))
+		return (W_SPACE);
+	else if (is_dquote(input[0]))
+		return (D_QUOTE);
+	else if (is_quote(input[0]))
+		return (S_QUOTE);
+	else if (is_pipe(input[0]))
+		return (PIPE);
+	else if (is_env(input[0]))
+		return (ENV);
+	else if (is_redir_out(input[0]) && !is_redir_out(input[1]))
+		return (REDIR_OUT);
+	else if (is_redir_out(input[0]) && is_redir_out(input[1]))
+		return (D_REDIR_OUT);
+	else if (is_redir_in(input[0]) && !is_redir_in(input[1]))
+		return (REDIR_IN);
+	else if (is_redir_in(input[0]) && is_redir_in(input[1]))
+		return (HEREDOC);
 	while (!is_special_char(input[i]))
 		i ++;
 	return (WORD);

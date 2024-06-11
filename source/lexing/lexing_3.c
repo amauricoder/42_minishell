@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing_3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:49:35 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/08 16:12:57 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:42:16 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_quote(char ch)
 {
-	if (ch == 39)
+	if (ch == '\'')
 		return (1);
 	else
 		return (0);
@@ -36,16 +36,61 @@ int	is_dquote(char ch)
 		return (0);
 }
 
+int	is_pipe(char ch)
+{
+	if (ch == '|')
+		return (1);
+	else
+		return (0);
+}
+
+int	is_env(char ch)
+{
+	if (ch == '$')
+		return (1);
+	else
+		return (0);
+}
+
+int	is_redir_in(char ch)
+{
+	if (ch == '<')
+		return (1);
+	else
+		return (0);
+}
+
+int	is_redir_out(char ch)
+{
+	if (ch == '>')
+		return (1);
+	else
+		return (0);
+}
+
 /**
  * @brief Check if the character is a special character
  * @return 1 for yes, 0 for no.
 */
 int	is_special_char(char ch)
 {
-	if(ch == '\'' || ch == '\"' || ch == '<' || ch == '>' || ch == '|'
-		|| ch == '$' || is_space(ch) || ch == '\n' || ch == '\0')
+	if (ch == '\'' || ch == '\"' || ch == '<' || ch == '>' || ch == '|'
+		|| ch == '$' || ch == ' ' || ch == '\n' || ch == '\0')
 	{	
-		return (true);
+		if (ch == ' ')
+			return (W_SPACE);
+		else if (ch == '\"')
+			return (D_QUOTE);
+		else if (ch == '\'')
+			return (S_QUOTE);
+		else if (ch == '|')
+			return (PIPE);
+		else if (ch == '$')
+			return (ENV);
+		else if ('>')
+			return (REDIR_OUT);
+		else if ('<')
+			return (REDIR_IN);
 	}
 	return (false);
 }

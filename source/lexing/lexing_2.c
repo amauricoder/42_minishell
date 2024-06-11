@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:40:12 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/06 16:39:58 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:23:38 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ t_token *init_token(char *content, e_token type, int id)
 
     return new_token;
 }
-
 
 int token_lstadd_back(t_mini *mini_d, t_token *new_token)
 {

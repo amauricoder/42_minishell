@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+         #
+#    By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
-#    Updated: 2024/06/08 16:03:00 by aconceic         ###   ########.fr        #
+#    Updated: 2024/06/11 17:28:35 by ismirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ OBJ = $(addprefix $(OBJ_DIR), $(ISA_SRC:.c=.o)) $(addprefix $(OBJ_DIR), $(AM_SRC
 SRC_DIR = ./source/
 
 ISA_SRC = isa_test.c build_in/buildin_echo.c build_in/buildin_pwd.c env/env.c \
-		  build_in/buildin_env.c init_values.c \
+		  build_in/buildin_env.c init_values.c\
 
 AM_SRC = am_test.c parsing_1.c prompt.c frees.c lexing/lexing_1.c lexing/lexing_2.c\
 		lexing/lexing_3.c support.c\
@@ -91,16 +91,16 @@ $(OBJ_DIR)lexing:
 
 $(LIBFT_LIB) : $(LIBFT_DIR)
 	@echo "$(ORANGE)[!]$(RESET) Working on LIBFT_LIB ..."
-	$(MAKEC) $(LIBFT_DIR) bonus
-	$(MAKEC) $(PRINTF_DIR)
-	$(MAKEC) $(GNL_DIR)
+	$(MAKEC) $(LIBFT_DIR) bonus > /dev/null 2>&1
+	$(MAKEC) $(PRINTF_DIR) > /dev/null 2>&1
+	$(MAKEC) $(GNL_DIR) > /dev/null 2>&1
 	@echo "$(GREEN)[✔]$(RESET) $(BLUE)LIBFT Ok!$(RESET)"
 
 clean :
 	@echo "$(ORANGE)[!]$(RESET) Executing cleaning ..."
 	$(RM) $(OBJ_DIR)
 	$(RM) $(BONUS_OBJ_DIR)
-	$(MAKECLEANC) $(LIBFT_DIR)
+	$(MAKECLEANC) $(LIBFT_DIR) 
 	@echo "$(GREEN)[✔]$(RESET) $(BLUE)Cleaning Ok!$(RESET) "
 
 fclean :
@@ -108,7 +108,7 @@ fclean :
 	$(RM) $(NAME) $(OBJ_DIR)
 	$(RM) $(BONUS_NAME) $(BONUS_OBJ_DIR)
 	$(RM) library/minilibx-linux
-	make fclean -C $(LIBFT_DIR)
+	make fclean -C $(LIBFT_DIR) > /dev/null 2>&1
 	@echo "$(GREEN)[✔]$(RESET) $(BLUE)full cleaning!$(RESET) "
 
 re : fclean all
