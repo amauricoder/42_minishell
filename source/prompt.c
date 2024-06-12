@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:16:59 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/11 16:26:05 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:02:47 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static	char *get_user_prompt(char **envp);
 static char *get_pwd_prompt(char **envp);
 static char *clean_user_prompt(char *prompt);
 static char *clean_pwd_prompt(char *pwd);
+static char *get_colorful_prompt(char *prompt, int green);
 
 /**
  * @brief Get information from envp to construct a prompt msg.
@@ -30,9 +31,10 @@ char	*get_prompt_msg(char **envp)
 
 	prompt = get_user_prompt(envp);
 	prompt = clean_user_prompt(prompt);
+	prompt = get_colorful_prompt(prompt, 1);
 	pwd = get_pwd_prompt(envp);
 	pwd = clean_pwd_prompt(pwd);
-
+	pwd = get_colorful_prompt(pwd, 0);
 	prompt_message = ft_strjoin(prompt, pwd);
 	free(prompt);
 	free(pwd);
@@ -143,4 +145,24 @@ static char *clean_pwd_prompt(char *pwd)
 	}
 	free_dp_char(pwd_split);
 	return (pwd);
+}
+
+static char *get_colorful_prompt(char *str, int green)
+{
+	char	*aux_str1;
+	char	*aux_str2;
+
+	if (green)
+	{
+		aux_str1 = ft_strjoin("\033[32;1m", str);
+		aux_str2 = ft_strjoin(aux_str1, "\033[0m");
+	}
+	else
+	{
+		aux_str1 = ft_strjoin("\033[34;1m", str);
+		aux_str2 = ft_strjoin(aux_str1, "\033[0m");
+	}
+	free(str);
+	free(aux_str1);
+	return (aux_str2);
 }

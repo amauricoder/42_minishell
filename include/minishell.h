@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/11 19:26:57 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:07:42 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@
 /*************************/
 # define RESET	"\033[0m"
 # define RED	"\033[31;1m"
-# define GREEN	"\033[32m"
-# define YELLOW	"\033[33m"
-# define BLUE	"\033[34m"
-# define MGT	"\033[35m"
-# define CYAN	"\033[36m"
-# define WHITE	"\033[37m"
+# define GREEN	"\033[32;1m"
+# define YELLOW	"\033[33;1m"
+# define BLUE	"\033[34;1m"
+# define MGT	"\033[35;1m"
+# define CYAN	"\033[36;1m"
+# define WHITE	"\033[37;1m"
 
 /*************************/
 /*    structs and enun	 */

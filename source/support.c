@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   support.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:02:42 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/11 19:38:40 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:15:30 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,13 @@ void print_nodes(t_mini *mini_d)
 		"RED_IN", "HEREDOC"};
 
 	current = mini_d->token;
+	printf("\n");
 	while (current)
 	{
-		printf("token id %i | ", current->id);
-		printf("token state %s | ", str[current->state]);
-		printf("token type %s | ", str[current->type + 3]);
-		printf("token content %s \n", current->content);
+		printf("| "YELLOW"Id %i "RESET" | ", current->id);
+		printf(RED"State %8s "RESET" | ", str[current->state]);
+		printf(BLUE"Type %7s "RESET" | ", str[current->type + 3]);
+		printf(CYAN"Content "RESET"%8s |\n", current->content);
 		current = current->next;
 	}
 }
