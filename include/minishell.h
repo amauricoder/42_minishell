@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/12 17:07:42 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:12:58 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ typedef struct s_token
 	int				id;
 	int				len;
 	char			*content;
-	enum e_token	type;
+	int				type;
+	//enum e_token	type;
 	enum e_token	state;
 	struct s_token	*head;
 	struct s_token	*tail;
@@ -99,7 +100,7 @@ typedef struct s_mini
 	char	*input;
 	char	*prompt;
 	char	**argv_cp;
-	int		type;
+	int		token_type;
 	t_env	*env_d;
 	t_token	*token;
 }				t_mini;
@@ -135,7 +136,7 @@ int		define_state(char ch, int state, int *i);
 int		get_token_type(char *input);
 
 //lexing_2.c
-t_token	*init_token(char *content, e_token typem, int id);
+t_token	*init_token(char *content, int type, int id);
 t_token	*set_token_head(t_mini *mini_d);
 t_token *set_token_tail(t_mini *mini_d);
 int		token_lstadd_back(t_mini *mini_d, t_token *new_token);
@@ -145,7 +146,7 @@ int		alloc_tokenstruct(t_mini *mini_d);
 int		is_quote(char ch);
 int		is_space(char ch);
 int		is_dquote(char ch);
-int		is_special_char(char ch);
+int		special_char(char ch);
 
 //support.c
 void	print_nodes(t_mini *mini_d);
@@ -174,6 +175,6 @@ int		is_pipe(char ch);
 int		is_env(char ch);
 int		is_redir_in(char ch);
 int		is_redir_out(char ch);
-void	do_lexing_aux(t_mini *mini_d, int i, int state);
+void	do_lexing_aux(t_mini *mini_d, int *i, int *state);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:17:04 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/11 19:36:08 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:33:15 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 //special (|, >, <,>>,<<, $, ‘ ‘ )
 //ft_strchr("|>$<" ,mini_d->input[i])
+//<< EOF ls -l | cat >output.txt
 int do_lexing(t_mini *mini_d)
 {
 	int	i;
@@ -25,9 +26,9 @@ int do_lexing(t_mini *mini_d)
 	word_len = 0;
 	while(mini_d->input[i])
 	{
-		if (is_special_char(mini_d->input[i]))
+		if (special_char(mini_d->input[i]))
 		{
-			if (is_dquote(mini_d->input[i]) || is_quote(mini_d->input[i]))
+/* 			if (is_dquote(mini_d->input[i]) || is_quote(mini_d->input[i]))
 			{
 				create_token(mini_d, &mini_d->input[i], state, 1);
 				state = define_state(mini_d->input[i], state, &i);
@@ -41,14 +42,16 @@ int do_lexing(t_mini *mini_d)
 					create_token(mini_d, &mini_d->input[i++], state, 2);
 				else
 					create_token(mini_d, &mini_d->input[i], state, 1);
-			}
+			} */
+			do_lexing_aux(mini_d, &i, &state);
 			i++;
 		}
 		else
 		{
 			//aqui eu busco a palavra e salvo em um token
+			mini_d->token_type = WORD;
 			word_len = i;
-			while(!is_special_char(mini_d->input[i]))
+			while(mini_d->input[i] && !special_char(mini_d->input[i]))
 			{
 				printf("%c \n", mini_d->input[i]);
 				i ++;
@@ -70,7 +73,8 @@ int	create_token(t_mini *mini_d, char *input, int state, int len)
 	static int id;
 
 	content = ft_strdup_qt(input, len);
-	new_token = init_token(content, get_token_type(content), id);
+	//printf("%i", mini_d->token->type);
+	new_token = init_token(content, mini_d->token_type, id);
 	if ((input[0] == '"' && state == 2) || (input[0] == '\'' && state == 1))
 		state = 0;
 	new_token->state = state;
@@ -143,7 +147,7 @@ int	get_token_type(char *input)
 		return (REDIR_IN);
 	else if (is_redir_in(input[0]) && is_redir_in(input[1]))
 		return (HEREDOC);
-	while (!is_special_char(input[i]))
+	while (!special_char(input[i]))
 		i ++;
 	return (WORD);
 }

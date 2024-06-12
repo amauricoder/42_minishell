@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:49:35 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/11 19:42:16 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:56:00 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	is_redir_out(char ch)
  * @brief Check if the character is a special character
  * @return 1 for yes, 0 for no.
 */
-int	is_special_char(char ch)
+int	special_char(char ch)
 {
 	if (ch == '\'' || ch == '\"' || ch == '<' || ch == '>' || ch == '|'
 		|| ch == '$' || ch == ' ' || ch == '\n' || ch == '\0')
@@ -87,9 +87,9 @@ int	is_special_char(char ch)
 			return (PIPE);
 		else if (ch == '$')
 			return (ENV);
-		else if ('>')
+		else if (ch == '>')
 			return (REDIR_OUT);
-		else if ('<')
+		else if (ch == '<')
 			return (REDIR_IN);
 	}
 	return (false);

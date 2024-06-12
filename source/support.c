@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   support.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:02:42 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/12 17:15:30 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:13:19 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,34 @@ tava funcionando tudo menos os redirects, e eu nao sei porque
 se funcionar pode excluir a get_token_type e todas as funcoes especificas de char,
 e ficar com a is_special_char do jeito que ta escrita agora
  */
-void	do_lexing_aux(t_mini *mini_d, int i, int state)
+void	do_lexing_aux(t_mini *mini_d, int *i, int *state)
 {
 	int	type;
 
-	type = is_special_char(mini_d->input[i]);
-	mini_d->type = type;
+	type = special_char(mini_d->input[*i]);
+	mini_d->token_type = type;
 	if (type == D_QUOTE || type == S_QUOTE)
 	{
-		create_token(mini_d, &mini_d->input[i], state, 1);
-		state = define_state(mini_d->input[i], state, &i);
+		create_token(mini_d, &mini_d->input[*i], *state, 1);
+		*state = define_state(mini_d->input[*i], *state, i);
 	}
 	if (type == W_SPACE || type == PIPE	|| type == ENV
 		|| type == REDIR_OUT || type == REDIR_IN)
 	{
-		if (type == REDIR_OUT && is_special_char(mini_d->input[i + 1]) == REDIR_OUT)
+		if (type == REDIR_OUT && special_char(mini_d->input[*i + 1]) == REDIR_OUT)
 		{
-			mini_d->type = D_REDIR_OUT;
-			create_token(mini_d, &mini_d->input[i++], state, 2);
+			mini_d->token_type = D_REDIR_OUT;
+			create_token(mini_d, &mini_d->input[*i], *state, 2);
+			(*i) = (*i) + 2;
 		}
-		if (type == REDIR_IN && is_special_char(mini_d->input[i + 1]) == REDIR_IN)
+		else if (type == REDIR_IN && special_char(mini_d->input[*i + 1]) == REDIR_IN)
 		{
-			mini_d->type = HEREDOC;
-			create_token(mini_d, &mini_d->input[i++], state, 2);
+			mini_d->token_type = HEREDOC;
+			create_token(mini_d, &mini_d->input[*i], *state, 2);
+			*i += 2;
 		}
 		else
-			create_token(mini_d, &mini_d->input[i], state, 1);
+			create_token(mini_d, &mini_d->input[*i], *state, 1);
 	}
 }
 

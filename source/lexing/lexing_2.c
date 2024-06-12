@@ -6,13 +6,13 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:40:12 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/11 17:23:38 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:41:50 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_token *init_token(char *content, e_token type, int id)
+t_token *init_token(char *content, int type, int id)
 {
     t_token *new_token = malloc(sizeof(t_token));
     if (new_token == NULL)

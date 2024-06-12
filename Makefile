@@ -6,7 +6,7 @@
 #    By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
-#    Updated: 2024/06/11 17:28:35 by ismirand         ###   ########.fr        #
+#    Updated: 2024/06/12 20:49:41 by ismirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,7 @@ $(NAME) : $(OBJ) $(LIBFT_LIB)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR) $(OBJ_DIR)build_in $(OBJ_DIR)env $(OBJ_DIR)lexing
 	@echo "$(ORANGE)[!]$(RESET) Creating objects ..."
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(GCC) $(CFLAGS) -c $< -o $@
 	@echo "$(GREEN)[✔]$(RESET) $(BLUE)Objects Ok!$(RESET) "
 
 $(OBJ_DIR)build_in:
