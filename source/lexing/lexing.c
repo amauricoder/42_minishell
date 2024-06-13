@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexing_1.c                                         :+:      :+:    :+:   */
+/*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:17:04 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/12 21:33:15 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/13 19:33:04 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int 	do_lexing(t_mini *mini_d);
+void	do_lexing_aux(t_mini *mini_d, int *i, int *state);
+int		specch(char ch);
+int		create_token(t_mini *mini_d, char *input, int state, int len);
+int		define_state(char ch, int state, int *i);
 
 //special (|, >, <,>>,<<, $, ‘ ‘ )
 //ft_strchr("|>$<" ,mini_d->input[i])
@@ -26,23 +32,8 @@ int do_lexing(t_mini *mini_d)
 	word_len = 0;
 	while(mini_d->input[i])
 	{
-		if (special_char(mini_d->input[i]))
+		if (specch(mini_d->input[i]))
 		{
-/* 			if (is_dquote(mini_d->input[i]) || is_quote(mini_d->input[i]))
-			{
-				create_token(mini_d, &mini_d->input[i], state, 1);
-				state = define_state(mini_d->input[i], state, &i);
-			}
-			if (is_space(mini_d->input[i]) || is_pipe(mini_d->input[i])
-				|| is_env(mini_d->input[i]))
-				create_token(mini_d, &mini_d->input[i], state, 1);
-			if (is_redir_out(mini_d->input[i]) || is_redir_in(mini_d->input[i]))
-			{
-				if (is_redir_out(mini_d->input[i + 1]) || is_redir_in(mini_d->input[i + 1]))
-					create_token(mini_d, &mini_d->input[i++], state, 2);
-				else
-					create_token(mini_d, &mini_d->input[i], state, 1);
-			} */
 			do_lexing_aux(mini_d, &i, &state);
 			i++;
 		}
@@ -51,7 +42,7 @@ int do_lexing(t_mini *mini_d)
 			//aqui eu busco a palavra e salvo em um token
 			mini_d->token_type = WORD;
 			word_len = i;
-			while(mini_d->input[i] && !special_char(mini_d->input[i]))
+			while(mini_d->input[i] && !specch(mini_d->input[i]))
 			{
 				printf("%c \n", mini_d->input[i]);
 				i ++;
@@ -61,6 +52,62 @@ int do_lexing(t_mini *mini_d)
 		}
 	}
 	return (EXIT_SUCCESS);
+}
+
+void	do_lexing_aux(t_mini *mini_d, int *i, int *state)
+{
+	int	type;
+
+	type = specch(mini_d->input[*i]);
+	mini_d->token_type = type;
+	if (type == D_QUOTE || type == S_QUOTE)
+	{
+		create_token(mini_d, &mini_d->input[*i], *state, 1);
+		*state = define_state(mini_d->input[*i], *state, i);
+	}
+	if (type == W_SPACE || type == PIPE	|| type == ENV
+		|| type == REDIR_OUT || type == REDIR_IN)
+	{
+		if ((type == REDIR_OUT && specch(mini_d->input[*i + 1]) == REDIR_OUT)
+			|| (type == REDIR_IN && specch(mini_d->input[*i + 1]) == REDIR_IN))
+		{
+			if (type == REDIR_OUT)
+				mini_d->token_type = D_REDIR_OUT;
+			else
+				mini_d->token_type = HEREDOC;
+			create_token(mini_d, &mini_d->input[*i], *state, 2);
+			(*i)++;
+		}
+		else
+			create_token(mini_d, &mini_d->input[*i], *state, 1);
+	}
+}
+
+/**
+ * @brief Define if a char is a special characther or not
+ * @return False for normal, or enum number with the kind of the character
+*/
+int	specch(char ch)
+{
+	if (ch == '\'' || ch == '\"' || ch == '<' || ch == '>' || ch == '|'
+		|| ch == '$' || ch == ' ' || ch == '\n' || ch == '\0')
+	{	
+		if (ch == ' ')
+			return (W_SPACE);
+		else if (ch == '\"')
+			return (D_QUOTE);
+		else if (ch == '\'')
+			return (S_QUOTE);
+		else if (ch == '|')
+			return (PIPE);
+		else if (ch == '$')
+			return (ENV);
+		else if (ch == '>')
+			return (REDIR_OUT);
+		else if (ch == '<')
+			return (REDIR_IN);
+	}
+	return (false);
 }
 
 /**
@@ -93,14 +140,14 @@ int	create_token(t_mini *mini_d, char *input, int state, int len)
 */
 int	define_state(char ch, int state, int *i)
 {
-	if (is_dquote(ch))
+	if (ch == '\"')
     {
         if (state == 0)
             return (2);
         else if (state == 2)
     		return (0);
     }
-	if (is_quote(ch))
+	if (ch == '\'')
 	{
 		if (state == 0)
 			return (1);
@@ -110,45 +157,3 @@ int	define_state(char ch, int state, int *i)
 	(void)i;
     return state;
 }
-
-/**
- * @brief Check the type of the token.
- * "word" = WORD,
- * " " = W_SPACE,
- * "\"" = D_QUOTE,
- * "\'" = S_QUOTE,
- * "|" = PIPE,
- * "$" = ENV,
- * ">" = REDIR_OUT,
- * ">>" = D_REDIR_OUT.
- * "<" = REDIR_IN,
- * "<<" = HEREDOC,
-*/
-int	get_token_type(char *input)
-{
-	int	i;
-
-	i = 0;
-	if (is_space(input[0]))
-		return (W_SPACE);
-	else if (is_dquote(input[0]))
-		return (D_QUOTE);
-	else if (is_quote(input[0]))
-		return (S_QUOTE);
-	else if (is_pipe(input[0]))
-		return (PIPE);
-	else if (is_env(input[0]))
-		return (ENV);
-	else if (is_redir_out(input[0]) && !is_redir_out(input[1]))
-		return (REDIR_OUT);
-	else if (is_redir_out(input[0]) && is_redir_out(input[1]))
-		return (D_REDIR_OUT);
-	else if (is_redir_in(input[0]) && !is_redir_in(input[1]))
-		return (REDIR_IN);
-	else if (is_redir_in(input[0]) && is_redir_in(input[1]))
-		return (HEREDOC);
-	while (!special_char(input[i]))
-		i ++;
-	return (WORD);
-}
-

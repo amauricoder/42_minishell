@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/12 21:12:58 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/13 19:31:39 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,24 +129,19 @@ void	clean_tokens(t_mini *mini_d);
 //init_values.c
 void	init_main_struct(t_mini *mini_d, char **argv, char **envp);
 
-//lexing_1.c
+//lexing.c
 int		do_lexing(t_mini *mini_d);
+void	do_lexing_aux(t_mini *mini_d, int *i, int *state);
 int		create_token(t_mini *mini_d, char *input, int state, int len);
 int		define_state(char ch, int state, int *i);
-int		get_token_type(char *input);
+int		specch(char ch);
 
-//lexing_2.c
+//token.c
 t_token	*init_token(char *content, int type, int id);
 t_token	*set_token_head(t_mini *mini_d);
 t_token *set_token_tail(t_mini *mini_d);
 int		token_lstadd_back(t_mini *mini_d, t_token *new_token);
 int		alloc_tokenstruct(t_mini *mini_d);
-
-//lexing_3.c
-int		is_quote(char ch);
-int		is_space(char ch);
-int		is_dquote(char ch);
-int		special_char(char ch);
 
 //support.c
 void	print_nodes(t_mini *mini_d);
@@ -171,10 +166,5 @@ void	buildin_env(t_env *env_var);
 //export
 //unset
 
-int		is_pipe(char ch);
-int		is_env(char ch);
-int		is_redir_in(char ch);
-int		is_redir_out(char ch);
-void	do_lexing_aux(t_mini *mini_d, int *i, int *state);
 
 #endif

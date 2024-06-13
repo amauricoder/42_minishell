@@ -6,7 +6,7 @@
 #    By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
-#    Updated: 2024/06/12 20:49:41 by ismirand         ###   ########.fr        #
+#    Updated: 2024/06/13 20:27:25 by ismirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,9 @@ RED = \e[0;31m
 MAGENTA = \033[1;35m
 ORANGE = \033[1;38;5;208m
 GREY = \033[0;37m
+CYAN = \e[1;36m
 RESET = \e[0m
+CYAN = \e[0;36m
 
 ##############################################
 #                  COMMANDS                  #
@@ -45,11 +47,11 @@ OBJ_DIR = ./objs/
 OBJ = $(addprefix $(OBJ_DIR), $(ISA_SRC:.c=.o)) $(addprefix $(OBJ_DIR), $(AM_SRC:.c=.o))
 SRC_DIR = ./source/
 
-ISA_SRC = isa_test.c build_in/buildin_echo.c build_in/buildin_pwd.c env/env.c \
+ISA_SRC = build_in/buildin_echo.c build_in/buildin_pwd.c env/env.c\
 		  build_in/buildin_env.c init_values.c\
 
-AM_SRC = am_test.c parsing_1.c prompt.c frees.c lexing/lexing_1.c lexing/lexing_2.c\
-		lexing/lexing_3.c support.c\
+AM_SRC = parsing_1.c prompt.c frees.c lexing/lexing.c lexing/token.c\
+		support.c\
 
 ##############################################
 #                COMPILATION                 #
@@ -64,52 +66,52 @@ CFLAGS = -Wall -Wextra -Werror
 all : $(NAME)
 
 $(OBJ_DIR) :
-	@echo "$(ORANGE)[!]$(RESET) Creating directory for objects ..."
+	@echo "$(CYAN)[!]$(RESET) Creating directory for objects ..."
 	mkdir $@
 
 $(NAME) : $(OBJ) $(LIBFT_LIB)
-	@echo "$(ORANGE)[!]$(RESET) Working on project ... "
+	@echo "$(CYAN)[!]$(RESET) Working on project ... "
 	$(GCC) $(CFLAGS) $(OBJ) -lreadline $(SRC_DIR)main.c $(LIBFT_LIB) $(GNL_LIB) -o $(NAME)
-	@echo "$(GREEN)[✔]$(RESET) $(BLUE)Ok!$(RESET) "
+	@echo "$(GREEN)[✔] Ok!$(RESET) "
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR) $(OBJ_DIR)build_in $(OBJ_DIR)env $(OBJ_DIR)lexing
-	@echo "$(ORANGE)[!]$(RESET) Creating objects ..."
+	@echo "$(CYAN)[!]$(RESET) Creating object $@ ..."
 	$(GCC) $(CFLAGS) -c $< -o $@
-	@echo "$(GREEN)[✔]$(RESET) $(BLUE)Objects Ok!$(RESET) "
+#@echo "$(GREEN)[✔]$(RESET) $(BLUE)Object $@ Ok!$(RESET) "
 
 $(OBJ_DIR)build_in:
-	@echo "$(ORANGE)[!]$(RESET) Creating directory for build_in objects ..."
+	@echo "$(CYAN)[!]$(RESET) Creating directory for build_in objects ..."
 	mkdir -p $(OBJ_DIR)build_in
 
 $(OBJ_DIR)env:
-	@echo "$(ORANGE)[!]$(RESET) Creating directory for env objects ..."
+	@echo "$(CYAN)[!]$(RESET) Creating directory for env objects ..."
 	mkdir -p $(OBJ_DIR)env
 
 $(OBJ_DIR)lexing:
-	@echo "$(ORANGE)[!]$(RESET) Creating directory for lexing objects ..."
+	@echo "$(CYAN)[!]$(RESET) Creating directory for lexing objects ..."
 	mkdir -p $(OBJ_DIR)lexing
 
 $(LIBFT_LIB) : $(LIBFT_DIR)
-	@echo "$(ORANGE)[!]$(RESET) Working on LIBFT_LIB ..."
+	@echo "$(CYAN)[!]$(RESET) Working on LIBFT_LIB ..."
 	$(MAKEC) $(LIBFT_DIR) bonus > /dev/null 2>&1
 	$(MAKEC) $(PRINTF_DIR) > /dev/null 2>&1
 	$(MAKEC) $(GNL_DIR) > /dev/null 2>&1
-	@echo "$(GREEN)[✔]$(RESET) $(BLUE)LIBFT Ok!$(RESET)"
+	@echo "$(GREEN)[✔] LIBFT Ok!$(RESET)"
 
 clean :
-	@echo "$(ORANGE)[!]$(RESET) Executing cleaning ..."
+	@echo "$(CYAN)[!]$(RESET) Executing cleaning ..."
 	$(RM) $(OBJ_DIR)
 	$(RM) $(BONUS_OBJ_DIR)
 	$(MAKECLEANC) $(LIBFT_DIR) 
 	@echo "$(GREEN)[✔]$(RESET) $(BLUE)Cleaning Ok!$(RESET) "
 
 fclean :
-	@echo "$(ORANGE)[!]$(RESET) Executing full cleaning..."
+	@echo "$(RED)[!] Executing full cleaning..."
 	$(RM) $(NAME) $(OBJ_DIR)
 	$(RM) $(BONUS_NAME) $(BONUS_OBJ_DIR)
 	$(RM) library/minilibx-linux
 	make fclean -C $(LIBFT_DIR) > /dev/null 2>&1
-	@echo "$(GREEN)[✔]$(RESET) $(BLUE)full cleaning!$(RESET) "
+	@echo "$(GREEN)[✔]$(RESET) $(BLUE)Full cleaning!$(RESET) "
 
 re : fclean all
 	@echo "$(GREEN)[✔]$(RESET) $(MAGENTA)Refresh Ok!$(RESET) "
