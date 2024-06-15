@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   frees.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:56:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/08 16:05:02 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/14 20:17:29 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 void	free_dp_char(char **dp_char)
 {
 	int	i;
+
 	i = 0;
 	while (dp_char[i])
 		free(dp_char[i ++]);
@@ -54,12 +55,13 @@ int	free_env(t_env *env)
 	return (0);
 }
 
-void clean_tokens(t_mini *mini_d) 
+void	clean_tokens(t_mini *mini_d)
 {
-	t_token *current = mini_d->token;
-	t_token *temp;
+	t_token	*current;
+	t_token	*temp;
 
-	while (current) 
+	current = mini_d->token;
+	while (current)
 	{
 		temp = current;
 		current = current->next;

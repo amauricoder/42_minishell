@@ -6,7 +6,7 @@
 #    By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
-#    Updated: 2024/06/13 20:27:25 by ismirand         ###   ########.fr        #
+#    Updated: 2024/06/14 20:50:44 by ismirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ AM_SRC = parsing_1.c prompt.c frees.c lexing/lexing.c lexing/token.c\
 #                COMPILATION                 #
 ##############################################
 CC = cc
+LDFLAGS = -lreadline
 GCC = cc -g
 CFLAGS = -Wall -Wextra -Werror
 
@@ -71,7 +72,7 @@ $(OBJ_DIR) :
 
 $(NAME) : $(OBJ) $(LIBFT_LIB)
 	@echo "$(CYAN)[!]$(RESET) Working on project ... "
-	$(GCC) $(CFLAGS) $(OBJ) -lreadline $(SRC_DIR)main.c $(LIBFT_LIB) $(GNL_LIB) -o $(NAME)
+	$(GCC) $(CFLAGS) $(OBJ) -lreadline $(SRC_DIR)main.c $(LIBFT_LIB) $(GNL_LIB) -o $(NAME) $(LDFLAGS)
 	@echo "$(GREEN)[✔] Ok!$(RESET) "
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR) $(OBJ_DIR)build_in $(OBJ_DIR)env $(OBJ_DIR)lexing

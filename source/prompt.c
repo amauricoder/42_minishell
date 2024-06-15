@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:16:59 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/12 17:02:47 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/14 21:02:17 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static	char *get_user_prompt(char **envp);
-static char *get_pwd_prompt(char **envp);
-static char *clean_user_prompt(char *prompt);
-static char *clean_pwd_prompt(char *pwd);
-static char *get_colorful_prompt(char *prompt, int green);
+static char	*get_user_prompt(char **envp);
+static char	*get_pwd_prompt(char **envp);
+static char	*clean_prompt(char *str, int flag);
+//static char	*clean_pwd_prompt(char *pwd);
+static char	*get_colorful_prompt(char *prompt, int green);
 
 /**
  * @brief Get information from envp to construct a prompt msg.
@@ -30,10 +30,10 @@ char	*get_prompt_msg(char **envp)
 	char	*prompt_message;
 
 	prompt = get_user_prompt(envp);
-	prompt = clean_user_prompt(prompt);
+	prompt = clean_prompt(prompt, 0);
 	prompt = get_colorful_prompt(prompt, 1);
 	pwd = get_pwd_prompt(envp);
-	pwd = clean_pwd_prompt(pwd);
+	pwd = clean_prompt(pwd, 1);
 	pwd = get_colorful_prompt(pwd, 0);
 	prompt_message = ft_strjoin(prompt, pwd);
 	free(prompt);
@@ -46,7 +46,7 @@ char	*get_prompt_msg(char **envp)
  * if no USER envp is available, display a regular msg.
  * @return Char * with information of the user.
 */
-static	char *get_user_prompt(char **envp)
+static	char	*get_user_prompt(char **envp)
 {
 	int		i;
 	int		is_user;
@@ -69,36 +69,66 @@ static	char *get_user_prompt(char **envp)
 }
 
 /**
- * @brief Take unecessary parts of USER variable of envp to display only
- * necessary parts
+ * @brief Take unecessary parts of USER(flag 0) or PWD(flag 1) variable 
+ * of envp to display only necessary parts
  * @return Char * with the "clean" information of the USER variable.
 */
-static char *clean_user_prompt(char *prompt)
+static char	*clean_prompt(char *str, int flag)
 {
-	char	**prompt_split;
+	char	**str_split;
 	int		i;
 
 	i = 0;
-	prompt_split = ft_split(prompt, '=');
-	i = 0;
-	while(prompt_split[i])
+	str_split = ft_split(str, '=');
+	while (str_split[i])
 		i ++;
 	if (i > 1)
 	{
-		free(prompt);
-		prompt = ft_strjoin(prompt_split[1], "minishell ~");
-		free_dp_char(prompt_split);
-		return (prompt);
+		free(str);
+		if (flag == 0)
+			str = ft_strjoin(str_split[1], "minishell ~");
+		if (flag == 1)
+			str = ft_strjoin(str_split[1], "$ " );
+		free_dp_char(str_split);
+		return (str);
 	}
-	free_dp_char(prompt_split);
-	return (prompt);
+	free_dp_char(str_split);
+	return (str);
 }
+
+/**
+ * @brief Take unecessary parts of PWD variable of envp to display only
+ * necessary parts
+ * @return Char * with the "clean" information of the PWD variable.
+*/
+/*
+static char	*clean_pwd_prompt(char *pwd)
+{
+	char	**pwd_split;
+	int		i;
+
+	i = 0;
+	pwd_split = ft_split(pwd, '=');
+	i = 0;
+	while (pwd_split[i])
+		i ++;
+	if (i > 1)
+	{
+		free(pwd);
+		pwd = ft_strjoin(pwd_split[1], "$ ");
+		free_dp_char(pwd_split);
+		return (pwd);
+	}
+	free_dp_char(pwd_split);
+	return (pwd);
+} */
+
 /**
  * @brief Get information from PWD of envp to display at prompt msg.
  * if no PWD envp is available, display a regular msg.
  * @return Char * with information of the PWD.
 */
-static char *get_pwd_prompt(char **envp)
+static char	*get_pwd_prompt(char **envp)
 {
 	int		i;
 	int		is_pwd;
@@ -120,34 +150,7 @@ static char *get_pwd_prompt(char **envp)
 	return (prompt);
 }
 
-/**
- * @brief Take unecessary parts of PWD variable of envp to display only
- * necessary parts
- * @return Char * with the "clean" information of the PWD variable.
-*/
-
-static char *clean_pwd_prompt(char *pwd)
-{
-	char	**pwd_split;
-	int		i;
-
-	i = 0;
-	pwd_split = ft_split(pwd, '=');
-	i = 0;
-	while(pwd_split[i])
-		i ++;
-	if (i > 1)
-	{
-		free(pwd);
-		pwd = ft_strjoin(pwd_split[1], "$ ");
-		free_dp_char(pwd_split);
-		return (pwd);
-	}
-	free_dp_char(pwd_split);
-	return (pwd);
-}
-
-static char *get_colorful_prompt(char *str, int green)
+static char	*get_colorful_prompt(char *str, int green)
 {
 	char	*aux_str1;
 	char	*aux_str2;

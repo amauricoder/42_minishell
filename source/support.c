@@ -6,18 +6,18 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:02:42 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/13 19:51:42 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/14 21:04:53 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void print_nodes(t_mini *mini_d)
+void	print_nodes(t_mini *mini_d)
 {
-    t_token *current;
-	const char *str[] = {" GENERAL ", "IN_QUOTE ", "IN_DQUOTE", "WORD   ", "W_SPACE",
-		"D_QUOTE", "S_QUOTE", "PIPE   ", "ENV    ", "RED_OUT", "D_R_OUT",
-		"RED_IN", "HEREDOC"};
+	t_token		*current;
+	const char	*str[] = {" GENERAL ", "IN_QUOTE ", "IN_DQUOTE", "WORD   ",
+		"W_SPACE", "D_QUOTE", "S_QUOTE", "PIPE   ", "ENV    ", "RED_OUT",
+		"D_R_OUT", "RED_IN", "HEREDOC"};
 
 	current = mini_d->token;
 	printf("\n");
@@ -40,14 +40,14 @@ char	*ft_strdup_qt(char *str, int qt)
 {
 	char	*dup;
 	int		i;
-	
+
 	dup = malloc(sizeof(char) * qt + 1);
 	if (!dup || !qt)
 		return (NULL);
 	i = 0;
-	while(i < qt)
+	while (i < qt)
 	{
-		dup[i] = str[i]; 
+		dup[i] = str[i];
 		i ++;
 	}
 	dup[i] = '\0';

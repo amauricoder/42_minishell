@@ -6,13 +6,13 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:17:04 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/13 19:33:04 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/14 20:39:52 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int 	do_lexing(t_mini *mini_d);
+int		do_lexing(t_mini *mini_d);
 void	do_lexing_aux(t_mini *mini_d, int *i, int *state);
 int		specch(char ch);
 int		create_token(t_mini *mini_d, char *input, int state, int len);
@@ -20,35 +20,34 @@ int		define_state(char ch, int state, int *i);
 
 //special (|, >, <,>>,<<, $, ‘ ‘ )
 //ft_strchr("|>$<" ,mini_d->input[i])
+//tratar erro descentemente
 //<< EOF ls -l | cat >output.txt
-int do_lexing(t_mini *mini_d)
+int	do_lexing(t_mini *mini)
 {
 	int	i;
-	int state;
-	int word_len;
+	int	state;
+	int	wrd_len;
 
 	i = 0;
 	state = 0;
-	word_len = 0;
-	while(mini_d->input[i])
+	wrd_len = 0;
+	while (mini->input[i])
 	{
-		if (specch(mini_d->input[i]))
+		if (specch(mini->input[i]))
 		{
-			do_lexing_aux(mini_d, &i, &state);
+			do_lexing_aux(mini, &i, &state);
 			i++;
 		}
 		else
 		{
-			//aqui eu busco a palavra e salvo em um token
-			mini_d->token_type = WORD;
-			word_len = i;
-			while(mini_d->input[i] && !specch(mini_d->input[i]))
+			mini->token_type = WORD;
+			wrd_len = i;
+			while (mini->input[i] && !specch(mini->input[i]))
 			{
-				printf("%c \n", mini_d->input[i]);
+				printf("%c \n", mini->input[i]);
 				i ++;
 			}
-			//tratar erro descentemente
-			create_token(mini_d, &mini_d->input[word_len], state, (i - word_len));
+			create_token(mini, &mini->input[wrd_len], state, (i - wrd_len));
 		}
 	}
 	return (EXIT_SUCCESS);
@@ -65,7 +64,7 @@ void	do_lexing_aux(t_mini *mini_d, int *i, int *state)
 		create_token(mini_d, &mini_d->input[*i], *state, 1);
 		*state = define_state(mini_d->input[*i], *state, i);
 	}
-	if (type == W_SPACE || type == PIPE	|| type == ENV
+	if (type == W_SPACE || type == PIPE || type == ENV
 		|| type == REDIR_OUT || type == REDIR_IN)
 	{
 		if ((type == REDIR_OUT && specch(mini_d->input[*i + 1]) == REDIR_OUT)
@@ -91,7 +90,7 @@ int	specch(char ch)
 {
 	if (ch == '\'' || ch == '\"' || ch == '<' || ch == '>' || ch == '|'
 		|| ch == '$' || ch == ' ' || ch == '\n' || ch == '\0')
-	{	
+	{
 		if (ch == ' ')
 			return (W_SPACE);
 		else if (ch == '\"')
@@ -115,12 +114,11 @@ int	specch(char ch)
 */
 int	create_token(t_mini *mini_d, char *input, int state, int len)
 {
-	t_token *new_token;
-	char	*content;
-	static int id;
+	t_token		*new_token;
+	char		*content;
+	static int	id;
 
 	content = ft_strdup_qt(input, len);
-	//printf("%i", mini_d->token->type);
 	new_token = init_token(content, mini_d->token_type, id);
 	if ((input[0] == '"' && state == 2) || (input[0] == '\'' && state == 1))
 		state = 0;
@@ -129,24 +127,24 @@ int	create_token(t_mini *mini_d, char *input, int state, int len)
 	new_token->head = set_token_head(mini_d);
 	new_token->tail = set_token_tail(mini_d);
 	id ++;
-
 	free(content);
 	return (EXIT_SUCCESS);
 }
 
 /**
- * @brief Define the state of a word. This means that, if is "word" -> state = DQUOTE,
- * 'word' -> state = QUOTE, word -> state = general
+ * @brief Define the state of a word. This means that, if is 
+ * "word" -> state = DQUOTE, 'word' -> state = QUOTE, 
+ * word -> state = general
 */
 int	define_state(char ch, int state, int *i)
 {
 	if (ch == '\"')
-    {
-        if (state == 0)
-            return (2);
-        else if (state == 2)
-    		return (0);
-    }
+	{
+		if (state == 0)
+			return (2);
+		else if (state == 2)
+			return (0);
+	}
 	if (ch == '\'')
 	{
 		if (state == 0)
@@ -155,5 +153,5 @@ int	define_state(char ch, int state, int *i)
 			return (0);
 	}
 	(void)i;
-    return state;
+	return (state);
 }

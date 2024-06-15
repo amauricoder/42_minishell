@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:32:23 by aconceic          #+#    #+#             */
-/*   Updated: 2024/05/30 15:14:17 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/14 20:14:49 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@
  * @return EXIT_SUCCESS on success, EXIT_FAILURE on failure.
 */
 
-int    buildin_pwd(void)
+int	buildin_pwd(void)
 {
-    char   cwd[1024];
-    char   *directory;
+	char	cwd[1024];
+	char	*directory;	
 
-    directory = getcwd(cwd, sizeof(cwd));
-    if (!directory)
-    {
-        perror("minishell: pwd: ");
-        return (EXIT_FAILURE);
-    }
-    printf("%s\n", directory);
-    return (EXIT_SUCCESS);
+	directory = getcwd(cwd, sizeof(cwd));
+	if (!directory)
+	{
+		perror("minishell: pwd: ");
+		return (EXIT_FAILURE);
+	}
+	printf("%s\n", directory);
+	return (EXIT_SUCCESS);
 }
