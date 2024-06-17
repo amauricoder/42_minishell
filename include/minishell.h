@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/17 09:24:55 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/17 10:24:41 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,9 @@ typedef struct s_mini
 	t_token	*token;
 }				t_mini;
 
+//global variable
+extern int	g_exit_status;
+
 /*********************************************/
 //main
 int		main(int argc, char **argv, char **envp);
@@ -150,6 +153,8 @@ char	*ft_strdup_qt(char *str, int qt);
 //signals.c
 void	signals_init(void);
 void	signal_handler(int sig);
+void	signals_child(void);
+void	signal_handler_child(int sig);
 
 /********************************************************************/
 /*     		       ISA SPACE	   									*/

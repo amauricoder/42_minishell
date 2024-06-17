@@ -6,13 +6,13 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/17 09:28:21 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/17 10:03:41 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	exit_status = 0;
+int	g_exit_status = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -26,6 +26,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		//I need to free the mini_d.input
 		mini_d.input = readline(mini_d.prompt);//nao podemos dar free dps?
+		//aqui handle ctrl+d -> nao ha nada para ser lido (EndOfFile)
 		if (!mini_d.input)
 		{
 			printf("exit\n");
@@ -33,7 +34,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (!ft_strncmp(mini_d.input, "exit", 4) && ft_strlen(mini_d.input) == 4)
 		{
-			printf("exit");//aqui n tem quebra de linha?
+			printf("exit\n");
 			//here we need to be careful with the free from token struct
 			//because of the free at the end. It can enter on  the else too.
 			break ;
