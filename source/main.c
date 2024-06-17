@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/14 21:25:28 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/17 10:42:22 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,20 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_mini	mini_d;
 
-	if (argc != 1 || !argv)
-		return (printf(RED"Try \"./minishell\" instead\n"RESET));	
+	if (!is_argument_valid(argc, envp))
+		return (EXIT_FAILURE);	
 	init_main_struct(&mini_d, argv, envp);
 	while (1)
 	{
-		//I need to free the mini_d.input
-		mini_d.input = readline(mini_d.prompt);//nao podemos dar free dps?
-		if (!mini_d.input)
+		mini_d.input = readline(mini_d.prompt);
+		//funcao de verificacao
+		if (!is_input_valid(mini_d.input))
+			break;
+		printf("%s\n", mini_d.input);
+		if (!mini_d.input || (!ft_strncmp(mini_d.input, "exit", 4)
+			&& ft_strlen(mini_d.input) == 4))
 		{
 			printf("exit\n");
-			break ;
-		}
-		if (!ft_strncmp(mini_d.input, "exit", 4) && ft_strlen(mini_d.input) == 4)
-		{
-			printf("exit");//aqui n tem quebra de linha?
-			//here we need to be careful with the free from token struct
-			//because of the free at the end. It can enter on  the else too.
 			break ;
 		}
 		else if (ft_strlen(mini_d.input) > 0)
@@ -42,9 +39,9 @@ int	main(int argc, char **argv, char **envp)
 			add_history(mini_d.input);
 			//here the magic happens
 			//start lexing
-			do_lexing(&mini_d);
-			//dont forget free all tokens			
-			print_nodes(&mini_d);
+			do_lexing(&mini_d); //dont forget free all tokens		
+			print_nodes(&mini_d); // for debug purposes
+
 			free(mini_d.input);
 			clean_tokens(&mini_d);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/13 19:31:39 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/17 10:23:13 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,11 @@ int		alloc_tokenstruct(t_mini *mini_d);
 //support.c
 void	print_nodes(t_mini *mini_d);
 char	*ft_strdup_qt(char *str, int qt);
+
+//check_input.c
+int		is_argument_valid(int argc, char **env);
+int		is_input_valid(char *input);
+
 
 /********************************************************************/
 /*     		       ISA SPACE	   									*/
