@@ -6,7 +6,11 @@
 #    By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2024/06/17 09:33:37 by aconceic         ###   ########.fr        #
+=======
+#    Updated: 2024/06/17 09:56:10 by ismirand         ###   ########.fr        #
+>>>>>>> isabella
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +55,7 @@ ISA_SRC = build_in/buildin_echo.c build_in/buildin_pwd.c env/env.c\
 		  build_in/buildin_env.c init_values.c\
 
 AM_SRC = parsing_1.c prompt.c frees.c lexing/lexing.c lexing/token.c\
-		support.c check_input.c\
+		support.c check_input.c signals.c\
 
 ##############################################
 #                COMPILATION                 #
