@@ -6,20 +6,21 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/14 21:25:28 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/17 09:28:21 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	clean_tokens(t_mini *mini_d);
+int	exit_status = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_mini	mini_d;
 
 	if (argc != 1 || !argv)
-		return (printf(RED"Try \"./minishell\" instead\n"RESET));	
+		return (printf(RED"Try \"./minishell\" instead\n"RESET));
+	signals_init();	
 	init_main_struct(&mini_d, argv, envp);
 	while (1)
 	{

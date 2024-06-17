@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/13 19:31:39 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/17 09:24:55 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,10 @@ int		alloc_tokenstruct(t_mini *mini_d);
 //support.c
 void	print_nodes(t_mini *mini_d);
 char	*ft_strdup_qt(char *str, int qt);
+
+//signals.c
+void	signals_init(void);
+void	signal_handler(int sig);
 
 /********************************************************************/
 /*     		       ISA SPACE	   									*/
