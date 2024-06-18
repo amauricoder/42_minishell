@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   support.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:02:42 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/14 21:04:53 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/17 18:45:42 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,15 @@ char	*ft_strdup_qt(char *str, int qt)
 	}
 	dup[i] = '\0';
 	return (dup);
+}
+/**
+ * @brief Give the error message and set the g_exit_status global variable
+ * to the exit value given
+ * @return exit_value
+*/
+int	error_msg_and_exit(char *str, int exit_value)
+{
+	ft_putendl_fd(str, 2);
+	g_exit_status = exit_value;
+	return(exit_value);
 }

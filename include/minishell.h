@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/17 10:59:11 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/18 08:17:13 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ typedef enum e_token
 	S_QUOTE,
 	PIPE,
 	ENV,
-	REDIR_OUT,//>
-	D_REDIR_OUT,//>>
-	REDIR_IN,//<
-	HEREDOC//<<
+	REDIR_OUT, //>
+	D_REDIR_OUT, //>>
+	REDIR_IN, //<
+	HEREDOC //<<
 }	e_token;
 
 typedef enum e_tstate
@@ -149,10 +149,14 @@ int		alloc_tokenstruct(t_mini *mini_d);
 //support.c
 void	print_nodes(t_mini *mini_d);
 char	*ft_strdup_qt(char *str, int qt);
+int		error_msg_and_exit(char *str, int exit_value);
 
 //check_input.c
 int		is_argument_valid(int argc, char **env);
-int		is_input_valid(char *input);
+int		check_input(char *input);
+int		is_quotes_closed(char *input, char type_quote);
+int		is_pipe_the_last(char *input);
+
 
 //signals.c
 void	signals_init(void);

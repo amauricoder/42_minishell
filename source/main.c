@@ -6,13 +6,13 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/17 10:58:28 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/18 08:47:40 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	g_exit_status = 0;
+int	g_exit_status;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -26,9 +26,11 @@ int	main(int argc, char **argv, char **envp)
 	{
 		mini_d.input = readline(mini_d.prompt);
 		//funcao de verificacao
-		if (!is_input_valid(mini_d.input))
-			break;
-		printf("%s\n", mini_d.input);
+		if (check_input(mini_d.input))
+		{
+			add_history(mini_d.input);
+			continue;
+		}
 		if (!mini_d.input || (!ft_strncmp(mini_d.input, "exit", 4)
 			&& ft_strlen(mini_d.input) == 4))
 		{
