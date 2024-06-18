@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:17:04 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/14 20:39:52 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:32:30 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,7 @@ int	do_lexing(t_mini *mini)
 			mini->token_type = WORD;
 			wrd_len = i;
 			while (mini->input[i] && !specch(mini->input[i]))
-			{
-				printf("%c \n", mini->input[i]);
 				i ++;
-			}
 			create_token(mini, &mini->input[wrd_len], state, (i - wrd_len));
 		}
 	}

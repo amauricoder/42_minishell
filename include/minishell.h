@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/18 10:06:23 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:04:02 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ typedef struct s_token
 	int				len;
 	char			*content;
 	int				type;
-	//enum e_token	type;
 	enum e_token	state;
 	struct s_token	*head;
 	struct s_token	*tail;
@@ -108,7 +107,6 @@ typedef struct s_mini
 //global variable
 extern int	g_exit_status;
 
-/*********************************************/
 //main
 int		main(int argc, char **argv, char **envp);
 
@@ -140,7 +138,10 @@ int		define_state(char ch, int state, int *i);
 int		specch(char ch);
 
 //token.c
-t_token	*init_token(char *content, int type, int id);
+t_token	*init_token(char *content, int type, int id);int prepare_parsing(t_mini	*mini_d)
+{
+		
+}
 t_token	*set_token_head(t_mini *mini_d);
 t_token *set_token_tail(t_mini *mini_d);
 int		token_lstadd_back(t_mini *mini_d, t_token *new_token);
@@ -157,12 +158,14 @@ int		check_input(char *input);
 int		is_quotes_closed(char *input);
 int		is_pipe_the_last(char *input);
 
-
 //signals.c
 void	signals_init(void);
 void	signal_handler(int sig);
 void	signals_child(void);
 void	signal_handler_child(int sig);
+
+//parsing/prepare.c
+
 
 /********************************************************************/
 /*     		       ISA SPACE	   									*/

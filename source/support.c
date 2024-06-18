@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   support.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:02:42 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/17 18:45:42 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:01:43 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	print_nodes(t_mini *mini_d)
 {
 	t_token		*current;
-	const char	*str[] = {" GENERAL ", "IN_QUOTE ", "IN_DQUOTE", "WORD   ",
-		"W_SPACE", "D_QUOTE", "S_QUOTE", "PIPE   ", "ENV    ", "RED_OUT",
+	const char	*str[] = {"GENERAL", "IN_QUOTE", "IN_DQUOTE", "WORD",
+		"W_SPACE", "D_QUOTE", "S_QUOTE", "PIPE", "ENV", "RED_OUT",
 		"D_R_OUT", "RED_IN", "HEREDOC"};
 
 	current = mini_d->token;
@@ -24,7 +24,7 @@ void	print_nodes(t_mini *mini_d)
 	while (current)
 	{
 		printf("| "YELLOW"Id %3i "RESET" | ", current->id);
-		printf(RED"State %8s "RESET" | ", str[current->state]);
+		printf(RED"State %10s "RESET" | ", str[current->state]);
 		printf(BLUE"Type %7s "RESET" | ", str[current->type + 3]);
 		printf(CYAN"Content "RESET"%8s |\n", current->content);
 		current = current->next;
@@ -53,6 +53,7 @@ char	*ft_strdup_qt(char *str, int qt)
 	dup[i] = '\0';
 	return (dup);
 }
+
 /**
  * @brief Give the error message and set the g_exit_status global variable
  * to the exit value given
@@ -62,5 +63,5 @@ int	error_msg_and_exit(char *str, int exit_value)
 {
 	ft_putendl_fd(str, 2);
 	g_exit_status = exit_value;
-	return(exit_value);
+	return (exit_value);
 }

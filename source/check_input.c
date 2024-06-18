@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:07:33 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/18 10:27:13 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:31:09 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@
 int	is_argument_valid(int argc, char **env)
 {
 	if (!argc || argc != 1)
-	{	
-		ft_putstr_fd(RED"Try \"./minishell\" instead\n"RESET, 2);	
+	{
+		ft_putstr_fd(RED"Try \"./minishell\" instead\n"RESET, 2);
 		return (false);
 	}
 	if (!env)
 	{
-		ft_putstr_fd(RED"Error\" Undefined ENV\n"RESET, 2);	
+		ft_putstr_fd(RED"Error\" Undefined ENV\n"RESET, 2);
 		return (false);
 	}
 	return (true);
@@ -36,7 +36,7 @@ int	is_argument_valid(int argc, char **env)
 */
 int	check_input(char *input)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!input)
@@ -53,7 +53,7 @@ int	check_input(char *input)
  * @return TRUE if s_quotes and d_quotes are closed
  * 			FALSE if one of them is opened
 */
-int is_quotes_closed(char *input)
+int	is_quotes_closed(char *input)
 {
 	int	i;
 	int	s_quotes;
@@ -73,7 +73,7 @@ int is_quotes_closed(char *input)
 	return (s_quotes % 2 == 0 && d_quotes % 2 == 0);
 }
 
-int is_pipe_the_last(char *input)
+int	is_pipe_the_last(char *input)
 {
 	int	i;
 
@@ -84,6 +84,6 @@ int is_pipe_the_last(char *input)
 	while (i >= 0 && (input[i] == ' ' || input[i] == '\t'))
 		i --;
 	if (i >= 0 && input[i] == '|')
-		return(true);
+		return (true);
 	return (false);
 }

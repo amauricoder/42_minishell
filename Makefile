@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+         #
+#    By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
-#    Updated: 2024/06/17 14:57:52 by aconceic         ###   ########.fr        #
+#    Updated: 2024/06/18 10:40:06 by ismirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ ISA_SRC = build_in/buildin_echo.c build_in/buildin_pwd.c env/env.c\
 		  build_in/buildin_env.c init_values.c\
 
 AM_SRC = parsing_1.c prompt.c frees.c lexing/lexing.c lexing/token.c\
-		support.c check_input.c signals.c\
+		support.c check_input.c signals.c parsing/prepare.c\
 
 ##############################################
 #                COMPILATION                 #
@@ -75,7 +75,7 @@ $(NAME) : $(OBJ) $(LIBFT_LIB)
 	$(GCC) $(CFLAGS) $(OBJ) -lreadline $(SRC_DIR)main.c $(LIBFT_LIB) $(GNL_LIB) -o $(NAME) $(LDFLAGS)
 	@echo "$(GREEN)[✔] Ok!$(RESET) "
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR) $(OBJ_DIR)build_in $(OBJ_DIR)env $(OBJ_DIR)lexing
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR) $(OBJ_DIR)build_in $(OBJ_DIR)env $(OBJ_DIR)lexing $(OBJ_DIR)parsing
 	@echo "$(CYAN)[!]$(RESET) Creating object $@ ..."
 	$(GCC) $(CFLAGS) -c $< -o $@
 #@echo "$(GREEN)[✔]$(RESET) $(BLUE)Object $@ Ok!$(RESET) "
@@ -91,6 +91,10 @@ $(OBJ_DIR)env:
 $(OBJ_DIR)lexing:
 	@echo "$(CYAN)[!]$(RESET) Creating directory for lexing objects ..."
 	mkdir -p $(OBJ_DIR)lexing
+
+$(OBJ_DIR)parsing:
+	@echo "$(CYAN)[!]$(RESET) Creating directory for parsing objects ..."
+	mkdir -p $(OBJ_DIR)parsing
 
 $(LIBFT_LIB) : $(LIBFT_DIR)
 	@echo "$(CYAN)[!]$(RESET) Working on LIBFT_LIB ..."
