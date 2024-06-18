@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:07:33 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/18 09:02:49 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:27:13 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,32 +41,36 @@ int	check_input(char *input)
 	i = 0;
 	if (!input)
 		return (false);
-	if (!is_quotes_closed(input, '\'') || !is_quotes_closed(input, '\"')
-		|| is_pipe_the_last(input))
+	if (!is_quotes_closed(input) || is_pipe_the_last(input))
 		return (error_msg_and_exit("Error\nSyntax error", 2));
 	//if (is_redirect_valid(input))	
 	//here I need to check for more invalid inputs
-	return (false);	
+	return (false);
 }
 
 /**
  * @brief Check if the quotes are closed.
- * @return value of is_closed variable. 1 for is_closed(true), 0 for !is_closed(false).
+ * @return TRUE if s_quotes and d_quotes are closed
+ * 			FALSE if one of them is opened
 */
-int is_quotes_closed(char *input, char type_quote)
+int is_quotes_closed(char *input)
 {
 	int	i;
-	int is_closed;
+	int	s_quotes;
+	int	d_quotes;
 
 	i = 0;
-	is_closed = 1;
-	while(input[i])
+	s_quotes = 0;
+	d_quotes = 0;
+	while (input[i])
 	{
-		if (input[i] == type_quote)
-			is_closed = !is_closed;
-		i ++;
+		if (input[i] == '\'' && d_quotes % 2 == 0) // Considera apenas se não estamos dentro de aspas duplas
+			s_quotes++;
+		else if (input[i] == '\"' && s_quotes % 2 == 0) // Considera apenas se não estamos dentro de aspas simples
+			d_quotes++;
+		i++;
 	}
-	return (is_closed);
+	return (s_quotes % 2 == 0 && d_quotes % 2 == 0);
 }
 
 int is_pipe_the_last(char *input)

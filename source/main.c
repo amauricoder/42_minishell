@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/18 08:47:40 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:14:11 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	g_exit_status;
+int	g_exit_status = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -27,11 +27,8 @@ int	main(int argc, char **argv, char **envp)
 		mini_d.input = readline(mini_d.prompt);
 		//funcao de verificacao
 		if (check_input(mini_d.input))
-		{
 			add_history(mini_d.input);
-			continue;
-		}
-		if (!mini_d.input || (!ft_strncmp(mini_d.input, "exit", 4)
+		else if (!mini_d.input || (!ft_strncmp(mini_d.input, "exit", 4)
 			&& ft_strlen(mini_d.input) == 4))
 		{
 			printf("exit\n");

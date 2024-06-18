@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/18 08:17:13 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:06:23 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int		error_msg_and_exit(char *str, int exit_value);
 //check_input.c
 int		is_argument_valid(int argc, char **env);
 int		check_input(char *input);
-int		is_quotes_closed(char *input, char type_quote);
+int		is_quotes_closed(char *input);
 int		is_pipe_the_last(char *input);
 
 
