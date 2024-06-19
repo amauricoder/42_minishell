@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/18 11:04:02 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/19 08:28:44 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,10 +138,7 @@ int		define_state(char ch, int state, int *i);
 int		specch(char ch);
 
 //token.c
-t_token	*init_token(char *content, int type, int id);int prepare_parsing(t_mini	*mini_d)
-{
-		
-}
+t_token	*init_token(char *content, int type, int id);
 t_token	*set_token_head(t_mini *mini_d);
 t_token *set_token_tail(t_mini *mini_d);
 int		token_lstadd_back(t_mini *mini_d, t_token *new_token);

@@ -6,22 +6,20 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:17:04 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/18 10:32:30 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/19 10:46:30 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int		do_lexing(t_mini *mini_d);
-void	do_lexing_aux(t_mini *mini_d, int *i, int *state);
-int		specch(char ch);
-int		create_token(t_mini *mini_d, char *input, int state, int len);
-int		define_state(char ch, int state, int *i);
-
 //special (|, >, <,>>,<<, $, ‘ ‘ )
 //ft_strchr("|>$<" ,mini_d->input[i])
 //tratar erro descentemente
 //<< EOF ls -l | cat >output.txt
+//a "b c" 'd e' "'f'" '"g"' < | >>
+// a "b c" 'd e'      "'f'" '"g    h"' < | >>
+static void	find_env(t_mini *mini_d);
+
 int	do_lexing(t_mini *mini)
 {
 	int	i;
@@ -29,10 +27,10 @@ int	do_lexing(t_mini *mini)
 	int	wrd_len;
 
 	i = 0;
-	state = 0;
 	wrd_len = 0;
 	while (mini->input[i])
 	{
+		state = GENERAL;
 		if (specch(mini->input[i]))
 		{
 			do_lexing_aux(mini, &i, &state);
@@ -47,19 +45,53 @@ int	do_lexing(t_mini *mini)
 			create_token(mini, &mini->input[wrd_len], state, (i - wrd_len));
 		}
 	}
+	find_env(mini);
 	return (EXIT_SUCCESS);
+}
+
+static void	find_env(t_mini *mini_d)
+{
+	t_token *head;
+
+	head = mini_d->token;
+	while (mini_d->token)
+	{
+		if (mini_d->token->type == WORD && mini_d->token->state != IN_QUOTE
+			&& mini_d->token->content[0] == '$' 
+			&& ft_isalnum(mini_d->token->content[1]))
+			mini_d->token->type = ENV;
+		mini_d->token = mini_d->token->next;
+	}
+	mini_d->token = head;
 }
 
 void	do_lexing_aux(t_mini *mini_d, int *i, int *state)
 {
 	int	type;
+	int	wrd_len;
 
+	wrd_len = 0;
 	type = specch(mini_d->input[*i]);
 	mini_d->token_type = type;
-	if (type == D_QUOTE || type == S_QUOTE)
+	if (type == D_QUOTE)
 	{
-		create_token(mini_d, &mini_d->input[*i], *state, 1);
-		*state = define_state(mini_d->input[*i], *state, i);
+		(*i)++;
+		*state = IN_DQUOTE;
+		mini_d->token_type = WORD;
+		wrd_len = *i;
+		while (mini_d->input[*i] && specch(mini_d->input[*i]) != D_QUOTE)
+			(*i)++;
+		create_token(mini_d, &mini_d->input[wrd_len], *state, (*i - wrd_len));
+	}
+	else if (type == S_QUOTE)
+	{
+		(*i)++;
+		*state = IN_QUOTE;
+		mini_d->token_type = WORD;
+		wrd_len = *i;
+		while (mini_d->input[*i] && specch(mini_d->input[*i]) != S_QUOTE)
+			(*i)++;
+		create_token(mini_d, &mini_d->input[wrd_len], *state, (*i - wrd_len));
 	}
 	if (type == W_SPACE || type == PIPE || type == ENV
 		|| type == REDIR_OUT || type == REDIR_IN)
@@ -74,8 +106,25 @@ void	do_lexing_aux(t_mini *mini_d, int *i, int *state)
 			create_token(mini_d, &mini_d->input[*i], *state, 2);
 			(*i)++;
 		}
+		else if (type == ENV)
+		{
+			wrd_len = *i;
+			(*i)++;
+			while (ft_isalnum(mini_d->input[*i]))
+				(*i)++;
+			(*i)--;
+ 			if ((*i - wrd_len) == 0)
+				mini_d->token_type = WORD;
+			create_token(mini_d, &mini_d->input[wrd_len], *state, (*i - wrd_len + 1));
+		}
 		else
 			create_token(mini_d, &mini_d->input[*i], *state, 1);
+		if (*state == GENERAL && type == W_SPACE)
+		{
+			while (specch(mini_d->input[*i]) == W_SPACE)
+				(*i)++;
+			(*i)--;
+		}
 	}
 }
 
@@ -133,7 +182,7 @@ int	create_token(t_mini *mini_d, char *input, int state, int len)
  * "word" -> state = DQUOTE, 'word' -> state = QUOTE, 
  * word -> state = general
 */
-int	define_state(char ch, int state, int *i)
+/* int	define_state(char ch, int state, int *i)
 {
 	if (ch == '\"')
 	{
@@ -151,4 +200,4 @@ int	define_state(char ch, int state, int *i)
 	}
 	(void)i;
 	return (state);
-}
+} */
