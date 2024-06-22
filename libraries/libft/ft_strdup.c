@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 11:58:59 by aconceic          #+#    #+#             */
-/*   Updated: 2024/01/29 15:45:56 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/22 14:28:23 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(const char *s)
 	size_t	i;
 	char	*cpy;
 
+	if (!s)
+		return (NULL);
 	length = ft_strlen(s);
 	cpy = (char *)malloc(sizeof(char) * length + 1);
 	i = 0;

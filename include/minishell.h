@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/19 08:28:44 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/21 18:15:00 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ void	signals_child(void);
 void	signal_handler_child(int sig);
 
 //parsing/prepare.c
-
+int		prepare_parsing(t_mini	*mini_d, char **envp);
 
 /********************************************************************/
 /*     		       ISA SPACE	   									*/

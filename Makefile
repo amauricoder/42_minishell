@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+         #
+#    By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
-#    Updated: 2024/06/18 10:40:06 by ismirand         ###   ########.fr        #
+#    Updated: 2024/06/22 11:03:09 by aconceic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

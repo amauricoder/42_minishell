@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   support.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:02:42 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/18 11:01:43 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/22 10:56:01 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	*ft_strdup_qt(char *str, int qt)
 	char	*dup;
 	int		i;
 
+	if (!str)
+		return (NULL);
 	dup = malloc(sizeof(char) * qt + 1);
 	if (!dup || !qt)
 		return (NULL);

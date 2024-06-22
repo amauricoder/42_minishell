@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/18 10:43:42 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/22 11:37:29 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	main(int argc, char **argv, char **envp)
 	init_main_struct(&mini_d, argv, envp);
 	while (1)
 	{
-		mini_d.input = readline(mini_d.prompt);
+		//mini_d.input = readline(mini_d.prompt);
+		mini_d.input = readline("Minishell $ ");
 		//funcao de verificacao
 		if (check_input(mini_d.input))
 			add_history(mini_d.input);
@@ -40,9 +41,11 @@ int	main(int argc, char **argv, char **envp)
 			//here the magic happens
 			//start lexing
 			do_lexing(&mini_d); //dont forget free all tokens
-			//prepare_parsing(&mini_d);
+			prepare_parsing(&mini_d, envp);
+			
+			printf("\n");
+			printf("-------- MAIN --------\n");
 			print_nodes(&mini_d); // for debug purposes
-
 			free(mini_d.input);
 			clean_tokens(&mini_d);
 		}

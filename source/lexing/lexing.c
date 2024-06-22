@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:17:04 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/19 10:46:30 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/22 11:02:53 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 //tratar erro descentemente
 //<< EOF ls -l | cat >output.txt
 //a "b c" 'd e' "'f'" '"g"' < | >>
-// a "b c" 'd e'      "'f'" '"g    h"' < | >>
+// a "$b c" '$d e'      "'$f'" '"g    h"' < | >>
 static void	find_env(t_mini *mini_d);
 
 int	do_lexing(t_mini *mini)
@@ -76,17 +76,22 @@ void	do_lexing_aux(t_mini *mini_d, int *i, int *state)
 	if (type == D_QUOTE)
 	{
 		(*i)++;
+		if (mini_d->input[*i] == '\"')
+			return ;
 		*state = IN_DQUOTE;
 		mini_d->token_type = WORD;
 		wrd_len = *i;
 		while (mini_d->input[*i] && specch(mini_d->input[*i]) != D_QUOTE)
 			(*i)++;
+		//printf("%i\n", *i);
 		create_token(mini_d, &mini_d->input[wrd_len], *state, (*i - wrd_len));
 	}
 	else if (type == S_QUOTE)
 	{
 		(*i)++;
 		*state = IN_QUOTE;
+		if (mini_d->input[*i] == '\'')
+			return ;
 		mini_d->token_type = WORD;
 		wrd_len = *i;
 		while (mini_d->input[*i] && specch(mini_d->input[*i]) != S_QUOTE)
