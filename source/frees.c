@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   frees.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:56:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/14 20:17:29 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/22 18:35:23 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	free_dp_char(char **dp_char)
 	int	i;
 
 	i = 0;
+	if (!dp_char)
+		return;
 	while (dp_char[i])
 		free(dp_char[i ++]);
 	free(dp_char);
