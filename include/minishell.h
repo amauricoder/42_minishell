@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/24 15:38:26 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/25 20:02:04 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ int		prepare_parsing(t_mini	*mini_d, char **envp);
 //parsing/prepare_support.c
 int		check_dollar(char *nd_content);
 int		have_spacial_char(char *word);
-int		can_be_expansive(char *content);
+//int		can_be_expansive(char *content);
 void	printf_dpchar(char **to_print);
 
 /********************************************************************/

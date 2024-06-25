@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 19:16:49 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/24 15:39:17 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/25 20:01:53 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int have_spacial_char(char *word)
  * '$AM' can be. "$'USER' is not"
  * @return true or false.
 */
-int can_be_expansive(char *content)
+/* int can_be_expansive(char *content)
 {
 	int i;
 
@@ -71,9 +71,12 @@ int can_be_expansive(char *content)
 	if (i < 2)
 		return (false);
 	return (true);
-}
+} */
 
-
+/**
+ * @brief just print an array of chars. 
+ * Support function to help debbuging
+*/
 void printf_dpchar(char **to_print)
 {
 	int i;

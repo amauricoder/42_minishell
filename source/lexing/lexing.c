@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:17:04 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/22 11:02:53 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/25 20:27:08 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ void	do_lexing_aux(t_mini *mini_d, int *i, int *state)
 		}
 		else if (type == ENV)
 		{
+			if (mini_d->input[*i + 1] == '\'' || mini_d->input[*i + 1] == '\"')
+				return ;
 			wrd_len = *i;
 			(*i)++;
 			while (ft_isalnum(mini_d->input[*i]))
