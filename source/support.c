@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:02:42 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/22 10:56:01 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/26 11:34:49 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,30 @@ void	print_nodes(t_mini *mini_d)
 		printf("| "YELLOW"Id %3i "RESET" | ", current->id);
 		printf(RED"State %10s "RESET" | ", str[current->state]);
 		printf(BLUE"Type %7s "RESET" | ", str[current->type + 3]);
-		printf(CYAN"Content "RESET"%8s |\n", current->content);
+		if (current->content != NULL)
+			printf(CYAN"Content "RESET"%8s | ", current->content);
+		else
+			printf(CYAN"Content "RESET"%8s NULL | ", current->content);
+		printf(MGT"Length "RESET"%3i |\n", current->len);
 		current = current->next;
+	}
+}
+
+/**
+ * @brief just print an array of chars. 
+ * Support function to help debbuging
+*/
+void	printf_matriz(char **to_print)
+{
+	int	i;
+
+	i = 0;
+	if (!to_print)
+		return ;
+	while (to_print[i])
+	{
+		printf("printed -> %s |\n", to_print[i]);
+		i ++;
 	}
 }
 

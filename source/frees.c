@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:56:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/22 18:35:23 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/26 11:17:04 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	free_dp_char(char **dp_char)
 
 	i = 0;
 	if (!dp_char)
-		return;
+		return ;
 	while (dp_char[i])
 		free(dp_char[i ++]);
 	free(dp_char);

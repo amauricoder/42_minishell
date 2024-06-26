@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/25 20:02:04 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/26 11:46:52 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ typedef enum e_token
 	S_QUOTE,
 	PIPE,
 	ENV,
-	REDIR_OUT, //>
-	D_REDIR_OUT, //>>
-	REDIR_IN, //<
+	R_OUT, //>
+	D_R_OUT, //>>
+	R_IN, //<
 	HEREDOC //<<
 }	e_token;
 
@@ -133,8 +133,12 @@ void	init_main_struct(t_mini *mini_d, char **argv, char **envp);
 //lexing.c
 int		do_lexing(t_mini *mini_d);
 void	do_lexing_aux(t_mini *mini_d, int *i, int *state);
+void	in_quote(t_mini *mini_d, int *i, int *state, char flag);
+void	in_special(t_mini *mini_d, int *i, int *state, int type);
+
+//lexing_support.c
+void	find_env(t_mini *mini_d);
 int		create_token(t_mini *mini_d, char *input, int state, int len);
-int		define_state(char ch, int state, int *i);
 int		specch(char ch);
 
 //token.c
@@ -146,6 +150,7 @@ int		alloc_tokenstruct(t_mini *mini_d);
 
 //support.c
 void	print_nodes(t_mini *mini_d);
+void	printf_matriz(char **to_print);
 char	*ft_strdup_qt(char *str, int qt);
 int		error_msg_and_exit(char *str, int exit_value);
 
@@ -161,14 +166,17 @@ void	signal_handler(int sig);
 void	signals_child(void);
 void	signal_handler_child(int sig);
 
-//parsing/prepare.c
-int		prepare_parsing(t_mini	*mini_d, char **envp);
+//parsing/expansion.c
+int		check_expansion(t_mini	*mini_d);
+int		aftdol_len(char *content);
+char	*env_expanded(char *content);
+void	expand_dolar(t_token *token);
+char	*change_content(t_token *token, int i);
 
-//parsing/prepare_support.c
+//parsing/expansion_support.c
 int		check_dollar(char *nd_content);
 int		have_spacial_char(char *word);
-//int		can_be_expansive(char *content);
-void	printf_dpchar(char **to_print);
+void	clean_tokens(t_mini *mini_d, int kind);
 
 /********************************************************************/
 /*     		       ISA SPACE	   									*/

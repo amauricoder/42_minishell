@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/22 11:37:29 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/26 11:28:00 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	main(int argc, char **argv, char **envp)
 			//here the magic happens
 			//start lexing
 			do_lexing(&mini_d); //dont forget free all tokens
-			prepare_parsing(&mini_d, envp);
+			check_expansion(&mini_d);
+			
 			
 			printf("\n");
 			printf("-------- MAIN --------\n");
