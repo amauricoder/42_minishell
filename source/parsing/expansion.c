@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:40:18 by ismirand          #+#    #+#             */
-/*   Updated: 2024/06/26 11:43:13 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:48:40 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,34 @@
 //$"PWD"
 //$
 //amauri $USER amauri
+
+void clean_token(t_mini *mini_d)
+{
+	t_token *current;
+	t_token *prev;
+	
+	while (mini_d->token && (mini_d->token->len == 0 || mini_d->token->type == W_SPACE))
+	{
+		current = mini_d->token->next;
+	    free(mini_d->token->content);
+	    free(mini_d->token);
+		mini_d->token = current;
+	}
+	prev = mini_d->token;
+	current = mini_d->token;
+	while (current)
+	{
+	    if (current->len == 0 || (current->type == W_SPACE && prev->type == W_SPACE))
+		{
+	        prev->next = current->next;
+	        free(current->content);
+	        free(current);
+			current = prev;
+	    }
+	    prev = current;//pra quando nao entra no if
+		current = current->next;
+	}
+}
 
 /**
  * @brief Check for expansions on the content of a node
@@ -37,6 +65,7 @@ int	check_expansion(t_mini	*mini_d)
 		mini_d->token = mini_d->token->next;
 	}
 	mini_d->token = token_head;
+	clean_token(mini_d);
 	return (EXIT_SUCCESS);
 }
 

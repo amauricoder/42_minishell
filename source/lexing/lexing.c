@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:17:04 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/26 11:25:20 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/26 14:46:22 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,10 @@ void	in_special(t_mini *mini, int *i, int *state, int type)
 	{
 		if (mini->input[*i + 1] == '\'' || mini->input[*i + 1] == '\"')
 			return ;
-		wrd_len = *i;
-		(*i)++;
-		while (ft_isalnum(mini->input[*i + 1]))
+		wrd_len = (*i)++;
+		while (ft_isalnum(mini->input[*i]))
 			(*i)++;
+		(*i)--;
 		if ((*i - wrd_len) == 0)
 			mini->token_type = WORD;
 		create_token(mini, &mini->input[wrd_len], *state, (*i - wrd_len + 1));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:07:33 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/18 10:31:09 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/26 14:47:45 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,10 @@ int	is_argument_valid(int argc, char **env)
 */
 int	check_input(char *input)
 {
-	int	i;
-
-	i = 0;
 	if (!input)
 		return (false);
 	if (!is_quotes_closed(input) || is_pipe_the_last(input))
 		return (error_msg_and_exit("Error\nSyntax error", 2));
-	//if (is_redirect_valid(input))	
-	//here I need to check for more invalid inputs
 	return (false);
 }
 
