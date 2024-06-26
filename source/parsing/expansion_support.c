@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_support.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 19:16:49 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/26 11:46:52 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:00:37 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,21 @@ int	have_spacial_char(char *word)
 	return (false);
 }
 
-void	clean_tokens(t_mini *mini_d, int kind)
+/**
+ * @brief Get the size of a string after the $ until a special char
+ * @return The value of the STR after dollarsing. 
+*/
+int	aftdol_len(char *content)
 {
-	t_token	*head;
+	int		i;
+	char	*tmp;
 
-	while (mini_d->token == NULL)
-		mini_d->token = mini_d->token->next;
-	head = mini_d->token;
-	(void)kind;
+	i = 0;
+	if (content[i] == '$')
+		i ++;
+	while (content[i] && (!specch(content[i + 1]) && content[i + 1]))
+		i ++;
+	tmp = ft_substr(content, 1, i);
+	free(tmp);
+	return (i);
 }

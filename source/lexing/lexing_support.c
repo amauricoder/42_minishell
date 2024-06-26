@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexing_support.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 10:59:36 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/26 11:26:17 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:57:47 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+//mini_d->token->state != IN_QUOTE
 void	find_env(t_mini *mini_d)
 {
 	t_token	*head;
@@ -19,7 +20,7 @@ void	find_env(t_mini *mini_d)
 	head = mini_d->token;
 	while (mini_d->token)
 	{
-		if (mini_d->token->type == WORD && mini_d->token->state != IN_QUOTE
+		if (mini_d->token->type == WORD && mini_d->token->state != 1
 			&& mini_d->token->content[0] == '$'
 			&& ft_isalnum(mini_d->token->content[1]))
 			mini_d->token->type = ENV;

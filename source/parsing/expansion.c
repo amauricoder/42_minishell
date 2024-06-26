@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:40:18 by ismirand          #+#    #+#             */
-/*   Updated: 2024/06/26 15:48:40 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:04:57 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,37 +16,39 @@
 //$
 //amauri $USER amauri
 
-void clean_token(t_mini *mini_d)
+void	clean_token(t_mini *mini_d)
 {
-	t_token *current;
-	t_token *prev;
-	
-	while (mini_d->token && (mini_d->token->len == 0 || mini_d->token->type == W_SPACE))
+	t_token	*tmp;
+	t_token	*prev;
+
+	while (mini_d->token && (mini_d->token->len == 0
+			|| mini_d->token->type == W_SPACE))
 	{
-		current = mini_d->token->next;
-	    free(mini_d->token->content);
-	    free(mini_d->token);
-		mini_d->token = current;
+		tmp = mini_d->token->next;
+		free(mini_d->token->content);
+		free(mini_d->token);
+		mini_d->token = tmp;
 	}
 	prev = mini_d->token;
-	current = mini_d->token;
-	while (current)
+	tmp = mini_d->token;
+	while (tmp)
 	{
-	    if (current->len == 0 || (current->type == W_SPACE && prev->type == W_SPACE))
+		if (tmp->len == 0 || (tmp->type == W_SPACE && prev->type == W_SPACE))
 		{
-	        prev->next = current->next;
-	        free(current->content);
-	        free(current);
-			current = prev;
-	    }
-	    prev = current;//pra quando nao entra no if
-		current = current->next;
+			prev->next = tmp->next;
+			free(tmp->content);
+			free(tmp);
+			tmp = prev;
+		}
+		prev = tmp;
+		tmp = tmp->next;
 	}
 }
 
 /**
  * @brief Check for expansions on the content of a node
 */
+//mini_d->token->state != IN_QUOTE
 int	check_expansion(t_mini	*mini_d)
 {
 	t_token	*token_head;
@@ -56,10 +58,10 @@ int	check_expansion(t_mini	*mini_d)
 	expanded_envs = NULL;
 	while (mini_d->token != NULL)
 	{
-		if (mini_d->token->state != IN_QUOTE
+		if (mini_d->token->state != 1
 			&& check_dollar(mini_d->token->content))
 		{
-			expand_dolar(mini_d->token);
+			expand_dollar(mini_d->token);
 			free_dp_char(expanded_envs);
 		}
 		mini_d->token = mini_d->token->next;
@@ -67,25 +69,6 @@ int	check_expansion(t_mini	*mini_d)
 	mini_d->token = token_head;
 	clean_token(mini_d);
 	return (EXIT_SUCCESS);
-}
-
-/**
- * @brief Get the size of a string after the $ until a special char
- * @return The value of the STR after dollarsing. 
-*/
-int	aftdol_len(char *content)
-{
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	if (content[i] == '$')
-		i ++;
-	while (content[i] && (!specch(content[i + 1]) && content[i + 1]))
-		i ++;
-	tmp = ft_substr(content, 1, i);
-	free(tmp);
-	return (i);
 }
 
 /**
@@ -118,7 +101,7 @@ char	*env_expanded(char *content)
 /**
  * @brief Search for $ENV, if found, expand and replace in the token content.
 */
-void	expand_dolar(t_token *token)
+void	expand_dollar(t_token *token)
 {
 	int		i;
 	int		expand;
@@ -142,7 +125,7 @@ void	expand_dolar(t_token *token)
 		free(token->content);
 		token->content = ft_strdup(tmp_final);
 		token->len = ft_strlen(token->content);
-		expand_dolar(token);
+		expand_dollar(token);
 	}
 	free(tmp_final);
 }

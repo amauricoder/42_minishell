@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/26 14:34:59 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:05:40 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ void	signal_handler_child(int sig);
 int		check_expansion(t_mini	*mini_d);
 int		aftdol_len(char *content);
 char	*env_expanded(char *content);
-void	expand_dolar(t_token *token);
+void	expand_dollar(t_token *token);
 char	*change_content(t_token *token, int i);
 
 //parsing/expansion_support.c
