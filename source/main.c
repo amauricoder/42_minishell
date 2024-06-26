@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/26 11:28:00 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/26 14:37:35 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 			printf("-------- MAIN --------\n");
 			print_nodes(&mini_d); // for debug purposes
 			free(mini_d.input);
-			clean_tokens(&mini_d);
+			free_tokens(&mini_d);
 		}
 	}
 	free_main_struct(&mini_d);

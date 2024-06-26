@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/26 11:46:52 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/26 14:34:59 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ char	*get_prompt_msg(char **envp);
 void	free_dp_char(char **dp_char);
 int		free_main_struct(t_mini *mini_d);
 int		free_env(t_env *env);
-void	clean_tokens(t_mini *mini_d);
+void	free_tokens(t_mini *mini_d);
 
 //init_values.c
 void	init_main_struct(t_mini *mini_d, char **argv, char **envp);
