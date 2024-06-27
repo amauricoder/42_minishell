@@ -65,12 +65,7 @@ Thx to tsignore.
 valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell
 =====================================================================================
 
-
-//static char *search_and_replace(char **expanded, char *content);
-//static int get_array_strlen(char **arr);
-//static int get_dollar_strlen(char *str)
-
-//static int have_spacial_char(char *word);
+## TESTES
 //'$USER' -> STATE IN_QUOTE && type WORD ~ [output] = $USER
 //"$USER" -> state IN_DQUOTE && type WORD ~ [output] = aconceic
 
@@ -78,7 +73,7 @@ valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=
 //"$USER>amauri" -> state IN_DQUOTE && type WORD ~ [output] = aconceic>amauri (file is created)
 
 //"$USER $USING" -> state IN_DQUOTE && type WORD ~ [output] = aconceic
-//"USER '$USING'" -> state IN_DQUOTE && type WORD ~ [output] = aconceic ''
+//"$USER '$USING'" -> state IN_DQUOTE && type WORD ~ [output] = aconceic ''
 
 //"$USER '$USING' $PWD" ->state IN_DQUOTE && type WORD 
 // ~ [output] = aconceic '' /home/aconceic/Documents/42_Git/minishell
@@ -86,7 +81,7 @@ valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=
 //"$USER '$USING>a' $PWD" -> state IN_DQUOTE && type WORD
 // ~[output] = aconceic '>a' /home/aconceic/Documents/42_Git/minishell
 
-//
+
 //"$'USER' $PWD"
  ~[output] = $'USER' /home/aconceic/Documents/42_Git/minishell
 //$BLA -> state GENERAL && type WORD ~ [output] = NULL

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:40:18 by ismirand          #+#    #+#             */
-/*   Updated: 2024/06/26 16:04:57 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:37:42 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //$"PWD"
 //$
 //amauri $USER amauri
-
+//"$'USER' palavra"
 void	clean_token(t_mini *mini_d)
 {
 	t_token	*tmp;
@@ -81,6 +81,8 @@ char	*env_expanded(char *content)
 	char	*env_expanded;
 
 	i = 0;
+	if (content[1] == '?')
+		return (ft_itoa(g_exit_status));
 	env_expanded = ft_strdup("");
 	if (content[i] == '$')
 		i ++;
@@ -98,28 +100,31 @@ char	*env_expanded(char *content)
 	return (env_expanded);
 }
 
+int	ft_strlen_char(char *str, char ch)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == ch)
+			break ;
+		i ++;
+	}
+	return (i);
+}
+
 /**
  * @brief Search for $ENV, if found, expand and replace in the token content.
 */
 void	expand_dollar(t_token *token)
 {
 	int		i;
-	int		expand;
 	char	*tmp_final;
 
-	i = 0;
 	tmp_final = NULL;
-	expand = 0;
-	while (token->content[i])
-	{
-		if (token->content[i] == '$' && token->content[i + 1])
-		{
-			expand ++;
-			break ;
-		}
-		i ++;
-	}
-	if (expand)
+	i = ft_strlen_char(token->content, '$');
+	if (i < (int)ft_strlen(token->content) && token->len > 1)
 	{
 		tmp_final = change_content(token, i);
 		free(token->content);
@@ -143,7 +148,7 @@ char	*change_content(t_token *token, int i)
 
 	env_exp = env_expanded(&token->content[i]);
 	tmp = ft_substr(token->content, 0, i);
-	tmp_middle = ft_strjoin(tmp, env_exp);
+	tmp_middle = ft_strjoin(tmp, env_exp);	
 	tmp_end = ft_substr(token->content,
 			i + aftdol_len(&token->content[i]) + 1,
 			ft_strlen(token->content) - ft_strlen(tmp)

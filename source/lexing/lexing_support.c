@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing_support.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 10:59:36 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/26 15:57:47 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/27 12:30:06 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	specch(char ch)
 		else if (ch == '<')
 			return (R_IN);
 	}
-	return (false);
+	return (0);
 }
 
 /**

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/26 16:05:40 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/27 12:43:12 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ int		do_lexing(t_mini *mini_d);
 void	do_lexing_aux(t_mini *mini_d, int *i, int *state);
 void	in_quote(t_mini *mini_d, int *i, int *state, char flag);
 void	in_special(t_mini *mini_d, int *i, int *state, int type);
+void	redir_env(t_mini *mini_d, int *i, int *state, int type);
 
 //lexing_support.c
 void	find_env(t_mini *mini_d);

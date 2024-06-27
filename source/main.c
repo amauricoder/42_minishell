@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/26 14:48:45 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/27 11:32:49 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	g_exit_status = 0;
 
+//Problema com $$ -> Retorna o PID. Como fazer???
 int	main(int argc, char **argv, char **envp)
 {
 	t_mini	mini_d;

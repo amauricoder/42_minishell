@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:17:04 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/26 14:46:22 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/27 12:42:53 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,24 @@ int	do_lexing(t_mini *mini)
 	return (EXIT_SUCCESS);
 }
 
+void	redir_env(t_mini *mini_d, int *i, int *state, int type)
+{
+	if ((type == R_OUT && specch(mini_d->input[*i + 1]) == R_OUT)
+		|| (type == R_IN && specch(mini_d->input[*i + 1]) == R_IN)
+		|| type == ENV)
+	{
+		if (type == ENV && mini_d->input[*i + 1] == '?')
+		{
+			create_token(mini_d, &mini_d->input[*i], *state, 2);
+			(*i)++;
+		}
+		else
+			in_special(mini_d, i, state, type);
+	}
+	else
+		create_token(mini_d, &mini_d->input[*i], *state, 1);
+}
+
 void	do_lexing_aux(t_mini *mini_d, int *i, int *state)
 {
 	int	type;
@@ -58,15 +76,9 @@ void	do_lexing_aux(t_mini *mini_d, int *i, int *state)
 		in_quote(mini_d, i, state, 's');
 	else if (type == D_QUOTE)
 		in_quote(mini_d, i, state, 'd');
-	if (type == W_SPACE || type == PIPE || type == ENV
-		|| type == R_OUT || type == R_IN)
+	else
 	{
-		if ((type == R_OUT && specch(mini_d->input[*i + 1]) == R_OUT)
-			|| (type == R_IN && specch(mini_d->input[*i + 1]) == R_IN)
-			|| type == ENV)
-			in_special(mini_d, i, state, type);
-		else
-			create_token(mini_d, &mini_d->input[*i], *state, 1);
+		redir_env(mini_d, i, state, type);
 		if (*state == GENERAL && type == W_SPACE)
 			while (specch(mini_d->input[*i + 1]) == W_SPACE)
 				(*i)++;
