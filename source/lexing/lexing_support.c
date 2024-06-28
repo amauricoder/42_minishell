@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 10:59:36 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/27 12:30:06 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/28 16:42:32 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	specch(char ch)
 			return (R_OUT);
 		else if (ch == '<')
 			return (R_IN);
+		else if (ch == '\0')
+			return (424242);
 	}
 	return (0);
 }

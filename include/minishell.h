@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/27 12:43:12 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:39:00 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ void	print_nodes(t_mini *mini_d);
 void	printf_matriz(char **to_print);
 char	*ft_strdup_qt(char *str, int qt);
 int		error_msg_and_exit(char *str, int exit_value);
+char	*aftdol_position(char *big, char *little);
 
 //check_input.c
 int		is_argument_valid(int argc, char **env);
@@ -168,16 +169,17 @@ void	signals_child(void);
 void	signal_handler_child(int sig);
 
 //parsing/expansion.c
-int		check_expansion(t_mini	*mini_d);
+int		find_expansion(t_mini	*mini_d);
 int		aftdol_len(char *content);
 char	*env_expanded(char *content);
-void	expand_dollar(t_token *token);
+void	expand_dollar(t_token *token, int i);
 char	*change_content(t_token *token, int i);
+void	clean_token(t_mini *mini_d);
+int		ft_strlen_char(char *str, char ch);
 
 //parsing/expansion_support.c
 int		check_dollar(char *nd_content);
 int		have_spacial_char(char *word);
-void	clean_tokens(t_mini *mini_d, int kind);
 
 /********************************************************************/
 /*     		       ISA SPACE	   									*/

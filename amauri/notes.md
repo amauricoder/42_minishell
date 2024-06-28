@@ -66,26 +66,37 @@ valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=
 =====================================================================================
 
 ## TESTES
-//'$USER' -> STATE IN_QUOTE && type WORD ~ [output] = $USER
-//"$USER" -> state IN_DQUOTE && type WORD ~ [output] = aconceic
+//'$USER' ~ [output] = $USER
+//"$USER" ~ [output] = aconceic
 
-//'$USER>amauri' -> STATE IN_QUOTE && type WORD ~ [output] = $USER>amauri
-//"$USER>amauri" -> state IN_DQUOTE && type WORD ~ [output] = aconceic>amauri (file is created)
+//'$USER>amauri' ~ [output] = $USER>amauri
+//"$USER>amauri" ~ [output] = aconceic>amauri
 
-//"$USER $USING" -> state IN_DQUOTE && type WORD ~ [output] = aconceic
-//"$USER '$USING'" -> state IN_DQUOTE && type WORD ~ [output] = aconceic ''
+//"$USER $USING" ~ [output] = aconceic
+//"$USER '$USING'" ~ [output] = aconceic ''
 
-//"$USER '$USING' $PWD" ->state IN_DQUOTE && type WORD 
-// ~ [output] = aconceic '' /home/aconceic/Documents/42_Git/minishell
+//"$USER '$USING' $PWD"
+// ~ [output] = aconceic '' /home/aconft_strlen(token->content)ceic/Documents/42_Git/minishell
 
-//"$USER '$USING>a' $PWD" -> state IN_DQUOTE && type WORD
+//"$USER '$USING>a' $PWD"
 // ~[output] = aconceic '>a' /home/aconceic/Documents/42_Git/minishell
 
+//"$USER $PWD $PWD $PWD"
+~[output] = aconceic /home/aconceic/Documents/42_Git/minishell /home/aconceic/Documents/42_Git/minishell /home/aconceic/Documents/42_Git/minishell
 
 //"$'USER' $PWD"
  ~[output] = $'USER' /home/aconceic/Documents/42_Git/minishell
-//$BLA -> state GENERAL && type WORD ~ [output] = NULL
 
-//If the word to be expanded is not in ' ' and is valid, it expands.
-//Otherwhise, it will be replaced by a NULL character.
+//$BLA ~ [output] = NULL
 
+//echo "$'$USER $'USER'"
+//~[output] = $'aconceic $'USER'
+
+//echo "$'USER$'USER'"
+~[output] = $'USER$'USER'
+
+//"$'USER $'USER"
+~[output] = $'USER $'USER
+
+//echo $"USER$""USER"
+~[output] = USER$USER

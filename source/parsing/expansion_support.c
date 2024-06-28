@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_support.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 19:16:49 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/26 16:00:37 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/06/28 16:12:27 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,24 @@ int	aftdol_len(char *content)
 	tmp = ft_substr(content, 1, i);
 	free(tmp);
 	return (i);
+}
+
+char	*aftdol_position(char *big, char *little)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	if (little[0] == '\0')
+		return ((char *)big);
+	while (big[i] != '\0')
+	{
+		j = 0;
+		while (little[j] == big[i + j] && big[i + j] != '\0')
+			j++;
+		if (big && big[i + j + 1] == '$')
+			return ((char *)&big[i + j + 1]);
+		i++;
+	}
+	return (NULL);
 }
