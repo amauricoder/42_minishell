@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+         #
+#    By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
-#    Updated: 2024/06/26 14:48:21 by aconceic         ###   ########.fr        #
+#    Updated: 2024/06/27 14:58:49 by ismirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ OBJ_DIR = ./objs/
 OBJ = $(addprefix $(OBJ_DIR), $(ISA_SRC:.c=.o)) $(addprefix $(OBJ_DIR), $(AM_SRC:.c=.o))
 SRC_DIR = ./source/
 
-ISA_SRC = build_in/buildin_echo.c build_in/buildin_pwd.c env/env.c\
+ISA_SRC = build_in/echo.c build_in/buildin_pwd.c env/env.c\
 		  build_in/buildin_env.c init_values.c\
 
 AM_SRC = parsing_1.c prompt.c frees.c lexing/lexing.c lexing/lexing_support.c\

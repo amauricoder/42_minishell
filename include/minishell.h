@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/27 12:43:12 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:07:51 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,10 @@ char	*change_content(t_token *token, int i);
 int		check_dollar(char *nd_content);
 int		have_spacial_char(char *word);
 void	clean_tokens(t_mini *mini_d, int kind);
+
+//build_in/echo.c
+void	execute_buildins(t_mini *mini_d);
+void	echo(t_mini *mini_d);
 
 /********************************************************************/
 /*     		       ISA SPACE	   									*/

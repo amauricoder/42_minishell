@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/27 11:32:49 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:04:56 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	main(int argc, char **argv, char **envp)
 			//start lexing
 			do_lexing(&mini_d); //dont forget free all tokens
 			check_expansion(&mini_d);
+			execute_buildins(&mini_d);
 			
 			printf("\n");
 			printf("-------- MAIN --------\n");
