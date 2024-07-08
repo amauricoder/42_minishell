@@ -66,37 +66,30 @@ valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=
 =====================================================================================
 
 ## TESTES
-//'$USER' ~ [output] = $USER
-//"$USER" ~ [output] = aconceic
+### 
 
-//'$USER>amauri' ~ [output] = $USER>amauri
-//"$USER>amauri" ~ [output] = aconceic>amauri
+- '$USER' ~ [output] = $USER
+- "$USER" ~ [output] = aconceic
+- '$USER>amauri' ~ [output] = $USER>amauri
+- "$USER>amauri" ~ [output] = aconceic>amauri
+- "$USER $USING" ~ [output] = aconceic
+- "$USER '$USING'" ~ [output] = aconceic ''
+- "$USER '$USING' $PWD"~ [output] = aconceic '' /home/aconceic/Documents/42_Git/minishell
+- "$USER '$USING>a' $PWD"~ [output] = aconceic '>a' /home/aconceic/Documents/42_Git/minishell
+- "$USER $PWD $PWD $PWD"~ [output] = Tem que expandir as 4.
+- "$'USER' $PWD"~ [output] = $'USER' /home/aconceic/Documents/42_Git/minishell
+- $BLA` ~ [output] = NULL
+- "$'$USER $'USER'"~ [output] = $'aconceic $'USER'
+- "$'USER$'USER'"~ [output] = $'USER$'USER'
+- "$'USER $'USER" ~ [output] = $'USER $'USER'
+- $"USER$""USER"~ [output] = USER$USER
+- "p" "wd” ~ [output] = /home/aconceic/Documents/42_Git/minishell
+- "p"'wd’ ~ [output] = /home/aconceic/Documents/42_Git/minishell
+- "p" "wd” ~ [output] = p: command not found
+- p" 'wd’ ~ [output] = p: command not found
+- amaur"lisbo" ~ [output] = amaurlisbo
+- palavra"$" ~ [output] = palavra$
+- palavra"$"palavra ~ [output] = palavra$palavra
+- palavra"$USER"palavra ~ [output] = palavraaconceicpalavra
 
-//"$USER $USING" ~ [output] = aconceic
-//"$USER '$USING'" ~ [output] = aconceic ''
-
-//"$USER '$USING' $PWD"
-// ~ [output] = aconceic '' /home/aconft_strlen(token->content)ceic/Documents/42_Git/minishell
-
-//"$USER '$USING>a' $PWD"
-// ~[output] = aconceic '>a' /home/aconceic/Documents/42_Git/minishell
-
-//"$USER $PWD $PWD $PWD"
-~[output] = aconceic /home/aconceic/Documents/42_Git/minishell /home/aconceic/Documents/42_Git/minishell /home/aconceic/Documents/42_Git/minishell
-
-//"$'USER' $PWD"
- ~[output] = $'USER' /home/aconceic/Documents/42_Git/minishell
-
-//$BLA ~ [output] = NULL
-
-//echo "$'$USER $'USER'"
-//~[output] = $'aconceic $'USER'
-
-//echo "$'USER$'USER'"
-~[output] = $'USER$'USER'
-
-//"$'USER $'USER"
-~[output] = $'USER $'USER
-
-//echo $"USER$""USER"
-~[output] = USER$USER
+=====================================================================================

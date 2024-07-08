@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/28 17:39:00 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/08 14:36:04 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ void	expand_dollar(t_token *token, int i);
 char	*change_content(t_token *token, int i);
 void	clean_token(t_mini *mini_d);
 int		ft_strlen_char(char *str, char ch);
+void	assemble_word_tokens(t_mini *mini_d);
 
 //parsing/expansion_support.c
 int		check_dollar(char *nd_content);

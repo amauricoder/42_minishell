@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:40:18 by ismirand          #+#    #+#             */
-/*   Updated: 2024/06/28 17:42:52 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/08 15:49:21 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	find_expansion(t_mini	*mini_d)
 	}
 	mini_d->token = token_head;
 	clean_token(mini_d);
+	assemble_word_tokens(mini_d);
 	return (EXIT_SUCCESS);
 }
 
@@ -174,4 +175,38 @@ void	clean_token(t_mini *mini_d)
 		prev = tmp;
 		tmp = tmp->next;
 	}
+}
+
+// 0 for WORD.
+//5 for ENV
+void assemble_word_tokens(t_mini *mini_d)
+{
+    t_token *tmp;
+    t_token *prev;
+    t_token *to_free;
+    char    *c_tmp;
+
+    prev = NULL;
+    tmp = mini_d->token;
+    while (tmp && tmp->next)
+    {
+        if (tmp->next->type == 0 || tmp->next->type == 5)
+        {
+            c_tmp = ft_strdup(tmp->content);
+            free(tmp->content);
+            tmp->content = ft_strjoin(c_tmp, tmp->next->content);
+            tmp->len = ft_strlen(tmp->content);
+            free(c_tmp);
+            to_free = tmp->next; //store the next token to free
+            tmp->next = tmp->next->next; //skip the next token
+            free(to_free->content);
+            free(to_free);
+			//Do not advance tmp or prev since we need to check the new tmp->next
+        }
+        else
+        {
+            prev = tmp;
+            tmp = tmp->next;
+        }
+    }
 }
