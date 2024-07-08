@@ -6,13 +6,16 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 10:59:36 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/28 16:42:32 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/08 16:16:46 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-//mini_d->token->state != IN_QUOTE
+/**
+ * @brief Secondary Function for do_lexing_aux.
+ * To define the $ as type ENV.
+*/
 void	find_env(t_mini *mini_d)
 {
 	t_token	*head;

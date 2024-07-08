@@ -6,19 +6,18 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:17:04 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/27 15:00:17 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/08 16:15:35 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-//special (|, >, <,>>,<<, $, ‘ ‘ )
-//ft_strchr("|>$<" ,mini_d->input[i])
-//tratar erro descentemente
-//<< EOF ls -l | cat >output.txt
-//a "b c" 'd e' "'f'" '"g"' < | >>
-// a "$b c" '$d e'      "'$f'" '"g    h"' < | >>
-
+/**
+ * @brief Main function to lexind functionality.
+ * Check char by char to identify special char. If it is, go to 2dary function.
+ * if not, create the token of the word.
+ * defines also the state of the token.
+*/
 int	do_lexing(t_mini *mini)
 {
 	int	i;
@@ -48,24 +47,10 @@ int	do_lexing(t_mini *mini)
 	return (EXIT_SUCCESS);
 }
 
-void	redir_env(t_mini *mini_d, int *i, int *state, int type)
-{
-	if ((type == R_OUT && specch(mini_d->input[*i + 1]) == R_OUT)
-		|| (type == R_IN && specch(mini_d->input[*i + 1]) == R_IN)
-		|| type == ENV)
-	{
-		if (type == ENV && mini_d->input[*i + 1] == '?')
-		{
-			create_token(mini_d, &mini_d->input[*i], *state, 2);
-			(*i)++;
-		}
-		else
-			in_special(mini_d, i, state, type);
-	}
-	else
-		create_token(mini_d, &mini_d->input[*i], *state, 1);
-}
-
+/**
+ * @brief Analyzes the current character in the 
+ * input string to create the token according to the necessary type.
+*/
 void	do_lexing_aux(t_mini *mini_d, int *i, int *state)
 {
 	int	type;
@@ -85,8 +70,32 @@ void	do_lexing_aux(t_mini *mini_d, int *i, int *state)
 	}
 }
 
-//flag = 's' -> single quote
-//flag 'd' -> double quote
+/**
+ * @brief Secondary Function for do_lexing_aux.
+ * for creation of the token of <, <<, >, >>, $.
+*/
+void	redir_env(t_mini *mini_d, int *i, int *state, int type)
+{
+	if ((type == R_OUT && specch(mini_d->input[*i + 1]) == R_OUT)
+		|| (type == R_IN && specch(mini_d->input[*i + 1]) == R_IN)
+		|| type == ENV)
+	{
+		if (type == ENV && mini_d->input[*i + 1] == '?')
+		{
+			create_token(mini_d, &mini_d->input[*i], *state, 2);
+			(*i)++;
+		}
+		else
+			in_special(mini_d, i, state, type);
+	}
+	else
+		create_token(mini_d, &mini_d->input[*i], *state, 1);
+}
+
+/**
+ * @brief Secondary Function for do_lexing_aux.
+ * for creation of the token of ''.
+*/
 void	in_quote(t_mini *mini_d, int *i, int *state, char flag)
 {
 	int	wrd_len;
@@ -116,6 +125,10 @@ void	in_quote(t_mini *mini_d, int *i, int *state, char flag)
 	create_token(mini_d, &mini_d->input[wrd_len], *state, (*i - wrd_len));
 }
 
+/**
+ * @brief Secondary Function for do_lexing_aux.
+ * for creation of the token of "".
+*/
 void	in_special(t_mini *mini, int *i, int *state, int type)
 {
 	int	wrd_len;

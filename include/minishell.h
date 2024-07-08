@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/08 14:36:04 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/08 17:35:55 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,6 @@ int		main(int argc, char **argv, char **envp);
 /********************************************************************/
 /*     		      AMAURI SPACE	   			 						*/
 /********************************************************************/
-void	am_function(void);
-
-//parsing_1.c
-void	parsing1(char *input, char **envp);
-
 //prompt.c
 char	*get_prompt_msg(char **envp);
 
@@ -147,14 +142,13 @@ t_token	*init_token(char *content, int type, int id);
 t_token	*set_token_head(t_mini *mini_d);
 t_token *set_token_tail(t_mini *mini_d);
 int		token_lstadd_back(t_mini *mini_d, t_token *new_token);
-int		alloc_tokenstruct(t_mini *mini_d);
+//int		alloc_tokenstruct(t_mini *mini_d);
 
 //support.c
 void	print_nodes(t_mini *mini_d);
 void	printf_matriz(char **to_print);
 char	*ft_strdup_qt(char *str, int qt);
 int		error_msg_and_exit(char *str, int exit_value);
-char	*aftdol_position(char *big, char *little);
 
 //check_input.c
 int		is_argument_valid(int argc, char **env);
@@ -170,17 +164,18 @@ void	signal_handler_child(int sig);
 
 //parsing/expansion.c
 int		find_expansion(t_mini	*mini_d);
-int		aftdol_len(char *content);
 char	*env_expanded(char *content);
 void	expand_dollar(t_token *token, int i);
 char	*change_content(t_token *token, int i);
 void	clean_token(t_mini *mini_d);
-int		ft_strlen_char(char *str, char ch);
-void	assemble_word_tokens(t_mini *mini_d);
 
 //parsing/expansion_support.c
+void	assemble_word_tokens(t_mini *mini_d);
 int		check_dollar(char *nd_content);
 int		have_spacial_char(char *word);
+int		aftdol_len(char *content);
+int		ft_strlen_char(char *str, char ch);
+//char	*aftdol_position(char *big, char *little);
 
 /********************************************************************/
 /*     		       ISA SPACE	   									*/
@@ -188,8 +183,6 @@ int		have_spacial_char(char *word);
 //env/env.c
 int		get_env(char **env, t_env *env_var);
 
-//isa_test.c
-void	isa_function2(void);
 
 //build_in/*.c
 int		buildin_pwd(void);

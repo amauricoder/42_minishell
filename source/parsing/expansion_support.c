@@ -6,11 +6,48 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 19:16:49 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/28 16:12:27 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/08 17:39:32 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+/**
+ * @attention Secondary function for find_expansion()
+ * @brief Cleans the excess of white spaces token
+ * 0 for WORD, 5 for ENV
+*/
+void	assemble_word_tokens(t_mini *mini_d)
+{
+	t_token	*tmp;
+	t_token	*prev;
+	t_token	*to_free;
+	char	*c_tmp;
+
+	prev = NULL;
+	tmp = mini_d->token;
+	while (tmp && tmp->next)
+	{
+		if (tmp->next->type == 0 || tmp->next->type == 5)
+		{
+			c_tmp = ft_strdup(tmp->content);
+			free(tmp->content);
+			tmp->content = ft_strjoin(c_tmp, tmp->next->content);
+			tmp->len = ft_strlen(tmp->content);
+			free(c_tmp);
+			to_free = tmp->next; //store the next token to free
+			tmp->next = tmp->next->next; //skip the next token
+			free(to_free->content);
+			free(to_free);
+			//Do not advance tmp or prev since we need to check the new tmp->next
+		}
+		else
+		{
+			prev = tmp;
+			tmp = tmp->next;
+		}
+	}
+}
 
 /**
  * @brief Check for how many dollars signs exists in a phrase
@@ -71,7 +108,24 @@ int	aftdol_len(char *content)
 	return (i);
 }
 
-char	*aftdol_position(char *big, char *little)
+/**
+ * @brief Get the len of a *str until find a specific char.
+*/
+int	ft_strlen_char(char *str, char ch)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == ch)
+			break ;
+		i ++;
+	}
+	return (i);
+}
+
+/* char	*aftdol_position(char *big, char *little)
 {
 	int	i;
 	int	j;
@@ -89,4 +143,4 @@ char	*aftdol_position(char *big, char *little)
 		i++;
 	}
 	return (NULL);
-}
+} */

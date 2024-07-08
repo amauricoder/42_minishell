@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:07:33 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/26 14:47:45 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/08 16:31:29 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ int	is_quotes_closed(char *input)
 	return (s_quotes % 2 == 0 && d_quotes % 2 == 0);
 }
 
+/**
+ * @brief Check if there is a pipe as last characther
+*/
 int	is_pipe_the_last(char *input)
 {
 	int	i;

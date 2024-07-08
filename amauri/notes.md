@@ -91,5 +91,15 @@ valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=
 - palavra"$" ~ [output] = palavra$
 - palavra"$"palavra ~ [output] = palavra$palavra
 - palavra"$USER"palavra ~ [output] = palavraaconceicpalavra
+- $12USER ~ [output] = 2USER
+- $123456789USER ~ [output] = $23456789USER
+
+
+===== test heredoc ====
+- cat << "EOF" > abc
+> ola $USER
+> que fixe $PWD
+> EOF
+
 
 =====================================================================================

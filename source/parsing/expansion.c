@@ -6,21 +6,15 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:40:18 by ismirand          #+#    #+#             */
-/*   Updated: 2024/07/08 15:49:21 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/08 17:31:03 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-//$"PWD"
-//$
-//amauri $USER amauri
-//"$'USER' palavra"
-
 /**
  * @brief Check for expansions on the content of a node
 */
-//mini_d->token->state != IN_QUOTE
 int	find_expansion(t_mini	*mini_d)
 {
 	t_token	*token_head;
@@ -45,6 +39,7 @@ int	find_expansion(t_mini	*mini_d)
 }
 
 /**
+ * @attention Secondary function for find_expansion();
  * @brief Search for $ENV, if found, expand and replace in the token content.
 */
 void	expand_dollar(t_token *token, int i)
@@ -75,6 +70,7 @@ void	expand_dollar(t_token *token, int i)
 }
 
 /**
+ * @attention Secondary function for expand_dollar;
  * @brief Changes the content of the token with the expansible env var.
  * @return The string with the expanded var.
 */
@@ -104,6 +100,7 @@ char	*change_content(t_token *token, int i)
 }
 
 /**
+ * @attention Secondary 
  * @return $USER -> aconceic || ft_strdup("") in case of invalid ENV var
 */
 char	*env_expanded(char *content)
@@ -115,6 +112,8 @@ char	*env_expanded(char *content)
 	i = 0;
 	if (content[1] == '?')
 		return (ft_itoa(g_exit_status));
+	if (content[i] == '$' && isdigit(content[i + 1]))
+		return (ft_strdup(&content[i + 2]));
 	if (content[i] == '$')
 		i ++;
 	if (content[i] == '\'')
@@ -122,32 +121,23 @@ char	*env_expanded(char *content)
 	while (content[i] && (!specch(content[i + 1]) && content[i + 1]))
 		i ++;
 	tmp = ft_substr(content, 1, i);
-	env_expanded = ft_strdup("");
+	//env_expanded = ft_strdup("");
 	if (getenv(tmp))
 	{
-		free(env_expanded);
+		//free(env_expanded);
 		env_expanded = ft_strdup(getenv(tmp));
 		free(tmp);
 		return (env_expanded);
 	}
 	free(tmp);
-	return (env_expanded);
+	//return (env_expanded);
+	return (ft_strdup(""));
 }
 
-int	ft_strlen_char(char *str, char ch)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == ch)
-			break ;
-		i ++;
-	}
-	return (i);
-}
-
+/**
+ * @attention Secondary function for find_expansion()
+ * @brief Cleans the excess of white spaces token
+*/
 void	clean_token(t_mini *mini_d)
 {
 	t_token	*tmp;
@@ -175,38 +165,4 @@ void	clean_token(t_mini *mini_d)
 		prev = tmp;
 		tmp = tmp->next;
 	}
-}
-
-// 0 for WORD.
-//5 for ENV
-void assemble_word_tokens(t_mini *mini_d)
-{
-    t_token *tmp;
-    t_token *prev;
-    t_token *to_free;
-    char    *c_tmp;
-
-    prev = NULL;
-    tmp = mini_d->token;
-    while (tmp && tmp->next)
-    {
-        if (tmp->next->type == 0 || tmp->next->type == 5)
-        {
-            c_tmp = ft_strdup(tmp->content);
-            free(tmp->content);
-            tmp->content = ft_strjoin(c_tmp, tmp->next->content);
-            tmp->len = ft_strlen(tmp->content);
-            free(c_tmp);
-            to_free = tmp->next; //store the next token to free
-            tmp->next = tmp->next->next; //skip the next token
-            free(to_free->content);
-            free(to_free);
-			//Do not advance tmp or prev since we need to check the new tmp->next
-        }
-        else
-        {
-            prev = tmp;
-            tmp = tmp->next;
-        }
-    }
 }

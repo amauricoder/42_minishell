@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:56:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/26 14:34:52 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/08 16:07:00 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ int	free_env(t_env *env)
 	return (0);
 }
 
+/**
+ * @brief Free the linked list of tokens and their content
+*/
 void	free_tokens(t_mini *mini_d)
 {
 	t_token	*current;
