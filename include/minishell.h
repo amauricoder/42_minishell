@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/08 17:35:55 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/09 16:43:37 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,14 +162,14 @@ void	signal_handler(int sig);
 void	signals_child(void);
 void	signal_handler_child(int sig);
 
-//parsing/expansion.c
+//expand/expansion.c
 int		find_expansion(t_mini	*mini_d);
 char	*env_expanded(char *content);
 void	expand_dollar(t_token *token, int i);
 char	*change_content(t_token *token, int i);
 void	clean_token(t_mini *mini_d);
 
-//parsing/expansion_support.c
+//expand/expansion_support.c
 void	assemble_word_tokens(t_mini *mini_d);
 int		check_dollar(char *nd_content);
 int		have_spacial_char(char *word);
@@ -177,12 +177,14 @@ int		aftdol_len(char *content);
 int		ft_strlen_char(char *str, char ch);
 //char	*aftdol_position(char *big, char *little);
 
+//parsing/parsing.c
+int	build_three(t_mini *mini_d);
+
 /********************************************************************/
 /*     		       ISA SPACE	   									*/
 /********************************************************************/
 //env/env.c
 int		get_env(char **env, t_env *env_var);
-
 
 //build_in/*.c
 int		buildin_pwd(void);

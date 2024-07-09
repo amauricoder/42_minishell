@@ -6,7 +6,7 @@
 #    By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
-#    Updated: 2024/07/08 16:06:08 by aconceic         ###   ########.fr        #
+#    Updated: 2024/07/09 16:41:34 by aconceic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,8 +51,8 @@ ISA_SRC = build_in/buildin_echo.c build_in/buildin_pwd.c env/env.c\
 		  build_in/buildin_env.c init_values.c\
 
 AM_SRC = prompt.c frees.c lexing/lexing.c lexing/lexing_support.c\
-		lexing/token.c	support.c check_input.c signals.c parsing/expansion.c\
-		parsing/expansion_support.c \
+		lexing/token.c	support.c check_input.c signals.c expand/expansion.c\
+		expand/expansion_support.c parsing/parsing.c\
 
 ##############################################
 #                COMPILATION                 #
@@ -76,7 +76,7 @@ $(NAME) : $(OBJ) $(LIBFT_LIB)
 	$(GCC) $(CFLAGS) $(OBJ) -lreadline $(SRC_DIR)main.c $(LIBFT_LIB) $(GNL_LIB) -o $(NAME) $(LDFLAGS)
 	@echo "$(GREEN)[✔] Ok!$(RESET) "
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR) $(OBJ_DIR)build_in $(OBJ_DIR)env $(OBJ_DIR)lexing $(OBJ_DIR)parsing
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR) $(OBJ_DIR)build_in $(OBJ_DIR)env $(OBJ_DIR)lexing $(OBJ_DIR)expand $(OBJ_DIR)parsing
 	@echo "$(CYAN)[!]$(RESET) Creating object $@ ..."
 	$(GCC) $(CFLAGS) -c $< -o $@
 #@echo "$(GREEN)[✔]$(RESET) $(BLUE)Object $@ Ok!$(RESET) "
@@ -92,6 +92,10 @@ $(OBJ_DIR)env:
 $(OBJ_DIR)lexing:
 	@echo "$(CYAN)[!]$(RESET) Creating directory for lexing objects ..."
 	mkdir -p $(OBJ_DIR)lexing
+
+$(OBJ_DIR)expand:
+	@echo "$(CYAN)[!]$(RESET) Creating directory for parsing objects ..."
+	mkdir -p $(OBJ_DIR)expand
 
 $(OBJ_DIR)parsing:
 	@echo "$(CYAN)[!]$(RESET) Creating directory for parsing objects ..."

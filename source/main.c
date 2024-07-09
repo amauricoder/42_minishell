@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/28 15:18:39 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/09 16:44:54 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(int argc, char **argv, char **envp)
 	init_main_struct(&mini_d, argv, envp);
 	while (1)
 	{
+		
 		//mini_d.input = readline(mini_d.prompt);
 		mini_d.input = readline("Minishell $ ");
 		//funcao de verificacao
@@ -43,7 +44,10 @@ int	main(int argc, char **argv, char **envp)
 			//start lexing
 			do_lexing(&mini_d); //dont forget free all tokens
 			find_expansion(&mini_d);
-			
+			//first, build the tree representation
+			build_three(&mini_d);
+			//then, walk trhgout the tree and execute the commands
+
 			printf("\n");
 			printf("-------- MAIN --------\n");
 			print_nodes(&mini_d); // for debug purposes

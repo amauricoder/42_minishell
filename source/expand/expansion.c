@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:40:18 by ismirand          #+#    #+#             */
-/*   Updated: 2024/07/08 17:31:03 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/08 17:54:52 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	*change_content(t_token *token, int i)
 }
 
 /**
- * @attention Secondary 
+ * @attention Secondary function to change_content()
  * @return $USER -> aconceic || ft_strdup("") in case of invalid ENV var
 */
 char	*env_expanded(char *content)
@@ -121,16 +121,13 @@ char	*env_expanded(char *content)
 	while (content[i] && (!specch(content[i + 1]) && content[i + 1]))
 		i ++;
 	tmp = ft_substr(content, 1, i);
-	//env_expanded = ft_strdup("");
 	if (getenv(tmp))
 	{
-		//free(env_expanded);
 		env_expanded = ft_strdup(getenv(tmp));
 		free(tmp);
 		return (env_expanded);
 	}
 	free(tmp);
-	//return (env_expanded);
 	return (ft_strdup(""));
 }
 
