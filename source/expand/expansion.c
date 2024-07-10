@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:40:18 by ismirand          #+#    #+#             */
-/*   Updated: 2024/07/08 17:54:52 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:36:31 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,32 +103,33 @@ char	*change_content(t_token *token, int i)
  * @attention Secondary function to change_content()
  * @return $USER -> aconceic || ft_strdup("") in case of invalid ENV var
 */
-char	*env_expanded(char *content)
+char	*env_expanded(char *cont)
 {
 	int		i;
 	char	*tmp;
 	char	*env_expanded;
 
 	i = 0;
-	if (content[1] == '?')
+	if (cont[1] == '?')
 		return (ft_itoa(g_exit_status));
-	if (content[i] == '$' && isdigit(content[i + 1]))
-		return (ft_strdup(&content[i + 2]));
-	if (content[i] == '$')
+	if (cont[i] == '$' && ft_isdigit(cont[i + 1]) && cont[i + 1] != '0')
+		return (ft_strdup(&cont[i + 2]));
+	else if (cont[i] == '$' && ft_isdigit(cont[i + 1]) && cont[i + 1] == '0')
+		return (ft_strjoin("./minishell", &cont[i + 2]));
+	if (cont[i] == '$')
 		i ++;
-	if (content[i] == '\'')
-		return (ft_strdup(content));
-	while (content[i] && (!specch(content[i + 1]) && content[i + 1]))
+	if (cont[i] == '\'')
+		return (ft_strdup(cont));
+	while (cont[i] && (!specch(cont[i + 1]) && cont[i + 1]))
 		i ++;
-	tmp = ft_substr(content, 1, i);
+	tmp = ft_substr(cont, 1, i);
 	if (getenv(tmp))
 	{
 		env_expanded = ft_strdup(getenv(tmp));
 		free(tmp);
 		return (env_expanded);
 	}
-	free(tmp);
-	return (ft_strdup(""));
+	return (free(tmp), ft_strdup(""));
 }
 
 /**

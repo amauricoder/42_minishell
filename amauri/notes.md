@@ -93,6 +93,8 @@ valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=
 - palavra"$USER"palavra ~ [output] = palavraaconceicpalavra
 - $12USER ~ [output] = 2USER
 - $123456789USER ~ [output] = $23456789USER
+- $0 ~[output] ./minishell  --- sozinho executa
+- $0USER ~[output] ./minishellUSER --- nao executa
 
 
 ===== test heredoc ====
