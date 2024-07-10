@@ -6,10 +6,9 @@
 #    By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
-#    Updated: 2024/07/10 15:53:13 by ismirand         ###   ########.fr        #
+#    Updated: 2024/07/10 16:21:11 by ismirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 ##############################################
 #                  COLORS                    #
@@ -44,15 +43,14 @@ GNL_LIB = $(GNL_DIR)gnl.a
 #Project
 NAME = minishell
 OBJ_DIR = ./objs/
-OBJ = $(addprefix $(OBJ_DIR), $(ISA_SRC:.c=.o)) $(addprefix $(OBJ_DIR), $(AM_SRC:.c=.o))
+OBJ = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 SRC_DIR = ./source/
 
-ISA_SRC = build_in/echo.c build_in/buildin_pwd.c env/env.c\
-		  build_in/buildin_env.c init_values.c\
-
-AM_SRC = prompt.c frees.c lexing/lexing.c lexing/lexing_support.c\
-		lexing/token.c	support.c check_input.c signals.c expand/expansion.c\
+SRC = prompt.c frees.c lexing/lexing.c lexing/lexing_support.c\
+		lexing/token.c support.c check_input.c signals.c expand/expansion.c\
 		expand/expansion_support.c parsing/parsing.c\
+		build_in/echo.c build_in/buildin_pwd.c env/env.c\
+		build_in/buildin_env.c init_values.c\
 
 ##############################################
 #                COMPILATION                 #
@@ -67,39 +65,15 @@ CFLAGS = -Wall -Wextra -Werror
 ##############################################
 all : $(NAME)
 
-$(OBJ_DIR) :
-	@echo "$(CYAN)[!]$(RESET) Creating directory for objects ..."
-	mkdir $@
-
 $(NAME) : $(OBJ) $(LIBFT_LIB)
 	@echo "$(CYAN)[!]$(RESET) Working on project ... "
 	$(GCC) $(CFLAGS) $(OBJ) -lreadline $(SRC_DIR)main.c $(LIBFT_LIB) $(GNL_LIB) -o $(NAME) $(LDFLAGS)
 	@echo "$(GREEN)[✔] Ok!$(RESET) "
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR) $(OBJ_DIR)build_in $(OBJ_DIR)env $(OBJ_DIR)lexing $(OBJ_DIR)expand $(OBJ_DIR)parsing
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@echo "$(CYAN)[!]$(RESET) Creating object $@ ..."
+	mkdir -p $(dir $@)
 	$(GCC) $(CFLAGS) -c $< -o $@
-#@echo "$(GREEN)[✔]$(RESET) $(BLUE)Object $@ Ok!$(RESET) "
-
-$(OBJ_DIR)build_in:
-	@echo "$(CYAN)[!]$(RESET) Creating directory for build_in objects ..."
-	mkdir -p $(OBJ_DIR)build_in
-
-$(OBJ_DIR)env:
-	@echo "$(CYAN)[!]$(RESET) Creating directory for env objects ..."
-	mkdir -p $(OBJ_DIR)env
-
-$(OBJ_DIR)lexing:
-	@echo "$(CYAN)[!]$(RESET) Creating directory for lexing objects ..."
-	mkdir -p $(OBJ_DIR)lexing
-
-$(OBJ_DIR)expand:
-	@echo "$(CYAN)[!]$(RESET) Creating directory for parsing objects ..."
-	mkdir -p $(OBJ_DIR)expand
-
-$(OBJ_DIR)parsing:
-	@echo "$(CYAN)[!]$(RESET) Creating directory for parsing objects ..."
-	mkdir -p $(OBJ_DIR)parsing
 
 $(LIBFT_LIB) : $(LIBFT_DIR)
 	@echo "$(CYAN)[!]$(RESET) Working on LIBFT_LIB ..."
@@ -128,9 +102,10 @@ re : fclean all
 
 .SILENT:
 .PHONY: all clean fclean re
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-#              NOTES AND REMINDERS           #
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-#        $< represent the prerequisite       #
-#        $@ represent the target             #
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#                NOTES AND REMINDERS            #
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#          $< represent the prerequisite        #
+#          $@ represent the target              #
+# mkdir -p make parent directory without errors #
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

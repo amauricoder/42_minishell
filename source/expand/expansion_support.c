@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_support.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 19:16:49 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/08 17:39:32 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:16:33 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	assemble_word_tokens(t_mini *mini_d)
 			tmp = tmp->next;
 		}
 	}
+	(void)prev;
 }
 
 /**

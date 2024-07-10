@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/10 15:53:36 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:01:54 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <readline/readline.h>//readline
 # include <readline/history.h>//add_history
 #include <stdbool.h>
+
 /*************************/
 /*     	 LIBFT/GNL 		 */
 /*************************/
@@ -110,9 +111,6 @@ extern int	g_exit_status;
 //main
 int		main(int argc, char **argv, char **envp);
 
-/********************************************************************/
-/*     		      AMAURI SPACE	   			 						*/
-/********************************************************************/
 //prompt.c
 char	*get_prompt_msg(char **envp);
 
@@ -178,27 +176,17 @@ int		ft_strlen_char(char *str, char ch);
 //char	*aftdol_position(char *big, char *little);
 
 //parsing/parsing.c
-int	build_three(t_mini *mini_d);
+int	build_tree(t_mini *mini_d);
 
 //build_in/echo.c
 void	execute_buildins(t_mini *mini_d);
 void	echo(t_mini *mini_d);
 
-/********************************************************************/
-/*     		       ISA SPACE	   									*/
-/********************************************************************/
 //env/env.c
 int		get_env(char **env, t_env *env_var);
 
 //build_in/*.c
 int		buildin_pwd(void);
 void	buildin_env(t_env *env_var);
-//echo
-//cd
-//env
-//exit
-//export
-//unset
-
 
 #endif

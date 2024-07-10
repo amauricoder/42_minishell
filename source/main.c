@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/10 15:56:29 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:00:10 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int argc, char **argv, char **envp)
 			find_expansion(&mini_d);
 			execute_buildins(&mini_d);
 			//first, build the tree representation
-			build_three(&mini_d);
+			build_tree(&mini_d);
 			//then, walk trhgout the tree and execute the commands
 			
 			printf("\n");

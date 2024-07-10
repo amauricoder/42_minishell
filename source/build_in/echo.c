@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:15:14 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/27 16:09:18 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:17:19 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,5 @@ void	echo(t_mini *mini_d)
 		ft_putstr_fd(tmp->content, 1);
 		tmp = tmp->next;
 	}
+	(void)fd;
 }
