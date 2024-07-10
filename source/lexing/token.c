@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:40:12 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/14 20:09:23 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/07/08 16:24:41 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/**
+ * @attention Secondary function for create_token.
+ * @brief Malloc and init values for a token.
+*/
 t_token	*init_token(char *content, int type, int id)
 {
 	t_token	*new_token;
@@ -29,6 +33,10 @@ t_token	*init_token(char *content, int type, int id)
 	return (new_token);
 }
 
+/**
+ * @attention Secondary function for create_token.
+ * @brief Add the token to the end of the linked list
+*/
 int	token_lstadd_back(t_mini *mini_d, t_token *new_token)
 {
 	t_token	*node;
@@ -48,40 +56,47 @@ int	token_lstadd_back(t_mini *mini_d, t_token *new_token)
 	return (EXIT_SUCCESS);
 }
 
-//ATTENTION -> need to refine error mngmt
+/**
+ * @attention Secondary function for create_token.
+ * @brief Set the head of the linked list.
+*/
 t_token	*set_token_head(t_mini *mini_d)
 {
 	if (!mini_d->token)
 	{
-		printf ("set_token_head\n");
+		error_msg_and_exit("Error setting token head \n", 127);
 		return (NULL);
 	}
 	return (mini_d->token);
 }
 
-//ATTENTION -> need to refine error mngmt
+/**
+ * @attention Secondary function for create_token.
+ * @brief Set the tail(last token) of the linked list.
+*/
 t_token	*set_token_tail(t_mini *mini_d)
 {
 	t_token	*current;
 
 	if (!mini_d->token)
+	{
+		error_msg_and_exit("Error setting token tail \n", 127);
 		return (NULL);
+	}
 	current = mini_d->token;
 	while (current->next != NULL)
 		current = current->next;
 	return (current);
 }
-
-//dont forget to clean this (THIS IS GIVING MEMORY LEAK)
-int	alloc_tokenstruct(t_mini *mini_d)
+/* int	alloc_tokenstruct(t_mini *mini_d)
 {
 	mini_d->token = malloc(sizeof(t_token));
 	mini_d->token->head = malloc(sizeof(t_token));
 	if (!mini_d->token || !mini_d->token->head)
 	{
-		printf("error alloc_tokenstruct\n");
+		error_msg_and_exit("Error alloc_tokenstruct\n", 127);
 		return (EXIT_FAILURE);
 	}
 	memset(mini_d->token, 0, sizeof(t_token));
 	return (EXIT_SUCCESS);
-}
+} */

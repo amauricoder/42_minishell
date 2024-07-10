@@ -66,26 +66,42 @@ valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=
 =====================================================================================
 
 ## TESTES
-//'$USER' -> STATE IN_QUOTE && type WORD ~ [output] = $USER
-//"$USER" -> state IN_DQUOTE && type WORD ~ [output] = aconceic
+### 
 
-//'$USER>amauri' -> STATE IN_QUOTE && type WORD ~ [output] = $USER>amauri
-//"$USER>amauri" -> state IN_DQUOTE && type WORD ~ [output] = aconceic>amauri (file is created)
+- '$USER' ~ [output] = $USER
+- "$USER" ~ [output] = aconceic
+- '$USER>amauri' ~ [output] = $USER>amauri
+- "$USER>amauri" ~ [output] = aconceic>amauri
+- "$USER $USING" ~ [output] = aconceic
+- "$USER '$USING'" ~ [output] = aconceic ''
+- "$USER '$USING' $PWD"~ [output] = aconceic '' /home/aconceic/Documents/42_Git/minishell
+- "$USER '$USING>a' $PWD"~ [output] = aconceic '>a' /home/aconceic/Documents/42_Git/minishell
+- "$USER $PWD $PWD $PWD"~ [output] = Tem que expandir as 4.
+- "$'USER' $PWD"~ [output] = $'USER' /home/aconceic/Documents/42_Git/minishell
+- $BLA` ~ [output] = NULL
+- "$'$USER $'USER'"~ [output] = $'aconceic $'USER'
+- "$'USER$'USER'"~ [output] = $'USER$'USER'
+- "$'USER $'USER" ~ [output] = $'USER $'USER'
+- $"USER$""USER"~ [output] = USER$USER
+- "p" "wd” ~ [output] = /home/aconceic/Documents/42_Git/minishell
+- "p"'wd’ ~ [output] = /home/aconceic/Documents/42_Git/minishell
+- "p" "wd” ~ [output] = p: command not found
+- p" 'wd’ ~ [output] = p: command not found
+- amaur"lisbo" ~ [output] = amaurlisbo
+- palavra"$" ~ [output] = palavra$
+- palavra"$"palavra ~ [output] = palavra$palavra
+- palavra"$USER"palavra ~ [output] = palavraaconceicpalavra
+- $12USER ~ [output] = 2USER
+- $123456789USER ~ [output] = $23456789USER
+- $0 ~[output] ./minishell  --- sozinho executa
+- $0USER ~[output] ./minishellUSER --- nao executa
 
-//"$USER $USING" -> state IN_DQUOTE && type WORD ~ [output] = aconceic
-//"$USER '$USING'" -> state IN_DQUOTE && type WORD ~ [output] = aconceic ''
 
-//"$USER '$USING' $PWD" ->state IN_DQUOTE && type WORD 
-// ~ [output] = aconceic '' /home/aconceic/Documents/42_Git/minishell
-
-//"$USER '$USING>a' $PWD" -> state IN_DQUOTE && type WORD
-// ~[output] = aconceic '>a' /home/aconceic/Documents/42_Git/minishell
+===== test heredoc ====
+- cat << "EOF" > abc
+> ola $USER
+> que fixe $PWD
+> EOF
 
 
-//"$'USER' $PWD"
- ~[output] = $'USER' /home/aconceic/Documents/42_Git/minishell
-//$BLA -> state GENERAL && type WORD ~ [output] = NULL
-
-//If the word to be expanded is not in ' ' and is valid, it expands.
-//Otherwhise, it will be replaced by a NULL character.
-
+=====================================================================================

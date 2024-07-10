@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_1.c                                        :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 14:45:52 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/14 20:22:41 by ismirand         ###   ########.fr       */
+/*   Created: 2024/07/09 16:41:52 by aconceic          #+#    #+#             */
+/*   Updated: 2024/07/10 15:41:13 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-void	parsing1(char *input, char **envp)
+int build_three(t_mini *mini_d)
 {
-	(void)envp;
-	printf("YOUR LAST INPUT INSIDE PARSING 1 %s\n", input);
+	printf("I will start building the arvore from here \n");
+
+	//Recursive descent parsing
+	
+	(void)mini_d;
+	return (EXIT_SUCCESS);
 }

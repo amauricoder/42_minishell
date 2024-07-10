@@ -6,12 +6,16 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:02:42 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/26 11:34:49 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/08 16:25:42 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+/**
+ * @brief Print the creation of the nodes. 
+ * Function used for debugging purposes.
+*/
 void	print_nodes(t_mini *mini_d)
 {
 	t_token		*current;

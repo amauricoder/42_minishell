@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/27 15:07:51 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:53:36 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,6 @@ int		main(int argc, char **argv, char **envp);
 /********************************************************************/
 /*     		      AMAURI SPACE	   			 						*/
 /********************************************************************/
-void	am_function(void);
-
-//parsing_1.c
-void	parsing1(char *input, char **envp);
-
 //prompt.c
 char	*get_prompt_msg(char **envp);
 
@@ -147,7 +142,7 @@ t_token	*init_token(char *content, int type, int id);
 t_token	*set_token_head(t_mini *mini_d);
 t_token *set_token_tail(t_mini *mini_d);
 int		token_lstadd_back(t_mini *mini_d, t_token *new_token);
-int		alloc_tokenstruct(t_mini *mini_d);
+//int		alloc_tokenstruct(t_mini *mini_d);
 
 //support.c
 void	print_nodes(t_mini *mini_d);
@@ -167,17 +162,23 @@ void	signal_handler(int sig);
 void	signals_child(void);
 void	signal_handler_child(int sig);
 
-//parsing/expansion.c
-int		check_expansion(t_mini	*mini_d);
-int		aftdol_len(char *content);
+//expand/expansion.c
+int		find_expansion(t_mini	*mini_d);
 char	*env_expanded(char *content);
-void	expand_dollar(t_token *token);
+void	expand_dollar(t_token *token, int i);
 char	*change_content(t_token *token, int i);
+void	clean_token(t_mini *mini_d);
 
-//parsing/expansion_support.c
+//expand/expansion_support.c
+void	assemble_word_tokens(t_mini *mini_d);
 int		check_dollar(char *nd_content);
 int		have_spacial_char(char *word);
-void	clean_tokens(t_mini *mini_d, int kind);
+int		aftdol_len(char *content);
+int		ft_strlen_char(char *str, char ch);
+//char	*aftdol_position(char *big, char *little);
+
+//parsing/parsing.c
+int	build_three(t_mini *mini_d);
 
 //build_in/echo.c
 void	execute_buildins(t_mini *mini_d);
@@ -188,9 +189,6 @@ void	echo(t_mini *mini_d);
 /********************************************************************/
 //env/env.c
 int		get_env(char **env, t_env *env_var);
-
-//isa_test.c
-void	isa_function2(void);
 
 //build_in/*.c
 int		buildin_pwd(void);
