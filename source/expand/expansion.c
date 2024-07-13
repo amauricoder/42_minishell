@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:40:18 by ismirand          #+#    #+#             */
-/*   Updated: 2024/07/10 15:36:31 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/13 14:50:41 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	find_expansion(t_mini	*mini_d)
 	mini_d->token = token_head;
 	clean_token(mini_d);
 	assemble_word_tokens(mini_d);
+	update_word_to_file(mini_d);
 	return (EXIT_SUCCESS);
 }
 
@@ -141,8 +142,7 @@ void	clean_token(t_mini *mini_d)
 	t_token	*tmp;
 	t_token	*prev;
 
-	while (mini_d->token && (mini_d->token->len == 0
-			|| mini_d->token->type == W_SPACE))
+	while (mini_d->token &&mini_d->token->type == W_SPACE) // changes here because we need the NULL **tmp->len == 0 ||**
 	{
 		tmp = mini_d->token->next;
 		free(mini_d->token->content);
@@ -153,7 +153,7 @@ void	clean_token(t_mini *mini_d)
 	tmp = mini_d->token;
 	while (tmp)
 	{
-		if (tmp->len == 0 || (tmp->type == W_SPACE && prev->type == W_SPACE))
+		if ((tmp->type == W_SPACE && prev->type == W_SPACE)) // changes here because we need the NULL **tmp->len == 0 ||** 
 		{
 			prev->next = tmp->next;
 			free(tmp->content);
@@ -163,4 +163,31 @@ void	clean_token(t_mini *mini_d)
 		prev = tmp;
 		tmp = tmp->next;
 	}
+}
+
+//amauri > $po TEST
+//This is to update the type from word to file if find a redirect
+ 
+void	update_word_to_file(t_mini *mini_d)
+{
+	t_token *head;
+	
+	head = mini_d->token;
+	while(mini_d->token)
+	{
+		if (mini_d->token->type == R_IN || mini_d->token->type == R_OUT
+			|| mini_d->token->type == D_R_OUT)
+		{
+			if ((mini_d->token->len == 1 || mini_d->token->len == 2)
+				&& (mini_d->token->next))
+			{
+				while (mini_d->token->next->type != WORD 
+					&& mini_d->token->next->type != ENV)
+					mini_d->token = mini_d->token->next;			
+				mini_d->token->next->type = FILE_NAME;
+			}
+		}
+		mini_d->token = mini_d->token->next;
+	}
+	mini_d->token = head;
 }

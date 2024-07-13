@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_support.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 19:16:49 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/10 16:16:33 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:08:20 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@ void	assemble_word_tokens(t_mini *mini_d)
 	tmp = mini_d->token;
 	while (tmp && tmp->next)
 	{
-		if (tmp->next->type == 0 || tmp->next->type == 5)
+		if ((tmp->next->type == 0 || tmp->next->type == 5) && tmp->next->state != GENERAL)
 		{
 			c_tmp = ft_strdup(tmp->content);
 			free(tmp->content);
 			tmp->content = ft_strjoin(c_tmp, tmp->next->content);
 			tmp->len = ft_strlen(tmp->content);
+			tmp->type = tmp->next->type;
 			free(c_tmp);
 			to_free = tmp->next; //store the next token to free
 			tmp->next = tmp->next->next; //skip the next token

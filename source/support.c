@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:02:42 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/08 16:25:42 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/13 15:24:30 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_nodes(t_mini *mini_d)
 	t_token		*current;
 	const char	*str[] = {"GENERAL", "IN_QUOTE", "IN_DQUOTE", "WORD",
 		"W_SPACE", "D_QUOTE", "S_QUOTE", "PIPE", "ENV", "RED_OUT",
-		"D_R_OUT", "RED_IN", "HEREDOC"};
+		"D_R_OUT", "RED_IN", "HEREDOC", "FILE_NAME"};
 
 	current = mini_d->token;
 	printf("\n");
@@ -29,7 +29,7 @@ void	print_nodes(t_mini *mini_d)
 	{
 		printf("| "YELLOW"Id %3i "RESET" | ", current->id);
 		printf(RED"State %10s "RESET" | ", str[current->state]);
-		printf(BLUE"Type %7s "RESET" | ", str[current->type + 3]);
+		printf(BLUE"Type %10s "RESET" | ", str[current->type + 3]);
 		if (current->content != NULL)
 			printf(CYAN"Content "RESET"%8s | ", current->content);
 		else
@@ -52,7 +52,7 @@ void	printf_matriz(char **to_print)
 		return ;
 	while (to_print[i])
 	{
-		printf("printed -> %s |\n", to_print[i]);
+		printf("element %i -> %s \n", i, to_print[i]);
 		i ++;
 	}
 }

@@ -68,6 +68,8 @@ valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=
 ## TESTES
 ### 
 
+--- amauri > $po --> error here
+
 - '$USER' ~ [output] = $USER
 - "$USER" ~ [output] = aconceic
 - '$USER>amauri' ~ [output] = $USER>amauri

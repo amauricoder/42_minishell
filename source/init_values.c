@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_values.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 19:46:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/14 20:39:00 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:22:49 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	init_main_struct(t_mini *mini_d, char **argv, char **envp)
 	//token
 	mini_d->token_type = 0;
 	mini_d->token = NULL;
+	mini_d->root = NULL;
 }
 
 /**

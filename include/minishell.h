@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/10 16:01:54 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/07/13 17:02:02 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ typedef enum e_token
 	R_OUT, //>
 	D_R_OUT, //>>
 	R_IN, //<
-	HEREDOC //<<
+	HEREDOC, //<<
+	FILE_NAME
 }	e_token;
 
 typedef enum e_tstate
@@ -103,7 +104,35 @@ typedef struct s_mini
 	int		token_type;
 	t_env	*env_d;
 	t_token	*token;
+	//pointer para root(void);
+	void	*root;
 }				t_mini;
+
+//main parsing struct
+
+typedef struct s_exec
+{
+	int		id;
+	char	**args; //cmds and arguments of the commands
+}	t_exec;
+
+typedef struct s_pipe
+{
+	int id;
+	//pointer to the left -> this node can point for a redir or exec
+	void *left;
+	//pointer to the right
+	void *right;
+}	t_pipe;
+
+typedef struct s_redir
+{
+	int		id;
+	//copy content
+	char *fname;
+	//Pointer -> This pointer can point to a redir or exec
+	void	*down;
+}	t_redir;
 
 //global variable
 extern int	g_exit_status;
@@ -166,6 +195,7 @@ char	*env_expanded(char *content);
 void	expand_dollar(t_token *token, int i);
 char	*change_content(t_token *token, int i);
 void	clean_token(t_mini *mini_d);
+void	update_word_to_file(t_mini *mini_d);
 
 //expand/expansion_support.c
 void	assemble_word_tokens(t_mini *mini_d);
@@ -176,7 +206,11 @@ int		ft_strlen_char(char *str, char ch);
 //char	*aftdol_position(char *big, char *little);
 
 //parsing/parsing.c
-int	build_tree(t_mini *mini_d);
+int		build_tree(t_mini *mini_d);
+void	*parse_exec(t_mini *mini_d);
+void	*parse_redir(t_mini *mini_d, t_exec *exec_nd);
+int		have_command(t_mini *mini_d);
+char	**get_cmd(t_mini *mini_d);
 
 //build_in/echo.c
 void	execute_buildins(t_mini *mini_d);

@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:40:12 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/08 16:24:41 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/12 16:48:55 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_token	*init_token(char *content, int type, int id)
 	new_token->len = ft_strlen(content);
 	new_token->content = ft_strdup(content);
 	new_token->next = NULL;
+	new_token->prev = NULL;
 	new_token->type = type;
 	new_token->head = NULL;
 	new_token->tail = NULL;
@@ -35,7 +36,7 @@ t_token	*init_token(char *content, int type, int id)
 
 /**
  * @attention Secondary function for create_token.
- * @brief Add the token to the end of the linked list
+ * @brief Add the token to the end of the linked list. Set prev pointer.
 */
 int	token_lstadd_back(t_mini *mini_d, t_token *new_token)
 {
@@ -52,6 +53,7 @@ int	token_lstadd_back(t_mini *mini_d, t_token *new_token)
 		while (node->next != NULL)
 			node = node->next;
 		node->next = new_token;
+		new_token->prev = node;
 	}
 	return (EXIT_SUCCESS);
 }
