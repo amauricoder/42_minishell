@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 16:41:52 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/13 17:27:34 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:39:40 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,12 @@
 int build_tree(t_mini *mini_d)
 {
 	void	*root;
-	//enum e_token node_type;
-
-	//node_type = *(enum e_token *) root;
-	//if (node_type == WORD)
-		//
-	//ft_printf("Build_Tree() \n");
+	
 	root = parse_exec(mini_d);
-	
-	t_redir *redir;
-	
-	redir = (t_redir *)root;
-	printf("redir content %s \n", redir->fname);
+
 	//if tem |
 	//parse PIPE
+	print_tree(root);
 	return (EXIT_SUCCESS);
 }
 
@@ -40,7 +32,6 @@ void	*parse_exec(t_mini *mini_d)
 	static int id;
 	void	*root;
 
-	//ft_printf("Parse_exec() \n");
 	exec_node = NULL;
 	if (have_command(mini_d))
 	{
@@ -48,53 +39,52 @@ void	*parse_exec(t_mini *mini_d)
 		exec_node->id = id;
 		id ++;
 		exec_node->args = get_cmd(mini_d);
+		exec_node->type = WORD;
 		//printf_matriz(exec_node->args);
 	}
-
+	else
+		exec_node = NULL;
 	//parse_redir,
 	//if !parse_redir
 		//return root
 	root = exec_node;
-	root = parse_redir(mini_d, exec_node);
+	root = parse_redir(mini_d, root);
 	return (root);
 }
 
-void	*parse_redir(t_mini *mini_d, t_exec *exec_nd)
+void	*parse_redir(t_mini *mini_d, void *root)
 {
 	t_token *last;
-	t_redir *redir;
 	static int id;
 
-	redir = NULL;
-	last = set_token_tail(mini_d);
-	//printf("content of last %s \n", last->content);
-	while(last)
+	last = get_last_redir(mini_d->token, 1);
+	if (last) // // This if will be removed. To prevend seg fault using printf.
 	{
-		//printf("%s", last->content);
-		if (last->type == R_IN || last->type == R_OUT || last->type == D_R_OUT)
+		//criar um node de redirect
+		//fazer com que ele aponte para o node de exec ou de redirect
+		while (last)
 		{
-			//criar um node de redirect
-			//fazer com que ele aponte para o node de exec ou de redirect
-			redir = ft_calloc(1 ,sizeof(t_redir *)); // free this after
-			redir->id = id;
+			root = create_redir_node(root, id, last);
 			id ++;
-			if (last->len > 2)
-				redir->fname = ft_strdup(last->content);
-			else if (last->len <= 2 && last->next->next)
-				redir->fname = ft_strdup(last->next->next->content);
-			redir->down = exec_nd;
-			return (redir);
-		}
-		last = last->prev;
+			last = get_last_redir(last, 0);
+			if(!last)
+				return (root);
+			
+		}	
 	}
-	return (NULL);
+	else // This else will be removed. To prevend seg fault using printf.
+	{
+		// aqui eh caso nao hava redirects
+		printf("No more redirs \n");
+	}
+
+	return (root);
 }
 //type 0 == WORD
 int	have_command(t_mini *mini_d)
 {
 	t_token *current;
 
-	ft_printf("Have_command()\n");
 	current = mini_d->token;
 	while(current)
 	{
@@ -139,4 +129,107 @@ char	**get_cmd(t_mini *mini_d)
 		current = current->next;
 	}
 	return (args);
+}
+
+char	*get_redir_name(t_token *node)
+{
+	t_token *current;
+
+	current = node;
+	while (current && current->type != FILE_NAME)
+		current = current->next;
+	
+	if (current->type != FILE_NAME)
+		return (ft_strdup("INVALID"));
+	else
+		return (ft_strdup(current->content));
+}
+
+//Get the last redir token or the last redir token before the pipe
+t_token *get_last_redir(t_token *node, int first_interaction)
+{
+	t_token *last;
+
+	last = node;
+	if (first_interaction)
+	{
+		while (last->next && last->type != PIPE)
+			last = last->next;
+
+		while (last)
+		{
+			if (last->type == R_IN || last->type == R_OUT 
+				|| last->type == D_R_OUT)
+			return (last);
+			last = last->prev;
+		}
+	}
+	else
+	{
+		if (last->type == R_IN || last->type == R_OUT 
+				|| last->type == D_R_OUT)
+			last = last->prev;
+		while (last)
+		{
+			if (last->type == R_IN || last->type == R_OUT 
+				|| last->type == D_R_OUT)
+			return (last);
+			last = last->prev;
+		}
+	}
+	return (NULL);
+}
+
+t_redir	*create_redir_node(void *down, int id, t_token *node)
+{
+	t_redir * redir;
+
+	redir = ft_calloc(1, sizeof(t_redir)); // free this after
+	redir->id = id;
+	id ++;
+	redir->fname = get_redir_name(node);
+	//printf("parse_redir filename %s\n", redir->fname);
+	redir->len = ft_strlen(redir->fname);
+	// here I need to update this to update always to exec or another redit pointer
+	redir->down = down;
+	redir->type = node->type;
+	return (redir);
+}
+
+//function used for debugging purposes
+void print_node(void *node);
+
+void print_tree(void *root)
+{
+	if (root == NULL)
+	{
+		printf("Empty tree\n");
+		return;
+	}
+	printf("\n");
+	printf("----------- PRINT TREE ----------\n");
+	printf("\n");
+	print_node(root);
+}
+
+void print_node(void *node)
+{
+	if (!node)
+		return;
+
+	int type = *((int *)node);
+	if (type == WORD)
+	{
+		t_exec *exec = (t_exec *)node;
+		printf("Exec Node: ID=%d, Type=%d\n", exec->id, exec->type);
+		printf_matriz(exec->args);
+	
+	}
+	else if (type == R_IN || type == R_OUT || type == D_R_OUT)
+	{
+		t_redir *redir = (t_redir *)node;
+		printf(BLUE "Redir Node: " RESET "ID=%d, File Name="ORANGE" %s "RESET, redir->id, redir->fname);
+		printf(GREEN"Down is pointing to a "RESET);
+		print_node(redir->down);
+	}
 }

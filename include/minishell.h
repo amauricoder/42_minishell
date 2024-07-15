@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/13 17:02:02 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:40:04 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@
 # define MGT	"\033[35;1m"
 # define CYAN	"\033[36;1m"
 # define WHITE	"\033[37;1m"
+# define ORANGE "\033[1;38;5;208m"
 
 /*************************/
 /*    structs and enun	 */
@@ -104,32 +105,34 @@ typedef struct s_mini
 	int		token_type;
 	t_env	*env_d;
 	t_token	*token;
-	//pointer para root(void);
-	void	*root;
 }				t_mini;
 
 //main parsing struct
 
 typedef struct s_exec
 {
+	int		type;
 	int		id;
 	char	**args; //cmds and arguments of the commands
 }	t_exec;
 
 typedef struct s_pipe
 {
+	int		type;
 	int id;
 	//pointer to the left -> this node can point for a redir or exec
-	void *left;
+	void 	*left;
 	//pointer to the right
-	void *right;
+	void 	*right;
 }	t_pipe;
 
 typedef struct s_redir
 {
+	int		type;
 	int		id;
 	//copy content
-	char *fname;
+	char	*fname;
+	int		len;
 	//Pointer -> This pointer can point to a redir or exec
 	void	*down;
 }	t_redir;
@@ -208,9 +211,13 @@ int		ft_strlen_char(char *str, char ch);
 //parsing/parsing.c
 int		build_tree(t_mini *mini_d);
 void	*parse_exec(t_mini *mini_d);
-void	*parse_redir(t_mini *mini_d, t_exec *exec_nd);
+void	*parse_redir(t_mini *mini_d, void *root);
 int		have_command(t_mini *mini_d);
 char	**get_cmd(t_mini *mini_d);
+char	*get_redir_name(t_token *node);
+t_token *get_last_redir(t_token *node, int first_interaction);
+t_redir	*create_redir_node(void *down, int id, t_token *node);
+void	print_tree(void *root);
 
 //build_in/echo.c
 void	execute_buildins(t_mini *mini_d);
