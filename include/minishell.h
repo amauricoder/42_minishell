@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/15 18:40:04 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/16 18:35:50 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,12 +212,21 @@ int		ft_strlen_char(char *str, char ch);
 int		build_tree(t_mini *mini_d);
 void	*parse_exec(t_mini *mini_d);
 void	*parse_redir(t_mini *mini_d, void *root);
-int		have_command(t_mini *mini_d);
-char	**get_cmd(t_mini *mini_d);
-char	*get_redir_name(t_token *node);
+char	**get_cmd(t_token *token);
 t_token *get_last_redir(t_token *node, int first_interaction);
+void print_tree(void *node, const char *prefix, bool isLeft);
+
+//parsing/tree_support.c
+int		have_command(t_token *node);
+char	*get_redir_name(t_token *node);
 t_redir	*create_redir_node(void *down, int id, t_token *node);
-void	print_tree(void *root);
+int		get_qt_cmd_tokens(t_token *token);
+
+//parsing/tree_debug.c
+void	print_tree(void *node, const char *prefix, bool isLeft);
+void	print_exec(void *node, const char *prefix, bool isLeft);
+void	print_redir(void *node, const char *prefix, bool isLeft);
+void	print_pipe(t_pipe *pipe, const char *prefix, bool isLeft);
 
 //build_in/echo.c
 void	execute_buildins(t_mini *mini_d);

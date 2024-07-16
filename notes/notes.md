@@ -65,10 +65,11 @@ Thx to tsignore.
 valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell
 =====================================================================================
 
-## TESTES
+## TESTES EXPANSION
 ### 
 
 --- amauri > $po --> error here
+--- > > > ---> error here (This is syntax error, easy to resolver)
 
 - '$USER' ~ [output] = $USER
 - "$USER" ~ [output] = aconceic
@@ -107,3 +108,8 @@ valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=
 
 
 =====================================================================================
+
+
+TESTS TREE
+
+cmd > file >> file2 < file3

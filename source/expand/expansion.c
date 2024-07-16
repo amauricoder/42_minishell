@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:40:18 by ismirand          #+#    #+#             */
-/*   Updated: 2024/07/13 14:50:41 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/16 18:16:30 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,6 @@ void	clean_token(t_mini *mini_d)
 
 //amauri > $po TEST
 //This is to update the type from word to file if find a redirect
- 
 void	update_word_to_file(t_mini *mini_d)
 {
 	t_token *head;
@@ -181,9 +180,10 @@ void	update_word_to_file(t_mini *mini_d)
 			if ((mini_d->token->len == 1 || mini_d->token->len == 2)
 				&& (mini_d->token->next))
 			{
-				while (mini_d->token->next->type != WORD 
-					&& mini_d->token->next->type != ENV)
-					mini_d->token = mini_d->token->next;			
+				while ((mini_d->token->next->next) &&
+					(mini_d->token->next->type != WORD
+					&& mini_d->token->next->type != ENV))
+					mini_d->token = mini_d->token->next;	
 				mini_d->token->next->type = FILE_NAME;
 			}
 		}
