@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/16 18:45:05 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/17 20:00:00 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int	main(int argc, char **argv, char **envp)
 			//execute_buildins(&mini_d); ---> ISA's Function
 
 			//first, build the tree representation
-			build_tree(&mini_d); // build the tree
+			mini_d.root = build_tree(mini_d.token); // build the tree
+			print_tree(mini_d.root, "", 0);
 			//then, walk trhgout the tree and execute the commands
 
 			//PRINTS FOR DEBUGGING PURPOSES
@@ -55,6 +56,7 @@ int	main(int argc, char **argv, char **envp)
 			print_nodes(&mini_d);
 			 */
 
+			free_tree(mini_d.root);
 			free(mini_d.input);
 			free_tokens(&mini_d);
 		}

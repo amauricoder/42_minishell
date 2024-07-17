@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:56:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/08 16:07:00 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/17 20:02:35 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * @brief Clean ** of chars.
  * @attention Called at prompt.c;
 */
-void	free_dp_char(char **dp_char)
+void	free_matriz(char **dp_char)
 {
 	int	i;
 
@@ -35,7 +35,7 @@ int	free_main_struct(t_mini *mini_d)
 {
 	free(mini_d->input);
 	free(mini_d->prompt);
-	free_dp_char(mini_d->argv_cp);
+	free_matriz(mini_d->argv_cp);
 	free_env(mini_d->env_d);
 	exit(EXIT_SUCCESS);
 }

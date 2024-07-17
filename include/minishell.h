@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/16 18:35:50 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:47:18 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct s_mini
 	char	*prompt;
 	char	**argv_cp;
 	int		token_type;
+	void	*root;
 	t_env	*env_d;
 	t_token	*token;
 }				t_mini;
@@ -147,7 +148,7 @@ int		main(int argc, char **argv, char **envp);
 char	*get_prompt_msg(char **envp);
 
 //frees.c
-void	free_dp_char(char **dp_char);
+void	free_matriz(char **dp_char);
 int		free_main_struct(t_mini *mini_d);
 int		free_env(t_env *env);
 void	free_tokens(t_mini *mini_d);
@@ -209,24 +210,33 @@ int		ft_strlen_char(char *str, char ch);
 //char	*aftdol_position(char *big, char *little);
 
 //parsing/parsing.c
-int		build_tree(t_mini *mini_d);
-void	*parse_exec(t_mini *mini_d);
-void	*parse_redir(t_mini *mini_d, void *root);
-char	**get_cmd(t_token *token);
-t_token *get_last_redir(t_token *node, int first_interaction);
-void print_tree(void *node, const char *prefix, bool isLeft);
+void	*build_tree(t_token *token);
+void	*parse_exec(t_token *token);
+void	*parse_redir(t_token *token, void *root);
+void	*parse_pipe(void *left, void *right);
 
 //parsing/tree_support.c
 int		have_command(t_token *node);
-char	*get_redir_name(t_token *node);
 t_redir	*create_redir_node(void *down, int id, t_token *node);
+char	*get_redir_name(t_token *node);
 int		get_qt_cmd_tokens(t_token *token);
+void	free_tree(void *root);
 
 //parsing/tree_debug.c
 void	print_tree(void *node, const char *prefix, bool isLeft);
 void	print_exec(void *node, const char *prefix, bool isLeft);
 void	print_redir(void *node, const char *prefix, bool isLeft);
 void	print_pipe(t_pipe *pipe, const char *prefix, bool isLeft);
+
+//parsing/tree_free.c
+void	free_exec(void *root);
+void	free_redir(void *root);
+void	free_tree(void *root);
+
+//parsing/tree_support2.c
+t_token	*get_last_or_pipe(t_token *to_advance);
+char	**get_cmd(t_token *token);
+t_token *get_last_redir(t_token *node, int first_interaction);
 
 //build_in/echo.c
 void	execute_buildins(t_mini *mini_d);

@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:40:18 by ismirand          #+#    #+#             */
-/*   Updated: 2024/07/16 18:16:30 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:46:25 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	find_expansion(t_mini	*mini_d)
 			&& check_dollar(mini_d->token->content))
 		{
 			expand_dollar(mini_d->token, 0);
-			free_dp_char(expanded_envs);
+			free_matriz(expanded_envs);
 		}
 		mini_d->token = mini_d->token->next;
 	}
@@ -175,7 +175,7 @@ void	update_word_to_file(t_mini *mini_d)
 	while(mini_d->token)
 	{
 		if (mini_d->token->type == R_IN || mini_d->token->type == R_OUT
-			|| mini_d->token->type == D_R_OUT)
+			|| mini_d->token->type == D_R_OUT || mini_d->token->type == HEREDOC)
 		{
 			if ((mini_d->token->len == 1 || mini_d->token->len == 2)
 				&& (mini_d->token->next))
