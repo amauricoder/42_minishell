@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 19:46:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/17 19:49:43 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:51:37 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	init_main_struct(t_mini *mini_d, char **argv, char **envp)
 	//token
 	mini_d->token_type = 0;
 	mini_d->token = NULL;
-	mini_d->root = ft_calloc(1, sizeof(void *)); // free this
 }
 
 /**

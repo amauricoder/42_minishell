@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/17 20:00:00 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:04:13 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,20 @@ int	main(int argc, char **argv, char **envp)
 
 			//first, build the tree representation
 			mini_d.root = build_tree(mini_d.token); // build the tree
-			print_tree(mini_d.root, "", 0);
 			//then, walk trhgout the tree and execute the commands
 
 			//PRINTS FOR DEBUGGING PURPOSES
-			/* 
+			printf(ORANGE"-------- MAIN --------\n"RESET);
 			printf("\n");
-			printf("-------- MAIN --------\n");
+			printf(MGT"-------- PRINT NODES --------\n"RESET);
+			printf("\n");
 			print_nodes(&mini_d);
-			 */
+			printf("\n");
+			printf(MGT"-------- PRINT TREE --------\n"RESET);
+			printf("\n");
+			print_tree(mini_d.root, "", 0);
+			printf("\n");
+			printf(ORANGE"-------- END MAIN --------\n"RESET);
 
 			free_tree(mini_d.root);
 			free(mini_d.input);

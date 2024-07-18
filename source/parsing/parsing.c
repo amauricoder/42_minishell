@@ -6,14 +6,14 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 16:41:52 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/17 19:55:51 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:24:53 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 //Main function that start to build the execution tree.
-void *build_tree(t_token *token)
+void	*build_tree(t_token *token)
 {
 	void	*root;
 
@@ -21,8 +21,7 @@ void *build_tree(t_token *token)
 	token = get_last_or_pipe(token);
 	if (token)
 	{
-		//DEbugging purposes
-		root = parse_pipe(root, build_tree(token->next)); // Here I need recurtion to construc the right side
+		root = parse_pipe(root, build_tree(token->next));
 		return (root);
 	}
 	else
@@ -32,9 +31,9 @@ void *build_tree(t_token *token)
 //Function to start the construction of the tree
 void	*parse_exec(t_token *token)
 {
-	t_exec	*exec_node;
-	static int id;
-	void	*root;
+	t_exec		*exec_node;
+	static int	id;
+	void		*root;
 
 	exec_node = NULL;
 	if (have_command(token))
@@ -54,18 +53,16 @@ void	*parse_exec(t_token *token)
 
 void	*parse_redir(t_token *token, void *root)
 {
-	t_token *last;
-	static int id;
+	t_token		*last;
+	static int	id;
 
 	last = get_last_redir(token, 1);
-	//criar um node de redirect
-	//fazer com que ele aponte para o node de exec ou de redirect
 	while (last)
 	{
-		root = create_redir_node(root, id, last); //here allocate memory
+		root = create_redir_node(root, id, last);
 		id ++;
 		last = get_last_redir(last, 0);
-		if(!last)
+		if (!last)
 			return (root);
 	}
 	return (root);
@@ -73,8 +70,8 @@ void	*parse_redir(t_token *token, void *root)
 
 void	*parse_pipe(void *left, void *right)
 {
-	t_pipe *pipe;
-	int static id;
+	t_pipe		*pipe;
+	int static	id;
 
 	pipe = ft_calloc(1, sizeof(t_pipe));
 	pipe->id = id;
@@ -82,6 +79,5 @@ void	*parse_pipe(void *left, void *right)
 	pipe->left = left;
 	pipe->right = right;
 	pipe->type = PIPE;
-
-	return (pipe);	
+	return (pipe);
 }

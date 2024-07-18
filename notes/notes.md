@@ -70,6 +70,7 @@ valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=
 
 --- amauri > $po --> error here
 --- > > > ---> error here (This is syntax error, easy to resolver)
+--- redirect withou nothing is syntax error (TO SOLVE)
 
 - '$USER' ~ [output] = $USER
 - "$USER" ~ [output] = aconceic
@@ -98,6 +99,8 @@ valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=
 - $123456789USER ~ [output] = $23456789USER
 - $0 ~[output] ./minishell  --- sozinho executa
 - $0USER ~[output] ./minishellUSER --- nao executa
+
+- "e"'c'"h""o"
 
 
 ===== test heredoc ====

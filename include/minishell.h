@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/17 19:47:18 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:45:59 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <sys/ioctl.h> //ioctl
 # include <readline/readline.h>//readline
 # include <readline/history.h>//add_history
-#include <stdbool.h>
+# include <stdbool.h>
 
 /*************************/
 /*     	 LIBFT/GNL 		 */
@@ -65,14 +65,14 @@ typedef enum e_token
 	R_IN, //<
 	HEREDOC, //<<
 	FILE_NAME
-}	e_token;
+}	t_token_type;
 
 typedef enum e_tstate
 {
 	GENERAL,
 	IN_QUOTE,
 	IN_DQUOTE
-}	e_tstate;
+}	t_tstate;
 
 //tokens
 typedef struct s_token
@@ -120,11 +120,9 @@ typedef struct s_exec
 typedef struct s_pipe
 {
 	int		type;
-	int id;
-	//pointer to the left -> this node can point for a redir or exec
-	void 	*left;
-	//pointer to the right
-	void 	*right;
+	int		id;
+	void	*left; //pointer to the left -> this node can point for a redir or exec 
+	void	*right; //pointer to the right
 }	t_pipe;
 
 typedef struct s_redir
@@ -171,7 +169,7 @@ int		specch(char ch);
 //token.c
 t_token	*init_token(char *content, int type, int id);
 t_token	*set_token_head(t_mini *mini_d);
-t_token *set_token_tail(t_mini *mini_d);
+t_token	*set_token_tail(t_mini *mini_d);
 int		token_lstadd_back(t_mini *mini_d, t_token *new_token);
 //int		alloc_tokenstruct(t_mini *mini_d);
 
@@ -226,17 +224,17 @@ void	free_tree(void *root);
 void	print_tree(void *node, const char *prefix, bool isLeft);
 void	print_exec(void *node, const char *prefix, bool isLeft);
 void	print_redir(void *node, const char *prefix, bool isLeft);
-void	print_pipe(t_pipe *pipe, const char *prefix, bool isLeft);
-
+void	print_pipe(void *node, const char *prefix, bool isLeft);
 //parsing/tree_free.c
 void	free_exec(void *root);
 void	free_redir(void *root);
 void	free_tree(void *root);
+void	free_pipe(void *root);
 
 //parsing/tree_support2.c
 t_token	*get_last_or_pipe(t_token *to_advance);
 char	**get_cmd(t_token *token);
-t_token *get_last_redir(t_token *node, int first_interaction);
+t_token	*get_last_redir(t_token *node, int first_interaction);
 
 //build_in/echo.c
 void	execute_buildins(t_mini *mini_d);

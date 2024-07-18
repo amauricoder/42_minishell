@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:18:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/17 15:56:34 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:38:40 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
  */
 int	have_command(t_token *node)
 {
-	t_token *current;
+	t_token	*current;
 
 	current = node;
-	while(current)
+	while (current)
 	{
 		if (current->type == WORD || current->type == ENV)
 			return (true);
@@ -34,15 +34,15 @@ int	have_command(t_token *node)
 /**
  * @attention Support function to parsing/parsing.c  -> parse_redir() function.
  * @brief Function to alloc and create the redir_node.
- * @param down Pointer to a possible exec or redir node, this is defined on parse_redir().
+ * @param down Ptr to a possible exec or redir node, defined on parse_redir().
  * @param id Id for future debug possibilities
  * @param node token node that we will get the name of the file.  
  */
 t_redir	*create_redir_node(void *down, int id, t_token *node)
 {
-	t_redir * redir;
+	t_redir	*redir;
 
-	redir = ft_calloc(1, sizeof(t_redir)); // free this after
+	redir = ft_calloc(1, sizeof(t_redir));
 	redir->id = id;
 	id ++;
 	redir->fname = get_redir_name(node);
@@ -60,7 +60,7 @@ t_redir	*create_redir_node(void *down, int id, t_token *node)
  */
 char	*get_redir_name(t_token *node)
 {
-	t_token *current;
+	t_token	*current;
 
 	current = node;
 	if (current->next)
@@ -80,10 +80,10 @@ char	*get_redir_name(t_token *node)
  */
 int	get_qt_cmd_tokens(t_token *token)
 {
-	t_token *current;
+	t_token	*current;
 	int		i;
 
-	i = 0;	
+	i = 0;
 	current = token;
 	while (current && current->type != PIPE)
 	{

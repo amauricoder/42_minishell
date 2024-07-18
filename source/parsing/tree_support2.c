@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:58:41 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/17 19:33:53 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:38:25 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@
 */
 t_token	*get_last_or_pipe(t_token *to_advance)
 {
-	while(to_advance)
+	while (to_advance)
 	{
 		if (to_advance->type == PIPE)
 			return (to_advance);
 		to_advance = to_advance->next;
 	}
-	return (NULL);	
+	return (NULL);
 }
 
 /**
@@ -33,8 +33,8 @@ t_token	*get_last_or_pipe(t_token *to_advance)
  */
 char	**get_cmd(t_token *token)
 {
-	t_token *current;
-	char **args;
+	t_token	*current;
+	char	**args;
 	int		i;
 
 	current = token;
@@ -59,9 +59,9 @@ char	**get_cmd(t_token *token)
  * if is not the first interaction, will get the REDIR_NODE before.
  * This function works withing a loop in parse_redir()
  */
-t_token *get_last_redir(t_token *node, int first_interaction)
+t_token	*get_last_redir(t_token *node, int first_interaction)
 {
-	t_token *last;
+	t_token	*last;
 
 	last = node;
 	if (first_interaction)
@@ -72,15 +72,15 @@ t_token *get_last_redir(t_token *node, int first_interaction)
 	}
 	else
 	{
-		if (last->type == R_IN || last->type == R_OUT 
-				|| last->type == D_R_OUT || last->type == HEREDOC)
+		if (last->type == R_IN || last->type == R_OUT
+			|| last->type == D_R_OUT || last->type == HEREDOC)
 			last = last->prev;
 	}
 	while (last && last->type != PIPE)
 	{
-		if (last->type == R_IN || last->type == R_OUT 
+		if (last->type == R_IN || last->type == R_OUT
 			|| last->type == D_R_OUT || last->type == HEREDOC)
-		return (last);
+			return (last);
 		last = last->prev;
 	}
 	return (NULL);

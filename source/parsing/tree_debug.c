@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:27:11 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/17 18:10:32 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:36:54 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,11 @@ void	print_tree(void *node, const char *prefix, bool isLeft)
 	type = *((int *)node);
 	if (type == WORD)
 		print_exec(node, prefix, isLeft);
-	else if (type == R_IN || type == R_OUT || type == D_R_OUT || type == HEREDOC)
+	else if (type == R_IN || type == R_OUT
+		|| type == D_R_OUT || type == HEREDOC)
 		print_redir(node, prefix, isLeft);
-   	else if (type == PIPE)
-	{
-		t_pipe *pipe = (t_pipe *)node;
-		print_pipe(pipe, prefix, isLeft);
-	} 
-	
+	else if (type == PIPE)
+		print_pipe(node, prefix, isLeft);
 }
 
 //function used for debugging purposes
@@ -39,12 +36,18 @@ void	print_exec(void *node, const char *prefix, bool isLeft)
 	const char	*str[] = {"GENERAL", "IN_QUOTE", "IN_DQUOTE", "WORD",
 		"W_SPACE", "D_QUOTE", "S_QUOTE", "PIPE", "ENV", "RED_OUT",
 		"D_R_OUT", "RED_IN", "HEREDOC", "FILE_NAME"};
+	char		*arrow;
 
+	if (isLeft)
+		arrow = ft_strdup("├── ");
+	else
+		arrow = ft_strdup("└── ");
 	exec = (t_exec *)node;
 	printf("%s%s"RED"EXEC: Type = '%s'\n"RESET,
 		prefix,
-		isLeft ? "├── " : "└── ",
+		arrow,
 		str[exec->type + 3]);
+	free(arrow);
 	i = 0;
 	while (exec->args[i])
 	{
@@ -55,35 +58,49 @@ void	print_exec(void *node, const char *prefix, bool isLeft)
 
 void	print_redir(void *node, const char *prefix, bool isLeft)
 {
-	t_redir	*redir;
-	char	newPrefix[256];
+	t_redir		*redir;
+	char		new_prefix[256];
 	const char	*str[] = {"GENERAL", "IN_QUOTE", "IN_DQUOTE", "WORD",
 		"W_SPACE", "D_QUOTE", "S_QUOTE", "PIPE", "ENV", "RED_OUT",
 		"D_R_OUT", "RED_IN", "HEREDOC", "FILE_NAME"};
-	
-	(void)str;
+	char		*arrow;
+
+	if (isLeft)
+		arrow = ft_strdup("├── ");
+	else
+		arrow = ft_strdup("└── ");
 	redir = (t_redir *)node;
 	printf("%s%s"ORANGE"%s: File Name = '%s'\n"RESET,
 		prefix,
-		isLeft ? "├── " : "└── ",
+		arrow,
 		str[redir->type + 3],
 		redir->fname);
-
-	snprintf(newPrefix, 
-		sizeof(newPrefix),
-		"%s%s",
-		prefix, isLeft ? "│   " : "    ");
-
-	print_tree(redir->down, newPrefix, false);
+	free(arrow);
+	if (isLeft)
+		snprintf(new_prefix, sizeof(new_prefix),
+			"%s%s", prefix, "│   ");
+	else
+		snprintf(new_prefix, sizeof(new_prefix),
+			"%s%s", prefix, "    ");
+	print_tree(redir->down, new_prefix, false);
 }
 
-void print_pipe(t_pipe *pipe, const char *prefix, bool isLeft)
+void	print_pipe(void *node, const char *prefix, bool isLeft)
 {
-	printf("%s%sPIPE:\n", prefix, isLeft ? "├── " : "└── ");
-	char newPrefixLeft[256];
-	char newPrefixRight[256];
-	snprintf(newPrefixLeft, sizeof(newPrefixLeft), "%s│   ", prefix);
-	snprintf(newPrefixRight, sizeof(newPrefixRight), "%s    ", prefix);
-	print_tree(pipe->left, newPrefixLeft, true);
-	print_tree(pipe->right, newPrefixRight, false);
+	t_pipe	*pipe;
+	char	new_prefix_left[256];
+	char	new_prefix_right[256];
+	char	*arrow;
+
+	pipe = (t_pipe *)node;
+	if (isLeft)
+		arrow = ft_strdup("├── ");
+	else
+		arrow = ft_strdup("└── ");
+	printf("%s%sPIPE:\n", prefix, arrow);
+	free(arrow);
+	snprintf(new_prefix_left, sizeof(new_prefix_left), "%s│   ", prefix);
+	snprintf(new_prefix_right, sizeof(new_prefix_right), "%s    ", prefix);
+	print_tree(pipe->left, new_prefix_left, true);
+	print_tree(pipe->right, new_prefix_right, false);
 }
