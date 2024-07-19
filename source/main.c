@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/18 16:04:13 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/19 10:51:13 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ int	main(int argc, char **argv, char **envp)
 			mini_d.root = build_tree(mini_d.token); // build the tree
 			//then, walk trhgout the tree and execute the commands
 
+			//rodar a arvore
+				//se o node for de pipe
+					//executar o node da esquerda e mandar para o input da direita
+				
+					
 			//PRINTS FOR DEBUGGING PURPOSES
 			printf(ORANGE"-------- MAIN --------\n"RESET);
 			printf("\n");

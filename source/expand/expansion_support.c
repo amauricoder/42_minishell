@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 19:16:49 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/11 18:08:20 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/18 19:49:31 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	assemble_word_tokens(t_mini *mini_d)
 	tmp = mini_d->token;
 	while (tmp && tmp->next)
 	{
-		if ((tmp->next->type == 0 || tmp->next->type == 5) && tmp->next->state != GENERAL)
+		if ((tmp->next->type == WORD || tmp->next->type == ENV) && tmp->next->state != GENERAL)
 		{
 			c_tmp = ft_strdup(tmp->content);
 			free(tmp->content);
