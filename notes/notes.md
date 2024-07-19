@@ -63,6 +63,9 @@ Thx to tsignore.
 
 
 valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell
+
+make re && clear && valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell
+
 =====================================================================================
 
 ## TESTES EXPANSION
@@ -116,3 +119,12 @@ valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=
 TESTS TREE
 
 cmd > file >> file2 < file3
+
+
+======================================================================================
+
+PROBLEMS TO BE SOLVED
+
+echo "WORD" -> This is creating a token begining with a space (find_expansion)
+
+echo "WORD" -> This word is not in state->IN_D_QUOTES (do_lexing) 

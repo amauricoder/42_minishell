@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/19 10:51:13 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/19 16:09:11 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	g_exit_status = 0;
 int	main(int argc, char **argv, char **envp)
 {
 	t_mini	mini_d;
-	
+
 	if (!is_argument_valid(argc, envp))
 		return (EXIT_FAILURE);	
 	signals_init();	
@@ -42,16 +42,17 @@ int	main(int argc, char **argv, char **envp)
 			do_lexing(&mini_d); //dont forget free all tokens
 			find_expansion(&mini_d);
 
-			//execute_buildins(&mini_d); ---> ISA's Function
+			define_builtins(&mini_d);
 
 			//first, build the tree representation
 			mini_d.root = build_tree(mini_d.token); // build the tree
-			//then, walk trhgout the tree and execute the commands
 
+			//TESTES BILLTIN(arvore)
+			//then, walk trhgout the tree and execute the commands
+			tests_builtins(mini_d.root);
 			//rodar a arvore
 				//se o node for de pipe
 					//executar o node da esquerda e mandar para o input da direita
-				
 					
 			//PRINTS FOR DEBUGGING PURPOSES
 			printf(ORANGE"-------- MAIN --------\n"RESET);

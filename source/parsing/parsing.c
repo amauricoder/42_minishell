@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 16:41:52 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/18 16:24:53 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/19 13:30:28 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	*parse_exec(t_token *token)
 		id ++;
 		exec_node->args = get_cmd(token);
 		exec_node->type = WORD;
+		exec_node->builtin = token->builtin;
 	}
 	else
 		exec_node = NULL;

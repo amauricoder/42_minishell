@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/18 16:45:59 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/19 15:35:13 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,18 @@ typedef enum e_tstate
 	IN_DQUOTE
 }	t_tstate;
 
+typedef enum e_builtins
+{
+	NO_B,
+	ECHO,
+	CD,
+	PWD,
+	EXPORT,
+	UNSET,
+	B_ENV,
+	EXIT
+}	t_builtins;
+
 //tokens
 typedef struct s_token
 {
@@ -81,6 +93,7 @@ typedef struct s_token
 	int				len;
 	char			*content;
 	int				type;
+	int				builtin;
 	enum e_token	state;
 	struct s_token	*head;
 	struct s_token	*tail;
@@ -109,11 +122,11 @@ typedef struct s_mini
 }				t_mini;
 
 //main parsing struct
-
 typedef struct s_exec
 {
 	int		type;
 	int		id;
+	int		builtin;
 	char	**args; //cmds and arguments of the commands
 }	t_exec;
 
@@ -236,15 +249,19 @@ t_token	*get_last_or_pipe(t_token *to_advance);
 char	**get_cmd(t_token *token);
 t_token	*get_last_redir(t_token *node, int first_interaction);
 
-//build_in/echo.c
-void	execute_buildins(t_mini *mini_d);
-void	echo(t_mini *mini_d);
+//builtins/tests.c
+void	tests_builtins(void *root);
+
+//builtins/echo.c
+void	define_builtins(t_mini *mini_d);
+void	echo(char **str);
+int		is_echoflag(char *str, int *new_line);
+
+//builtins/*.c
+int		buildin_pwd(void);
+void	buildin_env(t_env *env_var);
 
 //env/env.c
 int		get_env(char **env, t_env *env_var);
-
-//build_in/*.c
-int		buildin_pwd(void);
-void	buildin_env(t_env *env_var);
 
 #endif

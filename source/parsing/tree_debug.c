@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:27:11 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/18 17:36:54 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/19 13:37:10 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	print_exec(void *node, const char *prefix, bool isLeft)
 	const char	*str[] = {"GENERAL", "IN_QUOTE", "IN_DQUOTE", "WORD",
 		"W_SPACE", "D_QUOTE", "S_QUOTE", "PIPE", "ENV", "RED_OUT",
 		"D_R_OUT", "RED_IN", "HEREDOC", "FILE_NAME"};
+	const char	*built[] = {"NO_B", "ECHO", "CD", "PWD", "EXPORT",
+		"UNSET", "ENV", "EXIT"};
 	char		*arrow;
 
 	if (isLeft)
@@ -43,10 +45,11 @@ void	print_exec(void *node, const char *prefix, bool isLeft)
 	else
 		arrow = ft_strdup("└── ");
 	exec = (t_exec *)node;
-	printf("%s%s"RED"EXEC: Type = '%s'\n"RESET,
+	printf("%s%s"RED"EXEC: Type = '%s' - %s\n"RESET,
 		prefix,
 		arrow,
-		str[exec->type + 3]);
+		str[exec->type + 3],
+		built[exec->builtin]);
 	free(arrow);
 	i = 0;
 	while (exec->args[i])

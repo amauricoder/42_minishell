@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:02:42 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/13 15:24:30 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/19 16:00:30 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	print_nodes(t_mini *mini_d)
 	const char	*str[] = {"GENERAL", "IN_QUOTE", "IN_DQUOTE", "WORD",
 		"W_SPACE", "D_QUOTE", "S_QUOTE", "PIPE", "ENV", "RED_OUT",
 		"D_R_OUT", "RED_IN", "HEREDOC", "FILE_NAME"};
+	const char	*built[] = {"NO_B", "ECHO", "CD", "PWD", "EXPORT",
+		"UNSET", "ENV", "EXIT"};
 
 	current = mini_d->token;
 	printf("\n");
@@ -35,6 +37,7 @@ void	print_nodes(t_mini *mini_d)
 		else
 			printf(CYAN"Content "RESET"%8s NULL | ", current->content);
 		printf(MGT"Length "RESET"%3i |\n", current->len);
+		printf(MGT"Builtin "RESET"%3s |\n", built[current->builtin]);
 		current = current->next;
 	}
 }
