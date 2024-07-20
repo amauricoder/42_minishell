@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:52:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 13:19:20 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/20 14:52:10 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,29 @@
 
 			//clean properly free_env(env_var)??
 			//getenv()
-int	copy_env(char **env, t_env *env_var)
+int	copy_env(char **env, t_env **env_var)
 {
-	int		i;
-	t_env	*new;
-
+	int     i;
+	t_env   *new;
+	t_env   *last;
 	i = 0;
-	ft_memset (env_var, 0, sizeof(t_env));
+	*env_var = NULL; // Garante que a lista começa vazia.
 	while (env[i])
 	{
 		new = ft_calloc(sizeof(t_env), 1);
 		if (!new)
 			return (EXIT_FAILURE);
 		new->env_id = i;
-		new->env_name = ft_strdup(env[i]);
+		new->env_name = ft_strdup(env[i]); // Supondo que env[i] contém o nome da variável de ambiente.
 		new->next = NULL;
-		if (env_var == NULL)
-			env_var = new;
+		if (*env_var == NULL)
+			*env_var = new; // Define o primeiro elemento da lista.
 		else
-			env_var->next = new;
-		env_var = new;
+			last->next = new; // Adiciona o novo elemento ao final da lista.
+		last = new; // Atualiza a referência ao último elemento.
 		i++;
 	}
 	return (EXIT_SUCCESS);
 }
 
 //fazer uma ft_getenv
-

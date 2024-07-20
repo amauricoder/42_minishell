@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_values.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 19:46:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 13:14:07 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/20 14:41:03 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	init_main_struct(t_mini *mini_d, char **argv, char **envp)
 {
 	//env
 	mini_d->env_d = (t_env *)malloc(sizeof(t_env));
-	copy_env(envp, mini_d->env_d);
+	copy_env(envp, &(mini_d->env_d));
 	//prompt
 	mini_d->prompt = get_prompt_msg(envp);
 	get_argv_cp(mini_d, argv);

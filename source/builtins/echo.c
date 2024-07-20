@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:15:14 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 12:15:29 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:34:17 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,10 @@
 void	echo(char **str)
 {
 	int	i;
-	int	j;
 	int	new_line;
 	int	print;
 
 	i = 1;
-	j = 0;
 	new_line = 1;
 	print = 0;
 	while (str[i])

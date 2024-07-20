@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 16:41:52 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/19 13:30:28 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:33:32 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	*parse_redir(t_token *token, void *root)
 void	*parse_pipe(void *left, void *right)
 {
 	t_pipe		*pipe;
-	int static	id;
+	static int	id;
 
 	pipe = ft_calloc(1, sizeof(t_pipe));
 	pipe->id = id;

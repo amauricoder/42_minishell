@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 13:14:07 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/20 14:41:15 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,8 +280,9 @@ void	env(t_env *env_var);
 
 //builtins/cd.c
 int		cd(t_mini *mini, char **str);
+char	*get_path(t_mini *mini, char *str);
 
 //env/env.c
-int		copy_env(char **env, t_env *env_var);
+int		copy_env(char **env, t_env **env_var);
 
 #endif

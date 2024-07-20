@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 13:13:20 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:37:52 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@ int	cd(t_mini *mini, char **str)
 
 	if (str[2])
 		return (error_msg_and_exit(CD_ERR_ARG, EXIT_FAILURE));
+	if (!str[1])
+	{
+		dir = get_path(mini, "HOME");
+		printf("%s\n", dir);
+		//chdir(get_path(mini, "HOME"));
+		//return (EXIT_SUCCESS);
+	}
 	dir = getcwd(cwd, sizeof(cwd));
 	(void)mini;
  	if (!dir)
@@ -26,8 +33,25 @@ int	cd(t_mini *mini, char **str)
 		perror("minishell: cd: "); //treat this properly with exit_status
 		return (EXIT_FAILURE);
 	}
-	if (!str[1])
-		//funcao que encontre o home na mini_d->env
-	printf("%s\n", cwd);
+	printf("%s\n", dir);
 	return (EXIT_SUCCESS);	
+}
+
+char	*get_path(t_mini *mini, char *str)
+{
+	t_env	*current;
+	char	**path;
+
+	current = mini->env_d;
+	while (current)
+	{
+		if (!ft_strncmp(current->env_name, str, ft_strlen(str)))
+		{
+			path = ft_split(current->env_name, '=');
+			printf("%s\n", path[1]);
+			return (path[1]);
+		}
+		current = current->next;
+	}
+	return (NULL);
 }
