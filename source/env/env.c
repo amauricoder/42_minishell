@@ -6,38 +6,57 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:52:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 13:19:20 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/20 14:46:56 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-			//clean properly free_env(env_var)??
-			//getenv()
-int	copy_env(char **env, t_env *env_var)
+//clean properly free_env(env_var)??
+//getenv()
+int copy_env(char **env, t_env **env_var)
 {
-	int		i;
-	t_env	*new;
+    int     i;
+    t_env   *new;
+    t_env   *last;
 
-	i = 0;
-	ft_memset (env_var, 0, sizeof(t_env));
-	while (env[i])
-	{
-		new = ft_calloc(sizeof(t_env), 1);
-		if (!new)
-			return (EXIT_FAILURE);
-		new->env_id = i;
-		new->env_name = ft_strdup(env[i]);
-		new->next = NULL;
-		if (env_var == NULL)
-			env_var = new;
-		else
-			env_var->next = new;
-		env_var = new;
-		i++;
-	}
-	return (EXIT_SUCCESS);
+    i = 0;
+    *env_var = NULL; // Garante que a lista começa vazia.
+    while (env[i])
+    {
+        new = ft_calloc(sizeof(t_env), 1);
+        if (!new)
+            return (EXIT_FAILURE);
+        new->env_id = i;
+        new->env_name = ft_strdup(env[i]); // Supondo que env[i] contém o nome da variável de ambiente.
+        new->next = NULL;
+        if (*env_var == NULL)
+            *env_var = new; // Define o primeiro elemento da lista.
+        else
+            last->next = new; // Adiciona o novo elemento ao final da lista.
+        last = new; // Atualiza a referência ao último elemento.
+        i++;
+    }
+    return (EXIT_SUCCESS);
 }
 
 //fazer uma ft_getenv
+//getenv(USER) -
+int	ft_getenv(t_mini *mini_d, char *to_find)
+{
+	t_env *current;
+	int	i;
 
+	i = 0;
+	current = mini_d->env_d;
+	while(current)
+	{
+		/* if (!ft_strncmp(to_find, current->env_name, ft_strlen(to_find)))
+			return (printf("true")); */
+		printf("%s\n", current->env_name);
+		current = current->next;
+	}
+	//printf("to find %s\n", to_find);
+	(void)to_find;
+	return (printf("false\n"));
+}

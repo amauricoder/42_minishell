@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 12:56:49 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:36:45 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int	main(int argc, char **argv, char **envp)
 			printf("\n");
 			print_tree(mini_d.root, "", 0);
 			printf("\n");
+			printf(MGT"-------- TEST FT_GETENV --------\n"RESET);
+			ft_getenv(&mini_d, "USER");
 			printf(ORANGE"-------- END MAIN --------\n"RESET);
 
 			free_tree(mini_d.root);
