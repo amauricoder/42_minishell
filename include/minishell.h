@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 14:56:07 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/07/20 15:50:51 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,6 +282,7 @@ void	env(t_env *env_var);
 //builtins/cd.c
 int		cd(t_mini *mini, char **str);
 char	*get_path(t_mini *mini, char *str);
+char	*find_last_dir(char *dir);
 
 //env/env.c
 int		copy_env(char **env, t_env **env_var);
