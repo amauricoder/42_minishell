@@ -126,3 +126,8 @@ PROBLEMS TO BE SOLVED
 
 --- > > > ---> error here (This is syntax error, easy to resolver)
 redirect withou nothing is syntax error (TO SOLVE)
+
+
+https://codeshare.io/KWwAOM
+
+

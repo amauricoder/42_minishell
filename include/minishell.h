@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 14:56:07 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/07/20 15:11:29 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,9 +221,9 @@ void	signal_handler_child(int sig);
 
 //expand/expansion.c
 int		find_expansion(t_mini	*mini_d);
-char	*env_expanded(char *content);
-void	expand_dollar(t_token *token, int i);
-char	*change_content(t_token *token, int i);
+char	*env_expanded(t_mini *mini_d, char *content);
+void	expand_dollar(t_mini *mini_d, t_token *token, int i);
+char	*change_content(t_mini *mini_d, t_token *token, int i);
 void	clean_token(t_mini *mini_d);
 void	update_word_to_file(t_mini *mini_d);
 
@@ -285,6 +285,6 @@ char	*get_path(t_mini *mini, char *str);
 
 //env/env.c
 int		copy_env(char **env, t_env **env_var);
-//int		ft_getenv(t_mini *mini_d, char *to_find);
+int		ft_getenv(t_mini *mini_d, char *to_find);
 
 #endif
