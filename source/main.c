@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/19 16:09:11 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/20 12:56:49 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(int argc, char **argv, char **envp)
 
 			//TESTES BILLTIN(arvore)
 			//then, walk trhgout the tree and execute the commands
-			tests_builtins(mini_d.root);
+			tests_builtins(&mini_d, mini_d.root);
 			//rodar a arvore
 				//se o node for de pipe
 					//executar o node da esquerda e mandar para o input da direita

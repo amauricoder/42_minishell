@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buildin_env.c                                      :+:      :+:    :+:   */
+/*   bt_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 19:06:41 by aconceic          #+#    #+#             */
-/*   Updated: 2024/06/14 20:13:39 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/07/20 12:17:52 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 //env with no options or arguments
-void	buildin_env(t_env *env_var)
+void	env(t_env *env_var)
 {
 	while (env_var->next != NULL)
 	{

@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tests.c                                            :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/19 15:30:24 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/19 15:49:17 by aconceic         ###   ########.fr       */
+/*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
+/*   Updated: 2024/07/20 13:13:20 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-//Function to test
-void	tests_builtins(void *root)
+int	cd(t_mini *mini, char **str)
 {
-	int		type;
-	t_exec	*exec_node;
+	char	cwd[1024];
+	char	*dir;	
 
-	type = *((int *)root);
-	if (type == WORD)
+	if (str[2])
+		return (error_msg_and_exit(CD_ERR_ARG, EXIT_FAILURE));
+	dir = getcwd(cwd, sizeof(cwd));
+	(void)mini;
+ 	if (!dir)
 	{
-		exec_node = (t_exec *)root;
-		if (exec_node->builtin == ECHO)
-			echo(exec_node->args);
-		
+		perror("minishell: cd: "); //treat this properly with exit_status
+		return (EXIT_FAILURE);
 	}
-	//printf("The tipe of the root is %i\n", type);
-	//(void)root;
-
+	if (!str[1])
+		//funcao que encontre o home na mini_d->env
+	printf("%s\n", cwd);
+	return (EXIT_SUCCESS);	
 }

@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/19 15:35:13 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:14:07 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,13 @@
 # define CYAN	"\033[36;1m"
 # define WHITE	"\033[37;1m"
 # define ORANGE "\033[1;38;5;208m"
+
+/***********************************/
+/* ERROR MSG && EXIT_STATUS VALUES */
+/***********************************/
+# define SYNTAX_ERR 2
+# define PWD_ERR "minishell : pwd: -*: invalid option\npwd: usage: pwd\n"
+# define CD_ERR_ARG "minishell : cd: too many arguments\n"
 
 /*************************/
 /*    structs and enun	 */
@@ -108,6 +115,14 @@ typedef struct s_env
 	char			*env_name;
 	struct s_env	*next;
 }	t_env;
+
+//export 
+typedef struct s_export
+{
+	int				exp_id;
+	char			*exp_name;
+	struct s_export	*next;
+}	t_export;
 
 //main struct
 typedef struct s_mini
@@ -249,19 +264,24 @@ t_token	*get_last_or_pipe(t_token *to_advance);
 char	**get_cmd(t_token *token);
 t_token	*get_last_redir(t_token *node, int first_interaction);
 
-//builtins/tests.c
-void	tests_builtins(void *root);
+//builtins/support.c
+void	define_builtins(t_mini *mini_d);
+void	tests_builtins(t_mini *mini, void *root);
 
 //builtins/echo.c
-void	define_builtins(t_mini *mini_d);
 void	echo(char **str);
 int		is_echoflag(char *str, int *new_line);
 
-//builtins/*.c
-int		buildin_pwd(void);
-void	buildin_env(t_env *env_var);
+//builtins/pwd.c
+int		pwd(char **str);
+
+//builtins/bt_env.c
+void	env(t_env *env_var);
+
+//builtins/cd.c
+int		cd(t_mini *mini, char **str);
 
 //env/env.c
-int		get_env(char **env, t_env *env_var);
+int		copy_env(char **env, t_env *env_var);
 
 #endif

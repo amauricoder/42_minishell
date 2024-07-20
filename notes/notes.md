@@ -71,10 +71,6 @@ make re && clear && valgrind --leak-check=full --track-fds=yes --show-leak-kinds
 ## TESTES EXPANSION
 ### 
 
---- amauri > $po --> error here
---- > > > ---> error here (This is syntax error, easy to resolver)
---- redirect withou nothing is syntax error (TO SOLVE)
-
 - '$USER' ~ [output] = $USER
 - "$USER" ~ [output] = aconceic
 - '$USER>amauri' ~ [output] = $USER>amauri
@@ -96,14 +92,15 @@ make re && clear && valgrind --leak-check=full --track-fds=yes --show-leak-kinds
 - "p" 'wd' ~ [output] = p: command not found
 - amaur"lisbo" ~ [output] = amaurlisbo
 - palavra"$" ~ [output] = palavra$
-- palavra"$"palavra ~ [output] = palavra$palavra ---->> LEAK HERE
+- palavra"$"palavra ~ [output] = palavra$palavra
 - palavra"$USER"palavra ~ [output] = palavraaconceicpalavra ---> LEAK HERE
 - $12USER ~ [output] = 2USER
 - $123456789USER ~ [output] = $23456789USER
-- $0 ~[output] ./minishell  --- sozinho executa
+- $0 ~[output] ./minishell  --- sozinho executa (abrir o programa dnv)
 - $0USER ~[output] ./minishellUSER --- nao executa
 
 - "e"'c'"h""o"
+- echo "WORD" -> the second token was beggining with space and nor in_DQUOTE (do_lexing)
 
 
 ===== test heredoc ====
@@ -125,6 +122,7 @@ cmd > file >> file2 < file3
 
 PROBLEMS TO BE SOLVED
 
-echo "WORD" -> This is creating a token begining with a space (find_expansion)
+--- amauri > $po --> error here (syntax error)
 
-echo "WORD" -> This word is not in state->IN_D_QUOTES (do_lexing) 
+--- > > > ---> error here (This is syntax error, easy to resolver)
+redirect withou nothing is syntax error (TO SOLVE)

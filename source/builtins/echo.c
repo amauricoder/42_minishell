@@ -6,37 +6,11 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:15:14 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/19 15:55:21 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/20 12:15:29 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-void	define_builtins(t_mini *mini_d)
-{
-	t_token	*tmp;
-
-	tmp = mini_d->token;
-	while (tmp)
-	{
-		tmp->builtin = NO_B;
-		if (!ft_strncmp(tmp->content, "echo", 4))
-			tmp->builtin = ECHO;
-		if (!ft_strncmp(tmp->content, "cd", 2))
-			tmp->builtin = CD;
-		if (!ft_strncmp(tmp->content, "pwd", 3))
-			tmp->builtin = PWD;
-		if (!ft_strncmp(tmp->content, "export", 6))
-			tmp->builtin = EXPORT;
-		if (!ft_strncmp(tmp->content, "unset", 5))
-			tmp->builtin = UNSET;
-		if (!ft_strncmp(tmp->content, "env", 3))
-			tmp->builtin = B_ENV;
-		if (!ft_strncmp(tmp->content, "exit", 4))
-			tmp->builtin = EXIT;
-		tmp = tmp->next;
-	}
-}
 
 //not done. just a scketch
 //echo -n oi-> printa oi sem o \n
@@ -58,7 +32,11 @@ void	echo(char **str)
 	{
 		print = is_echoflag(str[i], &new_line);
 		if (print)
+		{
 			printf("%s", str[i]);
+			if (str[i + 1])
+				printf(" ");
+		}
 		i++;
 	}
 	if (new_line == 1)
