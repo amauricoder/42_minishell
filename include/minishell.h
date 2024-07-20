@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 14:41:15 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/07/20 14:56:07 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,6 +253,7 @@ void	print_tree(void *node, const char *prefix, bool isLeft);
 void	print_exec(void *node, const char *prefix, bool isLeft);
 void	print_redir(void *node, const char *prefix, bool isLeft);
 void	print_pipe(void *node, const char *prefix, bool isLeft);
+
 //parsing/tree_free.c
 void	free_exec(void *root);
 void	free_redir(void *root);
@@ -284,5 +285,6 @@ char	*get_path(t_mini *mini, char *str);
 
 //env/env.c
 int		copy_env(char **env, t_env **env_var);
+//int		ft_getenv(t_mini *mini_d, char *to_find);
 
 #endif

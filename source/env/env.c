@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:52:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 14:52:10 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/07/20 14:57:20 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,3 @@ int	copy_env(char **env, t_env **env_var)
 	return (EXIT_SUCCESS);
 }
 
-//fazer uma ft_getenv
