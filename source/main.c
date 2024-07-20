@@ -6,7 +6,11 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/07/20 15:02:53 by ismirand         ###   ########.fr       */
+=======
+/*   Updated: 2024/07/20 15:23:15 by aconceic         ###   ########.fr       */
+>>>>>>> amauri
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +69,6 @@ int	main(int argc, char **argv, char **envp)
 			printf("\n");
 			print_tree(mini_d.root, "", 0);
 			printf("\n");
-			//printf(MGT"-------- TEST FT_GETENV --------\n"RESET);
-			//ft_getenv(&mini_d, "USER");
 			printf(ORANGE"-------- END MAIN --------\n"RESET);
 
 			free_tree(mini_d.root);

@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 15:50:51 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/07/20 16:13:29 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,9 +221,9 @@ void	signal_handler_child(int sig);
 
 //expand/expansion.c
 int		find_expansion(t_mini	*mini_d);
-char	*env_expanded(char *content);
-void	expand_dollar(t_token *token, int i);
-char	*change_content(t_token *token, int i);
+char	*env_expanded(t_mini *mini_d, char *content);
+void	expand_dollar(t_mini *mini_d, t_token *token, int i);
+char	*change_content(t_mini *mini_d, t_token *token, int i);
 void	clean_token(t_mini *mini_d);
 void	update_word_to_file(t_mini *mini_d);
 
@@ -286,6 +286,6 @@ char	*find_last_dir(char *dir);
 
 //env/env.c
 int		copy_env(char **env, t_env **env_var);
-//int		ft_getenv(t_mini *mini_d, char *to_find);
+int		ft_getenv(t_mini *mini_d, char *to_find);
 
 #endif

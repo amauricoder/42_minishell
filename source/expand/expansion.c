@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:40:18 by ismirand          #+#    #+#             */
-/*   Updated: 2024/07/18 19:45:26 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/07/20 15:12:58 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	find_expansion(t_mini	*mini_d)
 		if (mini_d->token->state != 1
 			&& check_dollar(mini_d->token->content))
 		{
-			expand_dollar(mini_d->token, 0);
+			expand_dollar(mini_d ,mini_d->token, 0);
 			free_matriz(expanded_envs);
 		}
 		mini_d->token = mini_d->token->next;
@@ -43,7 +43,7 @@ int	find_expansion(t_mini	*mini_d)
  * @attention Secondary function for find_expansion();
  * @brief Search for $ENV, if found, expand and replace in the token content.
 */
-void	expand_dollar(t_token *token, int i)
+void	expand_dollar(t_mini *mini_d, t_token *token, int i)
 {
 	char	*tmp_final;
 
@@ -61,11 +61,11 @@ void	expand_dollar(t_token *token, int i)
 	}
 	if (i < (int)ft_strlen(token->content) && token->len > 1)
 	{
-		tmp_final = change_content(token, i);
+		tmp_final = change_content(mini_d, token, i);
 		free(token->content);
 		token->content = ft_strdup(tmp_final);
 		token->len = ft_strlen(token->content);
-		expand_dollar(token, i);
+		expand_dollar(mini_d, token, i);
 	}
 	free(tmp_final);
 }
@@ -75,14 +75,14 @@ void	expand_dollar(t_token *token, int i)
  * @brief Changes the content of the token with the expansible env var.
  * @return The string with the expanded var.
 */
-char	*change_content(t_token *token, int i)
+char	*change_content(t_mini *mini_d, t_token *token, int i)
 {
 	char	*env_exp;
 	char	*tmp;
 	char	*tmp_middle;
 	char	*tmp_end;
 
-	env_exp = env_expanded(&token->content[i]);
+	env_exp = env_expanded(mini_d, &token->content[i]);
 	tmp = ft_substr(token->content, 0, i);
 	tmp_middle = ft_strjoin(tmp, env_exp);
 	tmp_end = ft_substr(token->content,
@@ -104,7 +104,7 @@ char	*change_content(t_token *token, int i)
  * @attention Secondary function to change_content()
  * @return $USER -> aconceic || ft_strdup("") in case of invalid ENV var
 */
-char	*env_expanded(char *cont)
+char	*env_expanded(t_mini *mini_d, char *cont)
 {
 	int		i;
 	char	*tmp;
@@ -124,7 +124,7 @@ char	*env_expanded(char *cont)
 	while (cont[i] && (!specch(cont[i + 1]) && cont[i + 1]))
 		i ++;
 	tmp = ft_substr(cont, 1, i);
-	if (getenv(tmp))
+	if (ft_getenv(mini_d, tmp))
 	{
 		env_expanded = ft_strdup(getenv(tmp));
 		free(tmp);
