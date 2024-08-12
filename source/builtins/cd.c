@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 16:06:02 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/12 15:44:57 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,43 +18,40 @@ int	cd(t_mini *mini, char **str)
 	char	*dir;	
 
 	if (str[1] && str[2])
-		return (error_msg_and_exit(CD_ERR_ARG, EXIT_FAILURE));
+		return (error_msg_and_exit(mini, CD_ERR_ARG, EXIT_FAILURE));
 	if (!str[1])
 	{
 		dir = get_path(mini, "HOME");
-		//printf("dir if !str[1]-> %s\n", dir);
-		if (chdir(dir) == -1)
-		{
-			printf("dir !str[1] -> %s\n", dir);
-			perror("minishell: cd: ");
-			free(dir);
+		printf("cd -> %s\n", dir);//
+		if (safe_chdir(mini, dir) == -1)
 			return (EXIT_FAILURE);
-		}
-		free(dir);
-		return (EXIT_SUCCESS);
+		free (dir);
 	}
 	if (str[1])
 	{
 		dir = getcwd(cwd, sizeof(cwd));
-		printf("dir str[1] -> %s\n", dir);
+		printf("cd * -> %s/%s\n", dir, str[1]);//
 		if (!ft_strncmp(str[1], "..", 2))
 		{
 			dir = find_last_dir(dir);		
-			printf("dir find_last_dir -> %s\n", dir);
-			if (chdir(dir) == -1)
-			{
-				perror("minishell: cd: ");
+			printf("cd .. -> %s\n", dir);//
+			if (safe_chdir(mini, dir) == -1)
 				return (EXIT_FAILURE);
-			}
 		}
-		else if (chdir(str[1]) == -1)
-		{
-			perror("minishell: cd: ");
+		else if (safe_chdir(mini, str[1]) == -1)
 			return (EXIT_FAILURE);
-		}
 	}
-	
 	return (EXIT_SUCCESS);	
+}
+
+int	safe_chdir(t_mini *mini, char *dir)
+{
+	if (chdir(dir) == -1)
+	{
+		mini->exit_status = error_msg_and_exit(mini, CD_ERR_DIR, EXIT_FAILURE);//acho que ta redundante
+		return (-1);
+	}
+	return (EXIT_SUCCESS);
 }
 
 char	*find_last_dir(char *dir)

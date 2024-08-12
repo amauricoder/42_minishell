@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:52:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 15:23:05 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/12 14:33:25 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ int	copy_env(char **env, t_env **env_var)
 int	ft_getenv(t_mini *mini_d, char *to_find)
 {
 	t_env	*current;
-	int		i;
 
-	i = 0;
 	current = mini_d->env_d;
 	while(current)
 	{

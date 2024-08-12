@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 19:46:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 14:56:44 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/12 14:56:05 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	init_main_struct(t_mini *mini_d, char **argv, char **envp)
 	get_argv_cp(mini_d, argv);
 	//token
 	mini_d->token_type = 0;
+	mini_d->exit_status = 0;
 	mini_d->token = NULL;
 }
 

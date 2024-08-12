@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/12 15:39:54 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/12 15:57:21 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv, char **envp)
 		//mini_d.input = readline(mini_d.prompt);
 		mini_d.input = readline("Minishell $ ");
 		//funcao de verificacao
-		if (check_input(mini_d.input))
+		if (check_input(&mini_d, mini_d.input))
 			add_history(mini_d.input);
 		else if (!mini_d.input || (!ft_strncmp(mini_d.input, "exit", 4)
 			&& ft_strlen(mini_d.input) == 4))

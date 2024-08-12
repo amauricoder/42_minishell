@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/12 15:04:05 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/12 15:56:23 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,13 @@
 /***********************************/
 /* ERROR MSG && EXIT_STATUS VALUES */
 /***********************************/
-# define SYNTAX_ERR 2
+# define SYNTAX_ERR "minishell : syntax error\n"
 # define PWD_ERR "minishell : pwd: -*: invalid option\npwd: usage: pwd\n"
+# define PWD_ERR_DIR "minishell : pwd: cannot access '': No such file or directory\n"
 # define CD_ERR_ARG "minishell : cd: too many arguments\n"
+# define CD_ERR_DIR "minishell : cd: no such file or directory\n"
+# define EXIT_ERR_ARG "minishell : exit: too many arguments\n"
+# define EXIT_ERR_NUM "minishell : exit: numeric argument required\n"
 
 /*************************/
 /*    structs and enun	 */
@@ -132,6 +136,7 @@ typedef struct s_mini
 	char	**argv_cp;
 	int		token_type;
 	void	*root;
+	int		exit_status;
 	t_env	*env_d;
 	t_token	*token;
 }				t_mini;
@@ -205,11 +210,11 @@ int		token_lstadd_back(t_mini *mini_d, t_token *new_token);
 void	print_nodes(t_mini *mini_d);
 void	printf_matriz(char **to_print);
 char	*ft_strdup_qt(char *str, int qt);
-int		error_msg_and_exit(char *str, int exit_value);
+int		error_msg_and_exit(t_mini *mini, char *str, int exit_value);
 
 //check_input.c
 int		is_argument_valid(int argc, char **env);
-int		check_input(char *input);
+int		check_input(t_mini *mini, char *input);
 int		is_quotes_closed(char *input);
 int		is_pipe_last_or_first(char *input);
 int		is_redir_invalid(char *input);
@@ -280,15 +285,19 @@ void	echo(char **str);
 int		is_echoflag(char *str, int *new_line);
 
 //builtins/pwd.c
-int		pwd(char **str);
+int		pwd(t_mini *mini, char **str);
 
 //builtins/bt_env.c
 void	env(t_env *env_var);
 
 //builtins/cd.c
 int		cd(t_mini *mini, char **str);
-char	*get_path(t_mini *mini, char *str);
+int		safe_chdir(t_mini *mini, char *dir);
 char	*find_last_dir(char *dir);
+char	*get_path(t_mini *mini, char *str);
+
+//builtins/exit.c
+int		exit_shell(t_mini *mini_d, char **str);
 
 //env/env.c
 int		copy_env(char **env, t_env **env_var);

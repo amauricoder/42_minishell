@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   support.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:02:42 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/19 16:00:30 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/12 15:15:53 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,13 @@ char	*ft_strdup_qt(char *str, int qt)
 }
 
 /**
- * @brief Give the error message and set the g_exit_status global variable
+ * @brief Give the error message and set the exit_status in the main structure
  * to the exit value given
  * @return exit_value
 */
-int	error_msg_and_exit(char *str, int exit_value)
+int	error_msg_and_exit(t_mini *mini, char *str, int exit_value)
 {
 	ft_putendl_fd(str, 2);
-	g_exit_status = exit_value;
+	mini->exit_status = exit_value;
 	return (exit_value);
 }
