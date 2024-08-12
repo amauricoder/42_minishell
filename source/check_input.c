@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:07:33 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/12 15:30:43 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/12 15:42:59 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,14 @@ int	is_redir_invalid(char *inpt)
 		if (!ft_strncmp(&inpt[i], ">>", 2) || !ft_strncmp(&inpt[i], "<<", 2))
 		{	
 			if (inpt[i + 2])
-				is_invalid = is_next_word_invalid(&inpt[i + 2]);
+				is_invalid += is_next_word_invalid(&inpt[i + 2]);
 			else
 				return (true);
 		}
 		else if (!ft_strncmp(&inpt[i], ">", 1) || !ft_strncmp(&inpt[i], "<", 1))
 		{
 			if (inpt[i + 1])
-				is_invalid = is_next_word_invalid(&inpt[i + 1]);
+				is_invalid += is_next_word_invalid(&inpt[i + 1]);
 			else
 				return (true);
 		}
