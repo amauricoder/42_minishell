@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+         #
+#    By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
-#    Updated: 2024/08/10 17:13:05 by aconceic         ###   ########.fr        #
+#    Updated: 2024/08/12 15:49:27 by ismirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ SRC = prompt.c frees.c lexing/lexing.c lexing/lexing_support.c\
 		expand/expansion_support.c parsing/parsing.c parsing/tree_debug.c\
 		parsing/tree_support.c parsing/tree_free.c parsing/tree_support2.c\
 		env/env.c init_values.c builtins/echo.c builtins/pwd.c\
-		builtins/support.c builtins/cd.c exec/exec.c \
+		builtins/support.c builtins/cd.c builtins/exit.c exec/exec.c \
 
 ##############################################
 #                COMPILATION                 #

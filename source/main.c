@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/10 17:29:51 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/12 15:36:23 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv, char **envp)
 		//mini_d.input = readline(mini_d.prompt);
 		mini_d.input = readline("Minishell $ ");
 		//funcao de verificacao
-		if (check_input(mini_d.input))
+		if (check_input(&mini_d, mini_d.input))
 			add_history(mini_d.input);
 		else if (!mini_d.input || (!ft_strncmp(mini_d.input, "exit", 4)
 			&& ft_strlen(mini_d.input) == 4))
@@ -49,7 +49,7 @@ int	main(int argc, char **argv, char **envp)
 
 			//TESTES BILLTIN(arvore)
 			//then, walk trhgout the tree and execute the commands
-			//tests_builtins(&mini_d, mini_d.root);
+			tests_builtins(&mini_d, mini_d.root);
 			//andar pela arvore executando os nodes
 			//exec_tree(&mini_d, mini_d.root)
 			//redir_exec_tree(&mini_d, mini_d.root);	
