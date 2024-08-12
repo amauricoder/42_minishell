@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:07:33 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/08 16:31:29 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/12 13:30:58 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int	check_input(char *input)
 {
 	if (!input)
 		return (false);
-	if (!is_quotes_closed(input) || is_pipe_the_last(input))
+	if (!is_quotes_closed(input) || is_pipe_last_or_first(input)
+		|| is_redir_invalid(input))
 		return (error_msg_and_exit("Error\nSyntax error", 2));
 	return (false);
 }
@@ -71,11 +72,13 @@ int	is_quotes_closed(char *input)
 /**
  * @brief Check if there is a pipe as last characther
 */
-int	is_pipe_the_last(char *input)
+int	is_pipe_last_or_first(char *input)
 {
 	int	i;
 
 	i = 0;
+	if (input[0] == '|')
+		return (true);
 	while (input[i])
 		i ++;
 	i --;
@@ -83,5 +86,25 @@ int	is_pipe_the_last(char *input)
 		i --;
 	if (i >= 0 && input[i] == '|')
 		return (true);
+	return (false);
+}
+
+int	is_redir_invalid(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (!ft_strncmp(&input[i], ">>", 2))
+			printf("Have >> \n");
+		else if (!ft_strncmp(&input[i], "<<", 2))
+			printf("Have << \n");
+		else if (!ft_strncmp(&input[i], ">", 1))
+			printf("Have > \n");
+		else if (!ft_strncmp(&input[i], "<", 1))
+			printf("Have < \n");
+		i ++;
+	}
 	return (false);
 }

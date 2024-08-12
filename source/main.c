@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 16:15:08 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/10 17:29:51 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,10 @@ int	main(int argc, char **argv, char **envp)
 
 			//TESTES BILLTIN(arvore)
 			//then, walk trhgout the tree and execute the commands
-			tests_builtins(&mini_d, mini_d.root);
-			//rodar a arvore
-				//se o node for de pipe
-					//executar o node da esquerda e mandar para o input da direita
-					
+			//tests_builtins(&mini_d, mini_d.root);
+			//andar pela arvore executando os nodes
+			//exec_tree(&mini_d, mini_d.root)
+			//redir_exec_tree(&mini_d, mini_d.root);	
 			//PRINTS FOR DEBUGGING PURPOSES
 			printf(ORANGE"-------- MAIN --------\n"RESET);
 			printf("\n");

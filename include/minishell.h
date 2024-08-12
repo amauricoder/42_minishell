@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 16:13:29 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/10 17:33:08 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,8 @@ int		error_msg_and_exit(char *str, int exit_value);
 int		is_argument_valid(int argc, char **env);
 int		check_input(char *input);
 int		is_quotes_closed(char *input);
-int		is_pipe_the_last(char *input);
+int		is_pipe_last_or_first(char *input);
+int		is_redir_invalid(char *input);
 
 //signals.c
 void	signals_init(void);
@@ -264,6 +265,10 @@ void	free_pipe(void *root);
 t_token	*get_last_or_pipe(t_token *to_advance);
 char	**get_cmd(t_token *token);
 t_token	*get_last_redir(t_token *node, int first_interaction);
+
+//exec/exec.c
+void	exec_tree(t_mini *mini_d, void *root);
+void	redir_exec_tree(t_mini *mini_d, void *root);
 
 //builtins/support.c
 void	define_builtins(t_mini *mini_d);
