@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/10 17:33:08 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/12 15:04:05 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,7 @@ int		check_input(char *input);
 int		is_quotes_closed(char *input);
 int		is_pipe_last_or_first(char *input);
 int		is_redir_invalid(char *input);
+int		is_next_word_invalid(char *input);
 
 //signals.c
 void	signals_init(void);
