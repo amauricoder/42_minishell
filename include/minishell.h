@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/13 17:20:07 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/13 17:50:22 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,6 +287,7 @@ void	exec_redir_out(t_mini *mini_d, t_redir *node);
 //exec/exec_cmd.c
 void	execute_cmd(t_mini *mini, void *root);
 char	**find_path_env(t_mini	*mini_d);
+char	**get_env_matriz(t_mini *mini_d);
 
 //builtins/support.c
 void	define_builtins(t_mini *mini_d);
