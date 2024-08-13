@@ -127,6 +127,10 @@ PROBLEMS TO BE SOLVED
 --- > > > ---> error here (This is syntax error, easy to resolver)
 redirect withou nothing is syntax error (TO SOLVE)
 
+--- export LS="ls -la | wc -l" --> Verificar como acontece no bash(pra depois)
+--- export LS="ls -la" --> Verificar como acontece no bash (pra depois)
+
+--- $LS -> SEGFAULT
 
 https://codeshare.io/KWwAOM
 

@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/12 15:56:23 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/13 17:20:07 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@
 # include <readline/readline.h>//readline
 # include <readline/history.h>//add_history
 # include <stdbool.h>
+# include <fcntl.h> //open() flags
+# include <unistd.h> 
+# include <sys/types.h>
+# include <sys/stat.h>
 
 /*************************/
 /*     	 LIBFT/GNL 		 */
@@ -274,7 +278,15 @@ t_token	*get_last_redir(t_token *node, int first_interaction);
 
 //exec/exec.c
 void	exec_tree(t_mini *mini_d, void *root);
-void	redir_exec_tree(t_mini *mini_d, void *root);
+
+//exec/exec_redir.c
+void	handle_redir_nodes(t_mini *mini_d, void *root);
+void	exec_redir_in(t_mini *mini_d, t_redir *node);
+void	exec_redir_out(t_mini *mini_d, t_redir *node);
+
+//exec/exec_cmd.c
+void	execute_cmd(t_mini *mini, void *root);
+char	**find_path_env(t_mini	*mini_d);
 
 //builtins/support.c
 void	define_builtins(t_mini *mini_d);
