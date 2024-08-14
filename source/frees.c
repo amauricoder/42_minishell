@@ -3,14 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   frees.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:56:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 14:51:16 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/14 14:31:06 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	free_and_exit(t_mini *mini)
+{
+	//tem que limpar o exec node
+	if (mini->token)
+	{
+		free_tokens(mini);
+		free_main_struct(mini);
+	}
+	exit(mini->exit_status);
+}
+
+/**
+ * @brief Free main struct itens
+*/
+int	free_main_struct(t_mini *mini_d)
+{
+	free(mini_d->input);
+	free(mini_d->prompt);
+	free_matriz(mini_d->argv_cp);
+	free_env(mini_d->env_d);
+	exit(EXIT_SUCCESS);
+}
 
 /**
  * @brief Clean ** of chars.
@@ -26,18 +49,6 @@ void	free_matriz(char **dp_char)
 	while (dp_char[i])
 		free(dp_char[i ++]);
 	free(dp_char);
-}
-
-/**
- * @brief Free main struct itens
-*/
-int	free_main_struct(t_mini *mini_d)
-{
-	free(mini_d->input);
-	free(mini_d->prompt);
-	free_matriz(mini_d->argv_cp);
-	free_env(mini_d->env_d);
-	exit(EXIT_SUCCESS);
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 15:30:24 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/12 15:48:00 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/13 11:01:51 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	tests_builtins(t_mini *mini, void *root)
 		if (exec_node->builtin == CD)
 			cd(mini, exec_node->args);
 		if (exec_node->builtin == EXIT)
-			exit_shell(mini, exec_node->args);
+			exit_read(mini, exec_node->args);
 	}
 	//printf("The tipe of the root is %i\n", type);
 	//(void)root;

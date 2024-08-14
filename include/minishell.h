@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 12:55:06 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/14 14:44:47 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,15 @@
 /***********************************/
 /* ERROR MSG && EXIT_STATUS VALUES */
 /***********************************/
-# define SYNTAX_ERR "minishell : syntax error\n"
-# define PWD_ERR "minishell : pwd: -*: invalid option\npwd: usage: pwd\n"
-# define PWD_ERR_DIR "minishell : pwd: cannot access '': No such file or directory\n"
-# define CD_ERR_ARG "minishell : cd: too many arguments\n"
-# define CD_ERR_DIR "minishell : cd: no such file or directory\n"
-# define EXIT_ERR_ARG "minishell : exit: too many arguments\n"
-# define EXIT_ERR_NUM "minishell : exit: numeric argument required\n"
+# define INT_MIN -2147483648
+# define INT_MAX 2147483647
+# define SYNTAX_ERR "minishell : syntax error"
+# define PWD_ERR "minishell : pwd: -*: invalid option\npwd: usage: pwd"
+# define PWD_ERR_DIR "minishell : pwd: cannot access '': No such file or directory"
+# define CD_ERR_ARG "minishell : cd: too many arguments"
+# define CD_ERR_DIR "minishell : cd: no such file or directory"
+# define EXIT_ERR_ARG "minishell : exit: too many arguments"
+# define EXIT_ERR_NUM "minishell : exit: numeric argument required"
 
 /*************************/
 /*    structs and enun	 */
@@ -183,8 +185,9 @@ int		main(int argc, char **argv, char **envp);
 char	*get_prompt_msg(char **envp);
 
 //frees.c
-void	free_matriz(char **dp_char);
+void	free_and_exit(t_mini *mini);
 int		free_main_struct(t_mini *mini_d);
+void	free_matriz(char **dp_char);
 int		free_env(t_env *env);
 void	free_tokens(t_mini *mini_d);
 
@@ -214,7 +217,7 @@ int		token_lstadd_back(t_mini *mini_d, t_token *new_token);
 void	print_nodes(t_mini *mini_d);
 void	printf_matriz(char **to_print);
 char	*ft_strdup_qt(char *str, int qt);
-int		error_msg_and_exit(t_mini *mini, char *str, int exit_value);
+int		error_msg(t_mini *mini, char *str, int exit_value);
 
 //check_input.c
 int		is_argument_valid(int argc, char **env);
@@ -313,7 +316,9 @@ char	*find_last_dir(char *dir);
 char	*get_path(t_mini *mini, char *str);
 
 //builtins/exit.c
-int		exit_shell(t_mini *mini_d, char **str);
+void	exit_read(t_mini *mini_d, char **str);
+int		exit_number(t_mini *mini, char **str);
+int		str_digit(char *str);
 
 //env/env.c
 int		copy_env(char **env, t_env **env_var);

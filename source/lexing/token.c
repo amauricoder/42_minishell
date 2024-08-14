@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:40:12 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/12 15:32:53 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/13 15:03:42 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_token	*set_token_head(t_mini *mini_d)
 {
 	if (!mini_d->token)
 	{
-		error_msg_and_exit(mini_d, "Error setting token head\n", 127);
+		error_msg(mini_d, "Error setting token head\n", 127);
 		return (NULL);
 	}
 	return (mini_d->token);
@@ -82,7 +82,7 @@ t_token	*set_token_tail(t_mini *mini_d)
 
 	if (!mini_d->token)
 	{
-		error_msg_and_exit(mini_d, "Error setting token tail\n", 127);
+		error_msg(mini_d, "Error setting token tail\n", 127);
 		return (NULL);
 	}
 	current = mini_d->token;
