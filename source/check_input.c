@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:07:33 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/12 15:57:09 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/13 15:03:42 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	check_input(t_mini *mini, char *input)
 		return (false);
 	if (!is_quotes_closed(input) || is_pipe_last_or_first(input)
 		|| is_redir_invalid(input))
-		return (error_msg_and_exit(mini, SYNTAX_ERR, 2));
+		return (error_msg(mini, SYNTAX_ERR, 2));
 	return (false);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:02:42 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/12 15:15:53 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/13 15:03:42 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*ft_strdup_qt(char *str, int qt)
  * to the exit value given
  * @return exit_value
 */
-int	error_msg_and_exit(t_mini *mini, char *str, int exit_value)
+int	error_msg(t_mini *mini, char *str, int exit_value)
 {
 	ft_putendl_fd(str, 2);
 	mini->exit_status = exit_value;

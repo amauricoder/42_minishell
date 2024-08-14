@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/12 15:44:57 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/13 15:03:42 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	cd(t_mini *mini, char **str)
 	char	*dir;	
 
 	if (str[1] && str[2])
-		return (error_msg_and_exit(mini, CD_ERR_ARG, EXIT_FAILURE));
+		return (error_msg(mini, CD_ERR_ARG, EXIT_FAILURE));
 	if (!str[1])
 	{
 		dir = get_path(mini, "HOME");
@@ -48,7 +48,7 @@ int	safe_chdir(t_mini *mini, char *dir)
 {
 	if (chdir(dir) == -1)
 	{
-		mini->exit_status = error_msg_and_exit(mini, CD_ERR_DIR, EXIT_FAILURE);//acho que ta redundante
+		mini->exit_status = error_msg(mini, CD_ERR_DIR, EXIT_FAILURE);//acho que ta redundante
 		return (-1);
 	}
 	return (EXIT_SUCCESS);
