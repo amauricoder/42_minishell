@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 14:44:47 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/14 18:18:53 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@
 # define CD_ERR_DIR "minishell : cd: no such file or directory"
 # define EXIT_ERR_ARG "minishell : exit: too many arguments"
 # define EXIT_ERR_NUM "minishell : exit: numeric argument required"
-
+# define FORK_ERR "minishell : fork: error during fork"
+# define ERR_CMD_NOT_FOUND "minishell : command not found"
 /*************************/
 /*    structs and enun	 */
 /*************************/
@@ -293,14 +294,14 @@ int		execute_cmd(t_mini *mini, void *root);
 char	**find_path_env(t_mini	*mini_d);
 char	**get_env_matriz(t_mini *mini_d);
 char	*create_cmdpath(char *possible_path, char *command);
-void	execute_buildins(t_mini *mini, void *root);
+int		execute_buildins(t_mini *mini, void *root);
 
 //builtins/support.c
 void	define_builtins(t_mini *mini_d);
 void	tests_builtins(t_mini *mini, void *root);
 
 //builtins/echo.c
-void	echo(char **str);
+int		echo(char **str);
 int		is_echoflag(char *str, int *new_line);
 
 //builtins/pwd.c

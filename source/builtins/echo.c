@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:15:14 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 13:34:17 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/14 17:58:11 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 //echo -nnnnnnn oi-> printa oi sem o \n
 //echo -n -n -n oi -> printa oi sem o \n
 //echo -noi -> printa -noi
-void	echo(char **str)
+int		echo(char **str)
 {
 	int	i;
 	int	new_line;
@@ -26,6 +26,7 @@ void	echo(char **str)
 	i = 1;
 	new_line = 1;
 	print = 0;
+	printf("Entrou na echo \n");
 	while (str[i])
 	{
 		print = is_echoflag(str[i], &new_line);
@@ -39,6 +40,7 @@ void	echo(char **str)
 	}
 	if (new_line == 1)
 		printf("\n");
+	return (EXIT_SUCCESS);
 }
 
 int	is_echoflag(char *str, int *new_line)

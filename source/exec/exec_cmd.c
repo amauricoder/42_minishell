@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:28:01 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 12:33:59 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/14 18:25:18 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,23 @@ int		execute_cmd(t_mini *mini_d, void *root)
 	int		i;
 
 	exec_nd = root;
+	if (exec_nd->builtin != 0)
+		return (execute_buildins(mini_d, root));
 	envs = get_env_matriz(mini_d);
 	path_env = find_path_env(mini_d); // tratar caso path_env seja null
-	if (access(exec_nd->args[0], X_OK) != -1 && !exec_nd->builtin) // this is for complete path
-		if (execve(exec_nd->args[0], exec_nd->args, envs) == -1)
-			perror("Command");
+	if (path_env == NULL)
+		error_msg(mini_d, CD_ERR_DIR, 130);
+	if (access(exec_nd->args[0], X_OK) != -1) // this is for complete path
+		execve(exec_nd->args[0], exec_nd->args, envs);
 	i = -1;
 	while (path_env[++ i]) // This is for possible paths
 	{
 		possible_path = create_cmdpath(path_env[i], exec_nd->args[0]);
-		if (access(possible_path, X_OK) != -1 && !exec_nd->builtin)
-			if (execve(possible_path, exec_nd->args, envs) == -1)
-				perror("Command");
+		if (access(possible_path, X_OK) != -1)
+			execve(possible_path, exec_nd->args, envs);
 		free(possible_path);
 	}
-	//se chegar aqui, deu merda. O comando nao caiu na execve por alguma razao.
-	//pode ser build_in. chamar funcao de execucao dos buildins.
-	execute_buildins(mini_d, exec_nd); //aqui eu preciso saber se foi executado ou nao.
-	// Se chegou aqui, tratar erro.
-	perror("Command not found");
+	error_msg(mini_d, ERR_CMD_NOT_FOUND, 127);
 	free_matriz(path_env);
 	free_matriz(envs);
 	return(EXIT_FAILURE);
@@ -112,22 +110,21 @@ char	*create_cmdpath(char *possible_path, char *command)
 
 //PRECISO QUE ELA RETORNE VALOR
 //PRECISO QUE OS BUILDINS RETORNEM VALOR
-void	execute_buildins(t_mini *mini, void *root)
+int	execute_buildins(t_mini *mini, void *root)
 {
-	int		type;
 	t_exec	*exec_node;
 
-	type = *((int *)root);
-	if (type == WORD)
+	exec_node = (t_exec *)root;
+	if (exec_node->builtin)
 	{
-		exec_node = (t_exec *)root;
 		if (exec_node->builtin == ECHO)
-			echo(exec_node->args);
+			return (echo(exec_node->args));
 		if (exec_node->builtin == PWD)
-			pwd(mini, exec_node->args);
+			return (pwd(mini, exec_node->args));
 		if (exec_node->builtin == CD)
-			cd(mini, exec_node->args);
+			return (cd(mini, exec_node->args));
 		if (exec_node->builtin == EXIT)
-			exit_shell(mini, exec_node->args);
+			exit_read(mini, exec_node->args);
 	}
+	return (-1);
 }

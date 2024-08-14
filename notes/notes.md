@@ -132,6 +132,13 @@ redirect withou nothing is syntax error (TO SOLVE)
 
 --- $LS -> SEGFAULT
 
+--- ls | exit 1 --> nao sai do programa, mas muda o exit_status para 1
+
+--- export a=a | wc -l --> resultado 0 e nao exporta o "a"
+        * export e unset nao funciona em pipe
+
+-- pwd | echo oi | ls
+
 https://codeshare.io/KWwAOM
 
 

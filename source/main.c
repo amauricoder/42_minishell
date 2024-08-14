@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 13:41:35 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/14 18:26:52 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	g_exit_status = 0;
 
 //Problema com $$ -> Retorna o PID. Como fazer???
+//set follow-fork child
 int	main(int argc, char **argv, char **envp)
 {
 	t_mini	mini_d;
@@ -58,7 +59,7 @@ int	main(int argc, char **argv, char **envp)
 			exec_through_tree(&mini_d, mini_d.root);
 
 			//PRINTS FOR DEBUGGING PURPOSES
-			printf(ORANGE"-------- MAIN --------\n"RESET);
+			/* printf(ORANGE"-------- MAIN --------\n"RESET);
 			printf("\n");
 			printf(MGT"-------- PRINT NODES --------\n"RESET);
 			printf("\n");
@@ -69,11 +70,10 @@ int	main(int argc, char **argv, char **envp)
 			print_tree(mini_d.root, "", 0);
 			printf("\n");
 			printf(ORANGE"-------- END MAIN --------\n"RESET);
-
+ */
 			free_tree(mini_d.root);
 			free(mini_d.input);
 			free_tokens(&mini_d);
-			printf("EXIT STATUS %d \n", mini_d.exit_status);
 		}
 	}
 	free_main_struct(&mini_d);

@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:44:31 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 13:54:57 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:26:52 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	handle_redir_nodes(t_mini *mini_d, void *root)
 		exec_redir_in(mini_d, node);
 	if (dup2(stdout_backup, STDOUT_FILENO) == -1
 		|| dup2(stdin_backup, STDIN_FILENO) == -1)
-		error_msg_and_exit(mini_d, "Minishell: Error redir exec", 1);
+		error_msg(mini_d, "Minishell: Error redir exec", 1);
 	close(stdout_backup);
 	close(stdin_backup);
 }
@@ -45,10 +45,10 @@ void	exec_redir_out(t_mini *mini_d, t_redir *node)
 	else
 		out_fd = open(node->fname, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (out_fd < 0)
-		error_msg_and_exit(mini_d, "Minishell: Error redir out", 1);
+		error_msg(mini_d, "Minishell: Error redir out", 1);
 
 	if (dup2(out_fd, STDOUT_FILENO) == -1)
-		error_msg_and_exit(mini_d, "Minishell: Error Redir Out fd", 1);
+		error_msg(mini_d, "Minishell: Error Redir Out fd", 1);
 	close (out_fd);
 	if (node->down)
 		exec_tree(mini_d, node->down, 1);
@@ -64,15 +64,15 @@ void	exec_redir_in(t_mini *mini_d, t_redir *node)
 	in_fd = open(node->fname, O_RDONLY);
 	if (access(node->fname, R_OK | F_OK ) == -1)
 	{
-		error_msg_and_exit(mini_d, "Minishell: No such file or directory", 1);
+		error_msg(mini_d, "Minishell: No such file or directory", 1);
 		//Clean everything from this point
 		exit(1);
 		return ;
 	}
 	if (in_fd == -1)
-		error_msg_and_exit(mini_d, "Minishell: Error exec redir in", 1);
+		error_msg(mini_d, "Minishell: Error exec redir in", 1);
 	if (dup2(in_fd, STDIN_FILENO) == -1)
-		error_msg_and_exit(mini_d, "Minishell: Error exec redir in", 1);
+		error_msg(mini_d, "Minishell: Error exec redir in", 1);
 	close (in_fd);
 	if (node->down)
 		exec_tree(mini_d, node->down, 1);
