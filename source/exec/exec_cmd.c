@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:28:01 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 12:33:59 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/14 14:55:34 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,6 @@ void	execute_buildins(t_mini *mini, void *root)
 		if (exec_node->builtin == CD)
 			cd(mini, exec_node->args);
 		if (exec_node->builtin == EXIT)
-			exit_shell(mini, exec_node->args);
+			exit_read(mini, exec_node->args);
 	}
 }

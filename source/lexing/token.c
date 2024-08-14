@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:40:12 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/13 15:03:42 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/14 14:55:14 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_token	*set_token_tail(t_mini *mini_d)
 	mini_d->token->head = malloc(sizeof(t_token));
 	if (!mini_d->token || !mini_d->token->head)
 	{
-		error_msg_and_exit("Error alloc_tokenstruct\n", 127);
+		error_msg("Error alloc_tokenstruct\n", 127);
 		return (EXIT_FAILURE);
 	}
 	memset(mini_d->token, 0, sizeof(t_token));

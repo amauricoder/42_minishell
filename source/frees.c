@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:56:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 14:31:06 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:03:06 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 
 void	free_and_exit(t_mini *mini)
 {
-	//tem que limpar o exec node
-	if (mini->token)
-	{
-		free_tokens(mini);
-		free_main_struct(mini);
-	}
+	printf("EXIT STATUS ISABELLA -> %i\n", mini->exit_status);
+	free_tokens(mini);
+	free_main_struct(mini);
 	exit(mini->exit_status);
 }
 
