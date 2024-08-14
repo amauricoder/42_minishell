@@ -6,44 +6,55 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:28:01 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/13 18:37:23 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/14 11:02:08 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-// /bin/ls
+// /usr/bin/ls
 //which ls
 void	execute_cmd(t_mini *mini_d, void *root)
 {
 	printf("EXECUTE CMD\n");
 	t_exec	*exec_nd;
 	char	**path_env;
-	char	**env;
+	char	**envs;
+	char	*possible_path;
+	int		i;
 
 	exec_nd = root;
-	env = get_env_matriz(mini_d);
+	envs = get_env_matriz(mini_d);
 	path_env = find_path_env(mini_d); // tratar caso path_env seja null
 	
 	//verificar se eh buildin
 		//se for, execute buildin
 		//return;
 
-	//primeira coisa, preciso verificar se o executavel esta ali
-	//se esta, eviar para execve
-	if (access(exec_nd->args[0], X_OK) != -1)
+	//verificar se o executavel e encontrado(para caminho completo)
+	if (access(exec_nd->args[0], X_OK) != -1) // this is for complete path
 	{
-		//execute
-		/* printf("entered access execute_cmd\n");
-		printf("%s \n", exec_nd->args[0]);
-		printf_matriz(exec_nd->args);
-		printf_matriz(env); */
-		if (execve(exec_nd->args[0], exec_nd->args, env) == -1)
+		if (execve(exec_nd->args[0], exec_nd->args, envs) == -1)
 			printf("erro de exec \n");
+	}
+	//se chegar aqui, nao caiu na execve
+	//preciso verificar pelos possiveis caminhos.
+	i = 0;
+	while (path_env[i])
+	{
+		possible_path = create_cmdpath(&possible_path[i], exec_nd->args[0]);
+		printf("POSSIBLE_PATH %s \n", possible_path);
+		if (access(possible_path, X_OK) != -1)
+		{
+			if (execve(possible_path, exec_nd->args, envs) == -1)
+			printf("erro de exec \n");
+		}
+		free(possible_path);
+		i ++;
 	}
 	
 	//se nao, preciso achar o caminho atraves do Path
 	free_matriz(path_env);
-	free_matriz(env);
+	free_matriz(envs);
 	(void)mini_d;
 }
 
@@ -98,4 +109,15 @@ char	**get_env_matriz(t_mini *mini_d)
 	}
 	matriz[i] = NULL;
 	return (matriz);
+}
+
+char	*create_cmdpath(char *possible_path, char *command)
+{
+	char	*path;
+	char	*temp;
+
+	temp = ft_strjoin(possible_path, "/");
+	path = ft_strjoin(temp, command);
+	free(temp);
+	return (path);
 }
