@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:44:31 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/13 15:52:49 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/14 13:54:57 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	handle_redir_nodes(t_mini *mini_d, void *root)
 		exec_redir_out(mini_d, node);
 	else if (node->type == R_IN)
 		exec_redir_in(mini_d, node);
-
 	if (dup2(stdout_backup, STDOUT_FILENO) == -1
 		|| dup2(stdin_backup, STDIN_FILENO) == -1)
 		error_msg_and_exit(mini_d, "Minishell: Error redir exec", 1);
@@ -52,7 +51,7 @@ void	exec_redir_out(t_mini *mini_d, t_redir *node)
 		error_msg_and_exit(mini_d, "Minishell: Error Redir Out fd", 1);
 	close (out_fd);
 	if (node->down)
-		exec_tree(mini_d, node->down);
+		exec_tree(mini_d, node->down, 1);
 }
 
 //APENAS LE O ARQUIVO
@@ -76,7 +75,7 @@ void	exec_redir_in(t_mini *mini_d, t_redir *node)
 		error_msg_and_exit(mini_d, "Minishell: Error exec redir in", 1);
 	close (in_fd);
 	if (node->down)
-		exec_tree(mini_d, node->down);
+		exec_tree(mini_d, node->down, 1);
 	//for testing purposes
 	//execlp("cat", "cat", NULL);
 }

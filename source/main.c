@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/13 14:42:01 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/14 13:41:35 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ int	main(int argc, char **argv, char **envp)
 		mini_d.input = readline("Minishell $ ");
 		//funcao de verificacao
 		if (check_input(&mini_d, mini_d.input))
+		{
+			printf("VALUE EX %d", mini_d.exit_status);
 			add_history(mini_d.input);
+			continue;
+		}
 		else if (!mini_d.input || (!ft_strncmp(mini_d.input, "exit", 4)
 			&& ft_strlen(mini_d.input) == 4))
 		{
@@ -49,9 +53,9 @@ int	main(int argc, char **argv, char **envp)
 
 			//TESTES BILLTIN(arvore)
 			//then, walk trhgout the tree and execute the commands
-			tests_builtins(&mini_d, mini_d.root);
+			//tests_builtins(&mini_d, mini_d.root);
 			//andar pela arvore executando os nodes
-			exec_tree(&mini_d, mini_d.root);
+			exec_through_tree(&mini_d, mini_d.root);
 
 			//PRINTS FOR DEBUGGING PURPOSES
 			printf(ORANGE"-------- MAIN --------\n"RESET);
@@ -69,6 +73,7 @@ int	main(int argc, char **argv, char **envp)
 			free_tree(mini_d.root);
 			free(mini_d.input);
 			free_tokens(&mini_d);
+			printf("EXIT STATUS %d \n", mini_d.exit_status);
 		}
 	}
 	free_main_struct(&mini_d);

@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:40:18 by ismirand          #+#    #+#             */
-/*   Updated: 2024/07/20 15:12:58 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/14 13:43:29 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	*env_expanded(t_mini *mini_d, char *cont)
 
 	i = 0;
 	if (cont[1] == '?')
-		return (ft_itoa(g_exit_status));
+		return (ft_itoa(mini_d->exit_status));
 	if (cont[i] == '$' && ft_isdigit(cont[i + 1]) && cont[i + 1] != '0')
 		return (ft_strdup(&cont[i + 2]));
 	else if (cont[i] == '$' && ft_isdigit(cont[i + 1]) && cont[i + 1] == '0')

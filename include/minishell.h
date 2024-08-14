@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 11:00:35 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/14 12:55:06 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,7 +277,8 @@ char	**get_cmd(t_token *token);
 t_token	*get_last_redir(t_token *node, int first_interaction);
 
 //exec/exec.c
-void	exec_tree(t_mini *mini_d, void *root);
+void	exec_through_tree(t_mini *mini_d, void *root);
+void	exec_tree(t_mini *mini_d, void *root, int is_child);
 
 //exec/exec_redir.c
 void	handle_redir_nodes(t_mini *mini_d, void *root);
@@ -285,10 +286,11 @@ void	exec_redir_in(t_mini *mini_d, t_redir *node);
 void	exec_redir_out(t_mini *mini_d, t_redir *node);
 
 //exec/exec_cmd.c
-void	execute_cmd(t_mini *mini, void *root);
+int		execute_cmd(t_mini *mini, void *root);
 char	**find_path_env(t_mini	*mini_d);
 char	**get_env_matriz(t_mini *mini_d);
 char	*create_cmdpath(char *possible_path, char *command);
+void	execute_buildins(t_mini *mini, void *root);
 
 //builtins/support.c
 void	define_builtins(t_mini *mini_d);

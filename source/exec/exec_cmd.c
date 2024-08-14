@@ -6,16 +6,15 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:28:01 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 11:02:08 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/14 12:33:59 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 // /usr/bin/ls
 //which ls
-void	execute_cmd(t_mini *mini_d, void *root)
+int		execute_cmd(t_mini *mini_d, void *root)
 {
-	printf("EXECUTE CMD\n");
 	t_exec	*exec_nd;
 	char	**path_env;
 	char	**envs;
@@ -25,37 +24,26 @@ void	execute_cmd(t_mini *mini_d, void *root)
 	exec_nd = root;
 	envs = get_env_matriz(mini_d);
 	path_env = find_path_env(mini_d); // tratar caso path_env seja null
-	
-	//verificar se eh buildin
-		//se for, execute buildin
-		//return;
-
-	//verificar se o executavel e encontrado(para caminho completo)
-	if (access(exec_nd->args[0], X_OK) != -1) // this is for complete path
-	{
+	if (access(exec_nd->args[0], X_OK) != -1 && !exec_nd->builtin) // this is for complete path
 		if (execve(exec_nd->args[0], exec_nd->args, envs) == -1)
-			printf("erro de exec \n");
-	}
-	//se chegar aqui, nao caiu na execve
-	//preciso verificar pelos possiveis caminhos.
-	i = 0;
-	while (path_env[i])
+			perror("Command");
+	i = -1;
+	while (path_env[++ i]) // This is for possible paths
 	{
-		possible_path = create_cmdpath(&possible_path[i], exec_nd->args[0]);
-		printf("POSSIBLE_PATH %s \n", possible_path);
-		if (access(possible_path, X_OK) != -1)
-		{
+		possible_path = create_cmdpath(path_env[i], exec_nd->args[0]);
+		if (access(possible_path, X_OK) != -1 && !exec_nd->builtin)
 			if (execve(possible_path, exec_nd->args, envs) == -1)
-			printf("erro de exec \n");
-		}
+				perror("Command");
 		free(possible_path);
-		i ++;
 	}
-	
-	//se nao, preciso achar o caminho atraves do Path
+	//se chegar aqui, deu merda. O comando nao caiu na execve por alguma razao.
+	//pode ser build_in. chamar funcao de execucao dos buildins.
+	execute_buildins(mini_d, exec_nd); //aqui eu preciso saber se foi executado ou nao.
+	// Se chegou aqui, tratar erro.
+	perror("Command not found");
 	free_matriz(path_env);
 	free_matriz(envs);
-	(void)mini_d;
+	return(EXIT_FAILURE);
 }
 
 char	**find_path_env(t_mini	*mini_d)
@@ -120,4 +108,26 @@ char	*create_cmdpath(char *possible_path, char *command)
 	path = ft_strjoin(temp, command);
 	free(temp);
 	return (path);
+}
+
+//PRECISO QUE ELA RETORNE VALOR
+//PRECISO QUE OS BUILDINS RETORNEM VALOR
+void	execute_buildins(t_mini *mini, void *root)
+{
+	int		type;
+	t_exec	*exec_node;
+
+	type = *((int *)root);
+	if (type == WORD)
+	{
+		exec_node = (t_exec *)root;
+		if (exec_node->builtin == ECHO)
+			echo(exec_node->args);
+		if (exec_node->builtin == PWD)
+			pwd(mini, exec_node->args);
+		if (exec_node->builtin == CD)
+			cd(mini, exec_node->args);
+		if (exec_node->builtin == EXIT)
+			exit_shell(mini, exec_node->args);
+	}
 }
