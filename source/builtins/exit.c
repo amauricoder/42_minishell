@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:29:54 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/14 18:12:27 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:56:24 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	exit_read(t_mini *mini, char **str)
 {
-	ft_printf("exit\n");
+	ft_printf("nossa exit\n"); // modifiquei isso
 	if (!str[1])
 		free_and_exit(mini);
 	else if (str[1] && str_digit(str[1]))

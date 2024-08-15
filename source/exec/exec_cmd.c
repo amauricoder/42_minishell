@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:28:01 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 18:25:18 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:50:37 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ char	**find_path_env(t_mini	*mini_d)
 	}
 	return (path_clean);
 }
+
 char	**get_env_matriz(t_mini *mini_d)
 {
 	t_env	*nodes;

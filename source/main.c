@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 18:26:52 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:57:32 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	main(int argc, char **argv, char **envp)
 			//tests_builtins(&mini_d, mini_d.root);
 			//andar pela arvore executando os nodes
 			exec_through_tree(&mini_d, mini_d.root);
-
 			//PRINTS FOR DEBUGGING PURPOSES
 			/* printf(ORANGE"-------- MAIN --------\n"RESET);
 			printf("\n");
@@ -70,7 +69,7 @@ int	main(int argc, char **argv, char **envp)
 			print_tree(mini_d.root, "", 0);
 			printf("\n");
 			printf(ORANGE"-------- END MAIN --------\n"RESET);
- */
+ 			*/		
 			free_tree(mini_d.root);
 			free(mini_d.input);
 			free_tokens(&mini_d);
