@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:56:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 15:03:06 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/14 17:05:17 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	free_env(t_env *env)
 	{
 		tmp = env;
 		env = env->next;
-		free(tmp->env_name);
+		free(tmp->name);
 		free(tmp);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:28:01 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 14:55:34 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/14 17:05:17 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ char	**find_path_env(t_mini	*mini_d)
 		return (NULL);
 	while (env_var)
 	{
-		if (!ft_strncmp("PATH", env_var->env_name, 4))
-			path = ft_strdup(env_var->env_name);
+		if (!ft_strncmp("PATH", env_var->name, 4))
+			path = ft_strdup(env_var->name);
 		env_var = env_var->next;
 	}
 	if (path != NULL)
@@ -91,7 +91,7 @@ char	**get_env_matriz(t_mini *mini_d)
 	nodes = mini_d->env_d;
 	while(nodes)
 	{
-		matriz[i] = ft_strdup(nodes->env_name);
+		matriz[i] = ft_strdup(nodes->name);
 		i ++;
 		nodes = nodes->next;
 	}

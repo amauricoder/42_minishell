@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 14:44:47 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/14 17:27:59 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ typedef struct s_token
 //env
 typedef struct s_env
 {
-	int				env_id;
-	char			*env_name;
+	int				id;
+	char			*name;
 	struct s_env	*next;
 }	t_env;
 
@@ -144,6 +144,7 @@ typedef struct s_mini
 	void	*root;
 	int		exit_status;
 	t_env	*env_d;
+	t_env	*export;
 	t_token	*token;
 }				t_mini;
 
@@ -319,6 +320,11 @@ char	*get_path(t_mini *mini, char *str);
 void	exit_read(t_mini *mini_d, char **str);
 int		exit_number(t_mini *mini, char **str);
 int		str_digit(char *str);
+
+//builtins/export.c
+t_env	*export_create(t_mini *mini);
+void	env_export(t_env *env, t_env **export);
+int		export_read(t_mini *mini, char **str);
 
 //env/env.c
 int		copy_env(char **env, t_env **env_var);
