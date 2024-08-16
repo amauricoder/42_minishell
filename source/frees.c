@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:56:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 17:05:17 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/16 20:44:59 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	free_main_struct(t_mini *mini_d)
 	free(mini_d->prompt);
 	free_matriz(mini_d->argv_cp);
 	free_env(mini_d->env_d);
+	free_env(mini_d->export);
 	exit(EXIT_SUCCESS);
 }
 

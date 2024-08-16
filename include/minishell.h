@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 17:27:59 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/16 22:24:21 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,8 +323,9 @@ int		str_digit(char *str);
 
 //builtins/export.c
 t_env	*export_create(t_mini *mini);
-void	env_export(t_env *env, t_env **export);
+void	env_export(t_env *env, t_env *export);
 int		export_read(t_mini *mini, char **str);
+t_env	*lst_sort(t_env *env);
 
 //env/env.c
 int		copy_env(char **env, t_env **env_var);

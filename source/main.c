@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 16:44:57 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/16 20:43:19 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(int argc, char **argv, char **envp)
 			//exec_through_tree(&mini_d, mini_d.root);
 
 			//PRINTS FOR DEBUGGING PURPOSES
-			printf(ORANGE"-------- MAIN --------\n"RESET);
+/* 			printf(ORANGE"-------- MAIN --------\n"RESET);
 			printf("\n");
 			printf(MGT"-------- PRINT NODES --------\n"RESET);
 			printf("\n");
@@ -68,7 +68,7 @@ int	main(int argc, char **argv, char **envp)
 			printf("\n");
 			print_tree(mini_d.root, "", 0);
 			printf("\n");
-			printf(ORANGE"-------- END MAIN --------\n"RESET);
+			printf(ORANGE"-------- END MAIN --------\n"RESET); */
 
 			free_tree(mini_d.root);
 			free(mini_d.input);
