@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/15 13:57:32 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:26:15 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int	main(int argc, char **argv, char **envp)
 			add_history(mini_d.input);
 			continue;
 		}
-		else if (!mini_d.input || (!ft_strncmp(mini_d.input, "exit", 4)
-			&& ft_strlen(mini_d.input) == 4))
+		else if (!mini_d.input)
 		{
 			printf("exit\n");
 			break ;
@@ -56,9 +55,9 @@ int	main(int argc, char **argv, char **envp)
 			//then, walk trhgout the tree and execute the commands
 			//tests_builtins(&mini_d, mini_d.root);
 			//andar pela arvore executando os nodes
-			exec_through_tree(&mini_d, mini_d.root);
+			start_execution(&mini_d, mini_d.root);
 			//PRINTS FOR DEBUGGING PURPOSES
-			/* printf(ORANGE"-------- MAIN --------\n"RESET);
+		 	printf(ORANGE"-------- MAIN --------\n"RESET);
 			printf("\n");
 			printf(MGT"-------- PRINT NODES --------\n"RESET);
 			printf("\n");
@@ -69,7 +68,6 @@ int	main(int argc, char **argv, char **envp)
 			print_tree(mini_d.root, "", 0);
 			printf("\n");
 			printf(ORANGE"-------- END MAIN --------\n"RESET);
- 			*/		
 			free_tree(mini_d.root);
 			free(mini_d.input);
 			free_tokens(&mini_d);

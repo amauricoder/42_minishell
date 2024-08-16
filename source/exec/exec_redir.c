@@ -6,15 +6,19 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:44:31 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 15:26:52 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/15 15:11:52 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/**
+ * @brief "Filter" cases of redir_in, redir_out e double_redir out.
+ * Also, 
+ */
 void	handle_redir_nodes(t_mini *mini_d, void *root)
 {
-	t_redir *node;
+	t_redir	*node;
 	int		stdout_backup;
 	int		stdin_backup;
 
@@ -32,10 +36,10 @@ void	handle_redir_nodes(t_mini *mini_d, void *root)
 	close(stdin_backup);
 }
 
-//Redir out sem arquivo cria um
-//D_REDIR_OUT e REDIR_OUT tem functionalidades diferentes
-//DOUBLE -> APPEND
-//REDIR IN -> TRUNCA (TRUCO LADRAO)
+/**
+ * @brief Do the redirect of fds for the redir_out, taking in consideration
+ * if is a R_OUT or D_R_OUT. Also treat the creation of the file using open()
+ */
 void	exec_redir_out(t_mini *mini_d, t_redir *node)
 {
 	int	out_fd;
@@ -46,7 +50,6 @@ void	exec_redir_out(t_mini *mini_d, t_redir *node)
 		out_fd = open(node->fname, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (out_fd < 0)
 		error_msg(mini_d, "Minishell: Error redir out", 1);
-
 	if (dup2(out_fd, STDOUT_FILENO) == -1)
 		error_msg(mini_d, "Minishell: Error Redir Out fd", 1);
 	close (out_fd);
@@ -54,30 +57,27 @@ void	exec_redir_out(t_mini *mini_d, t_redir *node)
 		exec_tree(mini_d, node->down, 1);
 }
 
-//APENAS LE O ARQUIVO
-//SE NAO HOUVER -> ERRO
-//NAO ESQUECER PERMISSOES
+/**
+ * @brief Do the redirect of fds for the redir_in.
+ * Also treat the creation of the file using open().
+ */
 void	exec_redir_in(t_mini *mini_d, t_redir *node)
 {
 	int	in_fd;
 
 	in_fd = open(node->fname, O_RDONLY);
-	if (access(node->fname, R_OK | F_OK ) == -1)
+	if (access(node->fname, R_OK | F_OK) == -1)
 	{
-		error_msg(mini_d, "Minishell: No such file or directory", 1);
-		//Clean everything from this point
-		exit(1);
+		error_msg(mini_d, NULL, 1);
 		return ;
 	}
 	if (in_fd == -1)
-		error_msg(mini_d, "Minishell: Error exec redir in", 1);
+		error_msg(mini_d, NULL, 1);
 	if (dup2(in_fd, STDIN_FILENO) == -1)
-		error_msg(mini_d, "Minishell: Error exec redir in", 1);
+		error_msg(mini_d, NULL, 1);
 	close (in_fd);
 	if (node->down)
 		exec_tree(mini_d, node->down, 1);
-	//for testing purposes
-	//execlp("cat", "cat", NULL);
 }
 /* Redirecionamento de Saída (>)
 

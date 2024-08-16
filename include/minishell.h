@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 18:18:53 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/16 16:56:48 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,17 @@
 /***********************************/
 # define INT_MIN -2147483648
 # define INT_MAX 2147483647
-# define SYNTAX_ERR "minishell : syntax error"
-# define PWD_ERR "minishell : pwd: -*: invalid option\npwd: usage: pwd"
-# define PWD_ERR_DIR "minishell : pwd: cannot access '': No such file or directory"
-# define CD_ERR_ARG "minishell : cd: too many arguments"
-# define CD_ERR_DIR "minishell : cd: no such file or directory"
-# define EXIT_ERR_ARG "minishell : exit: too many arguments"
-# define EXIT_ERR_NUM "minishell : exit: numeric argument required"
-# define FORK_ERR "minishell : fork: error during fork"
-# define ERR_CMD_NOT_FOUND "minishell : command not found"
+# define SYNTAX_ERR "syntax error"
+# define PWD_ERR "pwd: -*: invalid option\npwd: usage: pwd"
+# define PWD_ERR_DIR "pwd: cannot access '': No such file or directory"
+# define CD_ERR_ARG "cd: too many arguments"
+# define CD_ERR_DIR "cd: no such file or directory"
+# define EXIT_ERR_ARG "exit: too many arguments"
+# define EXIT_ERR_NUM "exit: numeric argument required"
+# define FORK_ERR "fork: error during fork"
+# define ERR_NO_CMD ": command not found"
+# define ERR_NO_DIR ": No such file or directory"
+
 /*************************/
 /*    structs and enun	 */
 /*************************/
@@ -280,8 +282,8 @@ t_token	*get_last_or_pipe(t_token *to_advance);
 char	**get_cmd(t_token *token);
 t_token	*get_last_redir(t_token *node, int first_interaction);
 
-//exec/exec.c
-void	exec_through_tree(t_mini *mini_d, void *root);
+//exec/execution.c
+int		start_execution(t_mini *mini_d, void *root);
 void	exec_tree(t_mini *mini_d, void *root, int is_child);
 
 //exec/exec_redir.c

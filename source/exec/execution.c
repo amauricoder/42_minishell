@@ -1,60 +1,64 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:55:37 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/15 14:08:47 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:20:15 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	exec_through_tree(t_mini *mini_d, void *root)
+int	start_execution(t_mini *mini_d, void *root)
 {
 	int pid;
 	int status;
-	t_exec	*node_tocheck;
+	t_exec	*ndcheck;
 
 	//Here i need to read the root
 	//if the root is exec
 	//open child process
 
-	node_tocheck = root;
-	if (node_tocheck->type == WORD)
+	if (!root)
+		return (error_msg(mini_d, ERR_NO_CMD, 127));
+	ndcheck = root;
+	//if for pipe
+		//abrir a funcao de pipe (redirecionamento dos fds para o paipi)
+		//fazer dois fork
+		//Em um dos forks start_execution(pipe->left)
+		//no outro, o direito start_execution(pipe->right)
+
+	if (ndcheck->type == WORD)
 	{
-		if (node_tocheck->builtin != 0)
-		{
-			execute_buildins(mini_d, root);
-			printf("executou o builtin");
-			return ;
-		}
+		if (ndcheck->builtin != 0)
+			return (execute_buildins(mini_d, root));
 		pid = fork();
 		if (pid < 0) 
-		{
-			error_msg(mini_d, FORK_ERR, 1);
-			return;
-		} 
+			return (error_msg(mini_d, FORK_ERR, 1));
 		else if (pid == 0) 
 		{
-			exec_tree(mini_d, root, 1);  // Pass a flag indicating that it's the child
+			exec_tree(mini_d, root, 1);  // Pass a flag inif (access(node->fname, R_OK | F_OK ) == -1)if (access(node->fname, R_OK | F_OK ) == -1)dicating that it's the child
 			free_tree(mini_d->root);
 			free_and_exit(mini_d);
 			exit(0);
 		}
 		else
 		{
-		// Parent process: wait for the child
-		waitpid(pid, &status, 0);
-		mini_d->exit_status = WEXITSTATUS(status);
+			// Parent process: wait for the child
+			waitpid(pid, &status, 0);
+			mini_d->exit_status = WEXITSTATUS(status);
+			//printf("EXIT STATUS %d \n", mini_d->exit_status);
 		}
 	}
-	else if (node_tocheck->type == R_OUT)
+	else if (ndcheck->type == R_OUT || ndcheck->type == R_IN
+		|| ndcheck->type == D_R_OUT)
 	{
 		exec_tree(mini_d, root, 0);
 	}
+	return (EXIT_SUCCESS);
 }
 
 void	exec_tree(t_mini *mini_d, void *root, int is_child)
@@ -69,10 +73,7 @@ void	exec_tree(t_mini *mini_d, void *root, int is_child)
 		{
 			free_tree(mini_d->root);
 			free_tokens(mini_d);
-			free(mini_d->input);
-			free(mini_d->prompt);
-			free_matriz(mini_d->argv_cp);
-			free_env(mini_d->env_d);
+			free_main_struct(mini_d);
 			if (is_child) {
 				exit(127);  // Exit with an error if command is not found
 			} else {

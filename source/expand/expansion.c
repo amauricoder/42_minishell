@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:40:18 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/14 13:43:29 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/15 22:55:39 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ void	update_word_to_file(t_mini *mini_d)
 			{
 				while ((mini_d->token->next->next) &&
 					(mini_d->token->next->type != WORD
-					&& mini_d->token->next->type != ENV)) // treat syntax error for this, example ' > |' or '> NULL'
+					&& mini_d->token->next->type != ENV))
 					mini_d->token = mini_d->token->next;	
 				mini_d->token->next->type = FILE_NAME;
 			}

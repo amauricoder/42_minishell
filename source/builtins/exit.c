@@ -6,13 +6,15 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:29:54 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/15 13:56:24 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:26:31 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	exit_read(t_mini *mini, char **str)
+//(!ft_strncmp(mini_d.input, "exit", 4)
+//&& ft_strlen(mini_d.input) == 4)
+void	exit_read(t_mini *mini, char **str) // exitc
 {
 	ft_printf("nossa exit\n"); // modifiquei isso
 	if (!str[1])

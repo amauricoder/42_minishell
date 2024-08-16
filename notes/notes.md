@@ -139,6 +139,10 @@ redirect withou nothing is syntax error (TO SOLVE)
 
 -- pwd | echo oi | ls
 
+-- > $po --- Ambigous redirect (implementar isso)
+
+-- > "" --- SEG FAULT
+-- > '' --- SEG FAULT
 https://codeshare.io/KWwAOM
 
 

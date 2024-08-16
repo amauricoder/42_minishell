@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:15:14 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/15 13:58:51 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:04:46 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 //echo -nnnnnnn oi-> printa oi sem o \n
 //echo -n -n -n oi -> printa oi sem o \n
 //echo -noi -> printa -noi
-int		echo(char **str)
+int		echo(char **str)  //aqui precisa enviar mini_d por causa do exit code
 {
 	int	i;
 	int	new_line;

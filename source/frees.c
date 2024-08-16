@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   frees.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:56:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 14:31:06 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:35:54 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 void	free_and_exit(t_mini *mini)
 {
-	//tem que limpar o exec node
+	t_exec *meupau;
+
+	meupau = mini->root;
 	if (mini->token)
 	{
+		free_matriz(meupau->args); // talvez tenha que tirar isso. Refer onde essa funcao esta sendo utilizada.
+		free(mini->root);
 		free_tokens(mini);
 		free_main_struct(mini);
 	}
