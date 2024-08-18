@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:56:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/18 18:17:05 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:30:50 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	free_and_exit(t_mini *mini)
 	temp = mini->root;
 	if (mini->token)
 	{
+		printf("EXIT STATUS ISABELLA -> %i\n", mini->exit_status);
 		close(mini->stdfds[0]);
 		close(mini->stdfds[1]);
 		free_matriz(temp->args); // talvez tenha que tirar isso. Refer onde essa funcao esta sendo utilizada.
@@ -40,6 +41,7 @@ int	free_main_struct(t_mini *mini_d)
 	free(mini_d->prompt);
 	free_matriz(mini_d->argv_cp);
 	free_env(mini_d->env_d);
+	free_env(mini_d->export);
 	exit(EXIT_SUCCESS);
 }
 
@@ -70,7 +72,7 @@ int	free_env(t_env *env)
 	{
 		tmp = env;
 		env = env->next;
-		free(tmp->env_name);
+		free(tmp->name);
 		free(tmp);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 #    By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
-#    Updated: 2024/08/18 14:22:41 by aconceic         ###   ########.fr        #
+#    Updated: 2024/08/18 18:27:05 by aconceic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,8 +51,8 @@ SRC = prompt.c frees.c frees2.c lexing/lexing.c lexing/lexing_support.c\
 		expand/expansion_support.c parsing/parsing.c parsing/tree_debug.c\
 		parsing/tree_support.c parsing/tree_free.c parsing/tree_support2.c\
 		env/env.c init_values.c builtins/echo.c builtins/pwd.c\
-		builtins/support.c builtins/cd.c builtins/exit.c exec/execution.c \
-		exec/exec_redir.c exec/exec_cmd.c exec/exec_pipe.c \
+		builtins/support.c builtins/cd.c builtins/exit.c builtins/export_create.c \
+		exec/execution.c exec/exec_redir.c exec/exec_cmd.c exec/exec_pipe.c \
 
 ##############################################
 #                COMPILATION                 #

@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/18 17:50:44 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:27:28 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ char	*get_path(t_mini *mini, char *str)
 	dir = NULL;
 	while (current)
 	{
-		if (!ft_strncmp(current->env_name, str, ft_strlen(str)))
+		if (!ft_strncmp(current->name, str, ft_strlen(str)))
 		{
-			path = ft_split(current->env_name, '=');
+			path = ft_split(current->name, '=');
 			//printf("path -> %s\n", path[1]);
 			dir = ft_strdup(path[1]);
 			free_matriz(path);

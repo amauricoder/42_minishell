@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 19:46:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/18 18:19:32 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:30:55 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ static void	get_argv_cp(t_mini *mini_d, char **argv);
 */
 void	init_main_struct(t_mini *mini_d, char **argv, char **envp)
 {
-	//env
+	//env e export
 	copy_env(envp, &(mini_d->env_d));
+	export_create(mini_d);
 	//prompt
 	mini_d->prompt = get_prompt_msg(envp);
 	get_argv_cp(mini_d, argv);
