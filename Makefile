@@ -6,7 +6,7 @@
 #    By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
-#    Updated: 2024/08/14 16:47:34 by ismirand         ###   ########.fr        #
+#    Updated: 2024/08/18 10:51:07 by ismirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ SRC = prompt.c frees.c lexing/lexing.c lexing/lexing_support.c\
 		expand/expansion_support.c parsing/parsing.c parsing/tree_debug.c\
 		parsing/tree_support.c parsing/tree_free.c parsing/tree_support2.c\
 		env/env.c init_values.c builtins/echo.c builtins/pwd.c\
-		builtins/support.c builtins/cd.c builtins/exit.c builtins/export.c\
+		builtins/support.c builtins/cd.c builtins/exit.c builtins/export_create.c\
 		exec/exec.c exec/exec_redir.c exec/exec_cmd.c\
 
 ##############################################

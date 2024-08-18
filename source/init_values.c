@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 19:46:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/12 14:56:05 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:20:42 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ static void	get_argv_cp(t_mini *mini_d, char **argv);
 */
 void	init_main_struct(t_mini *mini_d, char **argv, char **envp)
 {
-	//env
+	//env e export
 	copy_env(envp, &(mini_d->env_d));
+	export_create(mini_d);
 	//prompt
 	mini_d->prompt = get_prompt_msg(envp);
 	get_argv_cp(mini_d, argv);
