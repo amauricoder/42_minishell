@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:44:31 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/15 15:11:52 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:08:30 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,25 @@
 
 /**
  * @brief "Filter" cases of redir_in, redir_out e double_redir out.
- * Also, 
+ * 
  */
 void	handle_redir_nodes(t_mini *mini_d, void *root)
 {
 	t_redir	*node;
-	int		stdout_backup;
-	int		stdin_backup;
 
 	node = root;
-	stdout_backup = dup(STDOUT_FILENO);
-	stdin_backup = dup(STDIN_FILENO);
+	if (mini_d->stdfds[0] == -1 || mini_d->stdfds[1] == -1)
+    {
+        perror("dup failed");
+        err_msg(mini_d, "Error redir exec", 1, 0);
+        return;
+    }
 	if (node->type == R_OUT || node->type == D_R_OUT)
 		exec_redir_out(mini_d, node);
 	else if (node->type == R_IN)
 		exec_redir_in(mini_d, node);
-	if (dup2(stdout_backup, STDOUT_FILENO) == -1
-		|| dup2(stdin_backup, STDIN_FILENO) == -1)
-		error_msg(mini_d, "Minishell: Error redir exec", 1);
-	close(stdout_backup);
-	close(stdin_backup);
+	if (node->down)
+		start_execution(mini_d, node->down);
 }
 
 /**
@@ -49,12 +48,10 @@ void	exec_redir_out(t_mini *mini_d, t_redir *node)
 	else
 		out_fd = open(node->fname, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (out_fd < 0)
-		error_msg(mini_d, "Minishell: Error redir out", 1);
+		err_msg(mini_d, "Error redir out", 1, 0);
 	if (dup2(out_fd, STDOUT_FILENO) == -1)
-		error_msg(mini_d, "Minishell: Error Redir Out fd", 1);
+		err_msg(mini_d, "Error Redir Out fd", 1, 0);
 	close (out_fd);
-	if (node->down)
-		exec_tree(mini_d, node->down, 1);
 }
 
 /**
@@ -68,16 +65,14 @@ void	exec_redir_in(t_mini *mini_d, t_redir *node)
 	in_fd = open(node->fname, O_RDONLY);
 	if (access(node->fname, R_OK | F_OK) == -1)
 	{
-		error_msg(mini_d, NULL, 1);
+		err_msg(mini_d, NULL, 1, 0);
 		return ;
 	}
-	if (in_fd == -1)
-		error_msg(mini_d, NULL, 1);
+	if (in_fd < 0)
+		err_msg(mini_d, NULL, 1, 0);
 	if (dup2(in_fd, STDIN_FILENO) == -1)
-		error_msg(mini_d, NULL, 1);
+		err_msg(mini_d, NULL, 1, 0);
 	close (in_fd);
-	if (node->down)
-		exec_tree(mini_d, node->down, 1);
 }
 /* Redirecionamento de Saída (>)
 

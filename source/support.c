@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:02:42 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/16 17:21:03 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/18 17:48:21 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,17 +89,21 @@ char	*ft_strdup_qt(char *str, int qt)
  * @brief Give the error message and set the exit_status in the main structure
  * to the exit value given
  * @return exit_value
+ * @attention d for DATA, of main structure, ev for Exit Value
+ * fr for Free
 */
-int	error_msg(t_mini *mini, char *str, int exit_value)
+int	err_msg(t_mini *d, char *str, int ev, int fr)
 {
 	if (!str)
 	{
 		perror("minishell ");
-		mini->exit_status = exit_value;
-		return (exit_value);
+		d->exit_status = ev;
+		return (ev);
 	}
 	write(2, "minishell : ", 12);
 	ft_putendl_fd(str, 2);
-	mini->exit_status = exit_value;
-	return (exit_value);
+	if (fr)
+		free(str);
+	d->exit_status = ev;
+	return (ev);
 }

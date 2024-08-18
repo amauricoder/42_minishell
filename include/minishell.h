@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/16 16:56:48 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:21:38 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@
 # define EXIT_ERR_ARG "exit: too many arguments"
 # define EXIT_ERR_NUM "exit: numeric argument required"
 # define FORK_ERR "fork: error during fork"
-# define ERR_NO_CMD ": command not found"
-# define ERR_NO_DIR ": No such file or directory"
+# define NO_CMD " : command not found"
+# define NO_DIR " : no such file or directory"
 
 /*************************/
 /*    structs and enun	 */
@@ -146,6 +146,7 @@ typedef struct s_mini
 	int		token_type;
 	void	*root;
 	int		exit_status;
+	int		stdfds[2];
 	t_env	*env_d;
 	t_token	*token;
 }				t_mini;
@@ -193,6 +194,8 @@ int		free_main_struct(t_mini *mini_d);
 void	free_matriz(char **dp_char);
 int		free_env(t_env *env);
 void	free_tokens(t_mini *mini_d);
+//frees2.c
+int		free_in_execution(t_mini *mini_d, int exit_status);
 
 //init_values.c
 void	init_main_struct(t_mini *mini_d, char **argv, char **envp);
@@ -220,7 +223,7 @@ int		token_lstadd_back(t_mini *mini_d, t_token *new_token);
 void	print_nodes(t_mini *mini_d);
 void	printf_matriz(char **to_print);
 char	*ft_strdup_qt(char *str, int qt);
-int		error_msg(t_mini *mini, char *str, int exit_value);
+int		err_msg(t_mini *d, char *str, int ev, int fr);
 
 //check_input.c
 int		is_argument_valid(int argc, char **env);
@@ -284,7 +287,7 @@ t_token	*get_last_redir(t_token *node, int first_interaction);
 
 //exec/execution.c
 int		start_execution(t_mini *mini_d, void *root);
-void	exec_tree(t_mini *mini_d, void *root, int is_child);
+int		handle_exec_cmd(t_mini *mini_d, void *root);
 
 //exec/exec_redir.c
 void	handle_redir_nodes(t_mini *mini_d, void *root);
@@ -297,6 +300,10 @@ char	**find_path_env(t_mini	*mini_d);
 char	**get_env_matriz(t_mini *mini_d);
 char	*create_cmdpath(char *possible_path, char *command);
 int		execute_buildins(t_mini *mini, void *root);
+
+//exec/exec_pipe.c
+int	exec_pipe(t_mini *mini_d, void *root);
+
 
 //builtins/support.c
 void	define_builtins(t_mini *mini_d);

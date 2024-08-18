@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:56:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/16 17:35:54 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:17:05 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 void	free_and_exit(t_mini *mini)
 {
-	t_exec *meupau;
+	t_exec *temp;
 
-	meupau = mini->root;
+	temp = mini->root;
 	if (mini->token)
 	{
-		free_matriz(meupau->args); // talvez tenha que tirar isso. Refer onde essa funcao esta sendo utilizada.
+		close(mini->stdfds[0]);
+		close(mini->stdfds[1]);
+		free_matriz(temp->args); // talvez tenha que tirar isso. Refer onde essa funcao esta sendo utilizada.
 		free(mini->root);
 		free_tokens(mini);
 		free_main_struct(mini);
@@ -32,6 +34,8 @@ void	free_and_exit(t_mini *mini)
 */
 int	free_main_struct(t_mini *mini_d)
 {
+	close(mini_d->stdfds[0]);
+	close(mini_d->stdfds[1]);
 	free(mini_d->input);
 	free(mini_d->prompt);
 	free_matriz(mini_d->argv_cp);

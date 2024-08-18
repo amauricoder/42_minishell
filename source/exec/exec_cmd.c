@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:28:01 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/16 17:03:40 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/18 17:49:42 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	execute_cmd(t_mini *mini_d, void *root)
 	envs = get_env_matriz(mini_d);
 	path_env = find_path_env(mini_d);
 	if (path_env == NULL)
-		return (error_msg(mini_d, ft_strjoin(exec_nd->args[0], ERR_NO_DIR), 127));
+		return (err_msg(mini_d, ft_strjoin(exec_nd->args[0], NO_DIR), 127, 1));
 	if (access(exec_nd->args[0], X_OK) != -1)
 		execve(exec_nd->args[0], exec_nd->args, envs);
 	i = -1;
@@ -37,7 +37,7 @@ int	execute_cmd(t_mini *mini_d, void *root)
 	}
 	free_matriz(path_env);
 	free_matriz(envs);
-	return (error_msg(mini_d, ft_strjoin(exec_nd->args[0], ERR_NO_CMD), 127));
+	return (err_msg(mini_d, ft_strjoin(exec_nd->args[0], NO_CMD), 127, 1));
 }
 
 /**

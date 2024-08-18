@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:40:12 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 15:26:52 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/18 17:52:12 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_token	*set_token_head(t_mini *mini_d)
 {
 	if (!mini_d->token)
 	{
-		error_msg(mini_d, "Error setting token head\n", 127);
+		err_msg(mini_d, "Error setting token head\n", 127, 0);
 		return (NULL);
 	}
 	return (mini_d->token);
@@ -82,7 +82,7 @@ t_token	*set_token_tail(t_mini *mini_d)
 
 	if (!mini_d->token)
 	{
-		error_msg(mini_d, "Error setting token tail\n", 127);
+		err_msg(mini_d, "Error setting token tail\n", 127, 0);
 		return (NULL);
 	}
 	current = mini_d->token;
@@ -96,7 +96,7 @@ t_token	*set_token_tail(t_mini *mini_d)
 	mini_d->token->head = malloc(sizeof(t_token));
 	if (!mini_d->token || !mini_d->token->head)
 	{
-		error_msg("Error alloc_tokenstruct\n", 127);
+		err_msg("Error alloc_tokenstruct\n", 127, 0);
 		return (EXIT_FAILURE);
 	}
 	memset(mini_d->token, 0, sizeof(t_token));

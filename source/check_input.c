@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:07:33 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 14:44:59 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:16:13 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	is_argument_valid(int argc, char **env)
 */
 int	check_input(t_mini *mini, char *input)
 {
-	if (!input || !is_quotes_closed(input) || is_pipe_last_or_first(input)
+	if (!is_quotes_closed(input) || is_pipe_last_or_first(input)
 		|| is_redir_invalid(input))
-		return (error_msg(mini, SYNTAX_ERR, 2));
+		return (err_msg(mini, SYNTAX_ERR, 2, 0));
 	return (false);
 }
 

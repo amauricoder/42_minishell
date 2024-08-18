@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:29:54 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/16 17:26:31 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/18 17:50:53 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	exit_read(t_mini *mini, char **str) // exitc
 		exit_number(mini, str);
 	else
 	{
-		error_msg(mini, EXIT_ERR_NUM, 2);
+		err_msg(mini, EXIT_ERR_NUM, 2, 0);
 		free_and_exit(mini);
 	}
 }
@@ -34,7 +34,7 @@ int	exit_number(t_mini *mini, char **str)
 		
 	status = ft_atoi(str[1]);
 	if (str[2])
-		return (error_msg(mini, EXIT_ERR_ARG, 1));
+		return (err_msg(mini, EXIT_ERR_ARG, 1, 0));
 	else
 	{
 			while (status < 0)
