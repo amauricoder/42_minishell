@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:44:31 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/18 18:29:31 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/18 19:26:25 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ void	handle_redir_nodes(t_mini *mini_d, void *root)
 	node = root;
 	if (mini_d->stdfds[0] == -1 || mini_d->stdfds[1] == -1)
     {
-        perror("dup failed");
-        err_msg(mini_d, "Error redir exec", 1, 0);
+        err_msg(mini_d, NULL, 1, 0);
         return;
     }
 	if (node->type == R_OUT || node->type == D_R_OUT)
@@ -48,7 +47,7 @@ void	exec_redir_out(t_mini *mini_d, t_redir *node)
 	else
 		out_fd = open(node->fname, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (out_fd < 0)
-		err_msg(mini_d, "Error redir out", 1, 0);
+		err_msg(mini_d, NULL, 1, 0);
 	if (dup2(out_fd, STDOUT_FILENO) == -1)
 		err_msg(mini_d, "Error Redir Out fd", 1, 0);
 	close (out_fd);

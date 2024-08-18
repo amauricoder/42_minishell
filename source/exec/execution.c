@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:55:37 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/18 18:12:34 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/18 19:45:08 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,12 @@ int	start_execution(t_mini *mini_d, void *root)
 {
 	t_exec	*ndcheck;
 
-	//Here i need to read the root
-	//if the root is exec
-	//open child process
-
 	if (!root)
 		return (err_msg(mini_d, NO_CMD, 127, 0));
 	ndcheck = root;
 	//if for pipe
 	if (ndcheck->type == PIPE)
-	{
-		//abrir a funcao de pipe (redirecionamento dos fds para o paipi)
-		//fazer dois fork
-		//Em um dos forks start_execution(pipe->left)
-		//no outro, o direito start_execution(pipe->right)
-		printf("There is a PAIPE around \n");
-		return (EXIT_SUCCESS);
-	}
-
+		return (handle_pipe(mini_d, root));
 	if (ndcheck->type == WORD)
 	{
 		if (ndcheck->builtin != 0)

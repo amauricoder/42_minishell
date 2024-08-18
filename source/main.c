@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/18 18:34:24 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/18 19:15:26 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ int	main(int argc, char **argv, char **envp)
 		}
 		else if (check_input(&mini_d, mini_d.input))
 		{
-			printf("VALUE EX %d", mini_d.exit_status);
 			add_history(mini_d.input);
+			close(mini_d.stdfds[0]);
+			close(mini_d.stdfds[1]);
 			continue;
 		}
 		else if (ft_strlen(mini_d.input) > 0)

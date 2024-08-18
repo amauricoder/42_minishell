@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/18 18:26:04 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/18 19:55:54 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,8 +303,8 @@ char	*create_cmdpath(char *possible_path, char *command);
 int		execute_buildins(t_mini *mini, void *root);
 
 //exec/exec_pipe.c
-int	exec_pipe(t_mini *mini_d, void *root);
-
+int		handle_pipe(t_mini *mini_d, void *root);
+int		exec_pipe(t_mini *mini_d, void *root, int p_fd[2], int is_left);
 
 //builtins/support.c
 void	define_builtins(t_mini *mini_d);

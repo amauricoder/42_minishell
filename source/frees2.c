@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:14:36 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/18 16:50:06 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:47:48 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ int	free_in_execution(t_mini *mini_d, int exit_status)
 	free(mini_d->prompt);
 	free_matriz(mini_d->argv_cp);
 	free_env(mini_d->env_d);
+	free_env(mini_d->export);
 	return(exit_status);
 }
