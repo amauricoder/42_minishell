@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:28:01 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/18 18:37:09 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/19 13:59:03 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ int	execute_buildins(t_mini *mini, void *root)
 			exit_read(mini, exec_node->args); // esssa tem que retornar valor
 		if (exec_node->builtin == EXPORT)
 			return (export_read(mini, exec_node->args));
+		if (exec_node->builtin == B_ENV)
+			env(mini->env_d);
 	}
 	return (EXIT_FAILURE);
 }
