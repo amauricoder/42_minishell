@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:44:31 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/18 19:26:25 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/19 11:23:39 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	handle_redir_nodes(t_mini *mini_d, void *root)
 
 	node = root;
 	if (mini_d->stdfds[0] == -1 || mini_d->stdfds[1] == -1)
-    {
-        err_msg(mini_d, NULL, 1, 0);
-        return;
-    }
+	{
+		err_msg(mini_d, NULL, 1, 0);
+		return ;
+	}
 	if (node->type == R_OUT || node->type == D_R_OUT)
 		exec_redir_out(mini_d, node);
 	else if (node->type == R_IN)
@@ -73,18 +73,3 @@ void	exec_redir_in(t_mini *mini_d, t_redir *node)
 		err_msg(mini_d, NULL, 1, 0);
 	close (in_fd);
 }
-/* Redirecionamento de Saída (>)
-
-O redirecionamento > cria um arquivo novo ou sobrescreve um arquivo existente. Para replicar esse comportamento com open(), você deve usar as seguintes flags:
-
-    O_WRONLY: Abre o arquivo para escrita.
-    O_CREAT: Cria o arquivo se ele não existir.
-    O_TRUNC: Trunca (esvazia) o arquivo para zero bytes se ele já existir.
-
-Redirecionamento de Saída com Append (>>)
-
-O redirecionamento >> anexa ao final de um arquivo existente ou cria um novo arquivo se ele não existir. Para replicar esse comportamento, você deve usar:
-
-    O_WRONLY: Abre o arquivo para escrita.
-    O_CREAT: Cria o arquivo se ele não existir.
-    O_APPEND: Adiciona dados ao final do arquivo, sem truncá-lo. */

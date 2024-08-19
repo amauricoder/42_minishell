@@ -146,3 +146,20 @@ redirect withou nothing is syntax error (TO SOLVE)
 https://codeshare.io/KWwAOM
 
 
+===============================================================================
+
+/* Redirecionamento de Saída (>)
+
+O redirecionamento > cria um arquivo novo ou sobrescreve um arquivo existente. Para replicar esse comportamento com open(), você deve usar as seguintes flags:
+
+    O_WRONLY: Abre o arquivo para escrita.
+    O_CREAT: Cria o arquivo se ele não existir.
+    O_TRUNC: Trunca (esvazia) o arquivo para zero bytes se ele já existir.
+
+Redirecionamento de Saída com Append (>>)
+
+O redirecionamento >> anexa ao final de um arquivo existente ou cria um novo arquivo se ele não existir. Para replicar esse comportamento, você deve usar:
+
+    O_WRONLY: Abre o arquivo para escrita.
+    O_CREAT: Cria o arquivo se ele não existir.
+    O_APPEND: Adiciona dados ao final do arquivo, sem truncá-lo. */

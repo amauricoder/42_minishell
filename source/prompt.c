@@ -6,17 +6,17 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:16:59 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/16 19:03:55 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/19 11:55:02 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 static char	*get_user_prompt(char **envp);
-static char	*get_pwd_prompt(char **envp);
+static char	*get_pwd_prompt(void);
 static char	*clean_prompt(char *str, int flag);
-//static char	*clean_pwd_prompt(char *pwd);
-static char	*get_colorful_prompt(char *prompt, int green);
+//See function to know how to use it.
+//static char	*get_colorful_prompt(char *prompt, int green);
 
 /**
  * @brief Get information from envp to construct a prompt msg.
@@ -31,10 +31,8 @@ char	*get_prompt_msg(char **envp)
 
 	prompt = get_user_prompt(envp);
 	prompt = clean_prompt(prompt, 0);
-	prompt = get_colorful_prompt(prompt, 1);
-	pwd = get_pwd_prompt(envp);
+	pwd = get_pwd_prompt();
 	pwd = clean_prompt(pwd, 1);
-	pwd = get_colorful_prompt(pwd, 0);
 	prompt_message = ft_strjoin(prompt, pwd);
 	free(prompt);
 	free(pwd);
@@ -97,60 +95,28 @@ static char	*clean_prompt(char *str, int flag)
 }
 
 /**
- * @brief Take unecessary parts of PWD variable of envp to display only
- * necessary parts
- * @return Char * with the "clean" information of the PWD variable.
-*/
-/*
-static char	*clean_pwd_prompt(char *pwd)
-{
-	char	**pwd_split;
-	int		i;
-
-	i = 0;
-	pwd_split = ft_split(pwd, '=');
-	i = 0;
-	while (pwd_split[i])
-		i ++;
-	if (i > 1)
-	{
-		free(pwd);
-		pwd = ft_strjoin(pwd_split[1], "$ ");
-		free_matriz(pwd_split);
-		return (pwd);
-	}
-	free_matriz(pwd_split);
-	return (pwd);
-} */
-
-/**
  * @brief Get information from PWD of envp to display at prompt msg.
  * if no PWD envp is available, display a regular msg.
  * @return Char * with information of the PWD.
 */
-static char	*get_pwd_prompt(char **envp)
+static char	*get_pwd_prompt(void)
 {
-	int		i;
-	int		is_pwd;
-	char	*prompt;
+	char	cwd[1024];
+	char	*directory;
 
-	i = 0;
-	is_pwd = 0;
-	while (envp[i] != NULL)
-	{
-		if (!ft_strncmp("PWD", envp[i], 3))
-		{
-			is_pwd ++;
-			prompt = ft_strdup(envp[i]);
-		}
-		i ++;
-	}
-	if (is_pwd == 0)
-		prompt = ft_strdup("$ ");
-	return (prompt);
+	directory = getcwd(cwd, sizeof(cwd));
+	if (!directory)
+		return (ft_strdup("Minishell ~"));
+	return (ft_strjoin(directory, "-> "));
 }
-
-static char	*get_colorful_prompt(char *str, int green)
+/**
+ * @Brief - due to a bug, this function in unused
+ * to use it, on function get_prompt_message(), you need to
+ * declare "prompt = get_colorful_prompt(prompt, 1);" 
+ * after prompt = clean_prompt(prompt, 0);
+ * and //pwd = get_colorful_prompt(pwd, 0); after pwd = clean_prompt(pwd, 1);
+ */
+/* static char	*get_colorful_prompt(char *str, int green)
 {
 	char	*aux_str1;
 	char	*aux_str2;
@@ -168,4 +134,4 @@ static char	*get_colorful_prompt(char *str, int green)
 	free(str);
 	free(aux_str1);
 	return (aux_str2);
-}
+} */

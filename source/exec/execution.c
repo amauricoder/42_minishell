@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:55:37 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/18 19:45:08 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/19 11:17:47 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	start_execution(t_mini *mini_d, void *root)
 	if (!root)
 		return (err_msg(mini_d, NO_CMD, 127, 0));
 	ndcheck = root;
-	//if for pipe
 	if (ndcheck->type == PIPE)
 		return (handle_pipe(mini_d, root));
 	if (ndcheck->type == WORD)
@@ -35,12 +34,12 @@ int	start_execution(t_mini *mini_d, void *root)
 }
 
 int	handle_exec_cmd(t_mini *mini_d, void *root)
-{	
+{
 	int	pid;
-	int status;
+	int	status;
 
 	pid = fork();
-	if (pid < 0) 
+	if (pid < 0)
 		return (err_msg(mini_d, FORK_ERR, 1, 0));
 	else if (pid == 0)
 	{
