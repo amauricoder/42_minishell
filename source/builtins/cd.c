@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 14:02:23 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:02:27 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	cd(t_mini *mini, char **str)
 {
-	printf("\n Nossa cd \n");
 	char	cwd[1024];
 	char	*dir;	
 	//eh preciso atualizar o OLD-PWD
@@ -44,7 +43,7 @@ int	cd(t_mini *mini, char **str)
 		else if (safe_chdir(mini, str[1]) == -1)
 			return (EXIT_FAILURE);
 	}
-	return (EXIT_SUCCESS);	
+	return (EXIT_SUCCESS);
 }
 
 int	safe_chdir(t_mini *mini, char *dir)

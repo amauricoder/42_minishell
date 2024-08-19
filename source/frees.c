@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:56:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/18 18:30:50 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:26:41 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_and_exit(t_mini *mini)
 {
-	t_exec *temp;
+	t_exec	*temp;
 
 	temp = mini->root;
 	if (mini->token)
@@ -22,7 +22,7 @@ void	free_and_exit(t_mini *mini)
 		printf("EXIT STATUS ISABELLA -> %i\n", mini->exit_status);
 		close(mini->stdfds[0]);
 		close(mini->stdfds[1]);
-		free_matriz(temp->args); // talvez tenha que tirar isso. Refer onde essa funcao esta sendo utilizada.
+		free_matriz(temp->args);
 		free(mini->root);
 		free_tokens(mini);
 		free_main_struct(mini);

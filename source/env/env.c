@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:52:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/17 16:28:24 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:31:30 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ void	env_add(t_mini *mini, char **str)
 //getenv()
 int	copy_env(char **env, t_env **env_var)
 {
-	int     i;
-	t_env   *new;
-	t_env   *last;
+	int		i;
+	t_env	*new;
+	t_env	*last;
+
 	i = 0;
 	*env_var = NULL; // Garante que a lista começa vazia.
 	while (env[i])
@@ -68,9 +69,10 @@ int	ft_getenv(t_mini *mini_d, char *to_find)
 	t_env	*current;
 
 	current = mini_d->env_d;
-	while(current)
+	while (current)
 	{
-		if (!ft_strncmp(to_find, current->name, ft_strlen(to_find)))
+		if (!ft_strncmp(to_find, current->name, ft_strlen(to_find))
+			&& current->name[ft_strlen(to_find)] == '=')
 			return (true);
 		current = current->next;
 	}

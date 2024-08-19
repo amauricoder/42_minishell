@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:58:41 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 12:12:40 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:59:15 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,16 @@ t_token	*get_last_redir(t_token *node, int first_interaction)
 			|| last->type == D_R_OUT || last->type == HEREDOC)
 			last = last->prev;
 	}
+	return (get_last_redir_aux(last));
+}
+
+/**
+ * @brief Function auxiliar to get_last_redir
+ * constructed to reduce lines
+ * return the last node
+ */
+t_token	*get_last_redir_aux(t_token *last)
+{
 	while (last && last->type != PIPE)
 	{
 		if (last->type == R_IN || last->type == R_OUT

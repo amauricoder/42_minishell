@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:18:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/18 17:38:40 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:40:57 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ t_redir	*create_redir_node(void *down, int id, t_token *node)
  * @brief This function get the redirection node content.
  * ex. cmd > file1 --- This will get the file1 and return this.
  * @warning Possible problems with edge cases. Need to test the cases
+ * UPDATE -> We updated this in a form that will never go into INVALID.
+ * But this will stay due to debud.
  */
 char	*get_redir_name(t_token *node)
 {
@@ -69,7 +71,7 @@ char	*get_redir_name(t_token *node)
 			current = current->next;
 	}
 	if (current->type != FILE_NAME)
-		return (ft_strdup("INVALID")); //This is for invalid ( test case -> ls > file >). Need to test. (A '>' alone CAN BE SYNTAX ERROR)
+		return (ft_strdup("INVALID"));
 	else
 		return (ft_strdup(current->content));
 }

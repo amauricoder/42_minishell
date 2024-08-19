@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:40:12 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/18 18:30:01 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:36:25 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,3 @@ t_token	*set_token_tail(t_mini *mini_d)
 		current = current->next;
 	return (current);
 }
-/* int	alloc_tokenstruct(t_mini *mini_d)
-{
-	mini_d->token = malloc(sizeof(t_token));
-	mini_d->token->head = malloc(sizeof(t_token));
-	if (!mini_d->token || !mini_d->token->head)
-	{
-		err_msg("Error alloc_tokenstruct\n", 127, 0);
-		return (EXIT_FAILURE);
-	}
-	memset(mini_d->token, 0, sizeof(t_token));
-	return (EXIT_SUCCESS);
-} */

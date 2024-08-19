@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   support.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 15:30:24 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/14 17:22:11 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:00:02 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	define_builtins(t_mini *mini_d)
 		if (!ft_strncmp(tmp->content, "env", 3))
 			tmp->builtin = B_ENV;
 		if (!ft_strncmp(tmp->content, "exit", 4))
-			tmp->builtin = EXIT; 
+			tmp->builtin = EXIT;
 		tmp = tmp->next;
 	}
 }
@@ -58,7 +58,4 @@ void	tests_builtins(t_mini *mini, void *root)
 		if (exec_node->builtin == EXPORT)
 			export_read(mini, exec_node->args);
 	}
-	//printf("The tipe of the root is %i\n", type);
-	//(void)root;
-
 }

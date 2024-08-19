@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:27:11 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/10 17:19:57 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:03:13 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,9 @@ void	print_exec(void *node, const char *prefix, bool isLeft)
 		str[exec->type + 3],
 		built[exec->builtin]);
 	free(arrow);
-	i = 0;
-	while (exec->args[i])
-	{
+	i = -1;
+	while (exec->args[++i])
 		printf(MGT"%s    %s\n"RESET, prefix, exec->args[i]);
-		i ++;
-	}
 }
 
 void	print_redir(void *node, const char *prefix, bool isLeft)

@@ -98,7 +98,7 @@ make re && clear && valgrind --leak-check=full --track-fds=yes --show-leak-kinds
 - $123456789USER ~ [output] = $23456789USER
 - $0 ~[output] ./minishell  --- sozinho executa (abrir o programa dnv)
 - $0USER ~[output] ./minishellUSER --- nao executa
-
+- cat arquivo.txt | grep "banana" | sort | wc -l
 - "e"'c'"h""o"
 - echo "WORD" -> the second token was beggining with space and nor in_DQUOTE (do_lexing)
 
@@ -130,7 +130,7 @@ redirect withou nothing is syntax error (TO SOLVE)
 --- export LS="ls -la | wc -l" --> Verificar como acontece no bash(pra depois)
 --- export LS="ls -la" --> Verificar como acontece no bash (pra depois)
 
---- $LS -> SEGFAULT
+--- $LS -> SEGFAULT(RESOLVIDO)
 
 --- ls | exit 1 --> nao sai do programa, mas muda o exit_status para 1
 

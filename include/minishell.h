@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 14:18:38 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:03:57 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,25 +158,23 @@ typedef struct s_exec
 	int		type;
 	int		id;
 	int		builtin;
-	char	**args; //cmds and arguments of the commands
+	char	**args;
 }	t_exec;
 
 typedef struct s_pipe
 {
 	int		type;
 	int		id;
-	void	*left; //pointer to the left -> this node can point for a redir or exec 
-	void	*right; //pointer to the right
+	void	*left;
+	void	*right;
 }	t_pipe;
 
 typedef struct s_redir
 {
 	int		type;
 	int		id;
-	//copy content
 	char	*fname;
 	int		len;
-	//Pointer -> This pointer can point to a redir or exec
 	void	*down;
 }	t_redir;
 
@@ -188,6 +186,7 @@ int		main(int argc, char **argv, char **envp);
 
 //main_support.c
 void	run_minishell(t_mini *mini_d);
+void	prompt_and_input(t_mini *mini, char **envp);
 
 //debug.c
 void	debug_nodes_and_tree(t_mini *mini_d);
@@ -224,7 +223,6 @@ t_token	*init_token(char *content, int type, int id);
 t_token	*set_token_head(t_mini *mini_d);
 t_token	*set_token_tail(t_mini *mini_d);
 int		token_lstadd_back(t_mini *mini_d, t_token *new_token);
-//int		alloc_tokenstruct(t_mini *mini_d);
 
 //support.c
 void	print_nodes(t_mini *mini_d);
@@ -234,8 +232,10 @@ int		err_msg(t_mini *d, char *str, int ev, int fr);
 
 //check_input.c
 int		is_argument_valid(int argc, char **env);
-int		check_input(t_mini *mini, char *input);
+int		is_input_invalid(t_mini *mini, char *input);
 int		is_quotes_closed(char *input);
+
+//check_input2.c
 int		is_pipe_last_or_first(char *input);
 int		is_redir_invalid(char *input);
 int		is_next_word_invalid(char *input);
@@ -275,6 +275,12 @@ char	*get_redir_name(t_token *node);
 int		get_qt_cmd_tokens(t_token *token);
 void	free_tree(void *root);
 
+//parsing/tree_support2.c
+t_token	*get_last_or_pipe(t_token *to_advance);
+char	**get_cmd(t_token *token);
+t_token	*get_last_redir(t_token *node, int first_interaction);
+t_token	*get_last_redir_aux(t_token *last);
+
 //parsing/tree_debug.c
 void	print_tree(void *node, const char *prefix, bool isLeft);
 void	print_exec(void *node, const char *prefix, bool isLeft);
@@ -286,11 +292,6 @@ void	free_exec(void *root);
 void	free_redir(void *root);
 void	free_tree(void *root);
 void	free_pipe(void *root);
-
-//parsing/tree_support2.c
-t_token	*get_last_or_pipe(t_token *to_advance);
-char	**get_cmd(t_token *token);
-t_token	*get_last_redir(t_token *node, int first_interaction);
 
 //exec/execution.c
 int		start_execution(t_mini *mini_d, void *root);
@@ -346,8 +347,6 @@ t_env	*lst_sort(t_env *env);
 //env/env.c
 int		copy_env(char **env, t_env **env_var);
 int		ft_getenv(t_mini *mini_d, char *to_find);
-
 void	env_add(t_mini *mini, char **str);
-
 
 #endif

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export_create.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 16:46:33 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/19 14:16:08 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:33:38 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
 
 //faz a leitura do que deve ser feito com o export
 //se nao tiver argumento, só printa a lista export
@@ -113,27 +112,27 @@ char	*env_export(t_env *env)
 //coloca a linked list export em ordem alfabética
 t_env	*lst_sort(t_env *env)
 {
-    t_env	*tmp;
-    t_env	*tmp2;
-    char	*swap;
+	t_env	*tmp;
+	t_env	*tmp2;
+	char	*swap;
 
-    if (!env)
-        return (NULL);
-    tmp = env;
-    while (tmp)
-    {
-        tmp2 = tmp->next;
-        while (tmp2)
-        {
-            if (ft_strncmp(&tmp->name[11], &tmp2->name[11], ft_strlen(tmp->name)) > 0)
-            {
-                swap = tmp->name;
-                tmp->name = tmp2->name;
-                tmp2->name = swap;
-            }
-            tmp2 = tmp2->next;
-        }
-        tmp = tmp->next;
-    }
-    return (env);
+	if (!env)
+		return (NULL);
+	tmp = env;
+	while (tmp)
+	{
+		tmp2 = tmp->next;
+		while (tmp2)
+		{
+			if (ft_strncmp(&tmp->name[11], &tmp2->name[11], ft_strlen(tmp->name)) > 0)
+			{
+				swap = tmp->name;
+				tmp->name = tmp2->name;
+				tmp2->name = swap;
+			}
+			tmp2 = tmp2->next;
+		}
+		tmp = tmp->next;
+	}
+	return (env);
 }
