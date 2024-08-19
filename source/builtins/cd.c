@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/18 18:27:28 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/19 14:02:23 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ int	cd(t_mini *mini, char **str)
 	printf("\n Nossa cd \n");
 	char	cwd[1024];
 	char	*dir;	
-
+	//eh preciso atualizar o OLD-PWD
+	//tratar tbm cd ~ (vai pra home)
+	// tratar cd - cd (volta ao caminho anterior)
 	if (str[1] && str[2])
 		return (err_msg(mini, CD_ERR_ARG, EXIT_FAILURE, 0));
 	if (!str[1])

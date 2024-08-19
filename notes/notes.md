@@ -140,6 +140,10 @@ redirect withou nothing is syntax error (TO SOLVE)
 -- pwd | echo oi | ls
 
 -- > $po --- Ambigous redirect (implementar isso)
+---> meucu | ls - atualizar exit code para comand bem executado
+
+---> cd ~ -> tratar
+---> cd - -> tratar
 
 -- > "" --- SEG FAULT
 -- > '' --- SEG FAULT

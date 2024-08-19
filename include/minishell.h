@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 11:31:15 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/19 14:13:44 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,9 @@ extern int	g_exit_status;
 
 //main
 int		main(int argc, char **argv, char **envp);
+
+//main_support.c
+void	run_minishell(t_mini *mini_d);
 
 //debug.c
 void	debug_nodes_and_tree(t_mini *mini_d);

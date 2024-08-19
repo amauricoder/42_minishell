@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 11:50:44 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/19 14:15:20 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	main(int argc, char **argv, char **envp)
 			free(mini_d.prompt);
 		mini_d.prompt = get_prompt_msg(envp);
 		mini_d.input = readline(mini_d.prompt);
-		//funcao de verificacao
 		if (!mini_d.input)
 		{
 			printf("exit\n");
@@ -46,27 +45,7 @@ int	main(int argc, char **argv, char **envp)
 			continue;
 		}
 		else if (ft_strlen(mini_d.input) > 0)
-		{
-			add_history(mini_d.input);
-			do_lexing(&mini_d);
-			find_expansion(&mini_d);
-			define_builtins(&mini_d);
-			mini_d.root = build_tree(mini_d.token);
-			//tests_builtins(&mini_d, mini_d.root);
-			start_execution(&mini_d, mini_d.root);
-			debug_nodes_and_tree(&mini_d);
-			free_tree(mini_d.root);
-			free(mini_d.input);
-			free_tokens(&mini_d);
-			if (dup2(mini_d.stdfds[0], STDOUT_FILENO) == -1
-			|| dup2(mini_d.stdfds[1], STDIN_FILENO) == -1)
-			{
-				perror("dup2 failed");
-				err_msg(&mini_d, "Error redir exec", 1, 0);			
-			}
-			close(mini_d.stdfds[0]);
-			close(mini_d.stdfds[1]);
-		}
+			run_minishell(&mini_d);
 	}
 	free_main_struct(&mini_d);
 	return (0);
