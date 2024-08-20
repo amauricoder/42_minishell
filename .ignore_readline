@@ -4,3 +4,13 @@
    ...
    obj:*/libreadline.so.*
 }
+
+{
+   ignore_ft_strjoin_leak
+   Memcheck:Leak
+   fun:malloc
+   fun:ft_strjoin
+   fun:get_user_prompt
+   fun:get_prompt_msg
+   fun:main
+}
