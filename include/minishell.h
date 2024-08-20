@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/20 12:47:25 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/20 17:51:05 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ void	in_special(t_mini *mini_d, int *i, int *state, int type);
 void	redir_env(t_mini *mini_d, int *i, int *state, int type);
 
 //lexing_support.c
-void	find_env(t_mini *mini_d);
+void	define_type_env(t_mini *mini_d);
 int		create_token(t_mini *mini_d, char *input, int state, int len);
 int		specch(char ch);
 
@@ -336,6 +336,8 @@ int		cd(t_mini *mini, char **str);
 int		safe_chdir(t_mini *mini, char *dir);
 char	*find_last_dir(char *dir);
 char	*get_path(t_mini *mini, char *str);
+int		back_cd(t_mini *mini_d, char **str);
+int		update_pwd_oldpwd(t_mini *mini, char *last_dir);
 
 //builtins/exit.c
 void	exit_read(t_mini *mini_d, char **str);
@@ -352,5 +354,7 @@ t_env	*lst_sort(t_env *env);
 int		copy_env(char **env, t_env **env_var);
 int		ft_getenv(t_mini *mini_d, char *to_find);
 void	env_add(t_mini *mini, char **str);
+char	*save_env(t_mini *mini_d, char *to_find);
+int		replace_env_value(t_mini *mini, char *env_name, char *new);
 
 #endif

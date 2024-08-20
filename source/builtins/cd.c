@@ -6,43 +6,56 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 17:02:27 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/20 20:02:25 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
+//unset HOME nao esquecer
+//eh preciso atualizar o OLD-PWD
+//tratar tbm cd ~ (vai pra home)
+// tratar cd - cd (volta ao caminho anterior)
+//ECHO nao esta printando a $PWD nem $OLDPWD com valor atualizado
 int	cd(t_mini *mini, char **str)
 {
+	char	*dir;
 	char	cwd[1024];
-	char	*dir;	
-	//eh preciso atualizar o OLD-PWD
-	//tratar tbm cd ~ (vai pra home)
-	// tratar cd - cd (volta ao caminho anterior)
-	if (str[1] && str[2])
-		return (err_msg(mini, CD_ERR_ARG, EXIT_FAILURE, 0));
-	if (!str[1])
+
+	dir = NULL;
+	if ((str[1] && str[2]) || (str[1] && !ft_strncmp(str[1], "...", 3))
+		|| (str[1] && !ft_strncmp(str[1], "--", 2)))
+		return (err_msg(mini, "cd : bad usage", EXIT_FAILURE, 0));
+	if (!str[1] || (!ft_strncmp("~", str[1], 1) && ft_strlen(str[1]) == 1))
 	{
-		dir = get_path(mini, "HOME");
-		printf("cd -> %s\n", dir);//
+		//dir = get_path(mini, "HOME");
+		dir = save_env(mini, "HOME");
 		if (safe_chdir(mini, dir) == -1)
 			return (EXIT_FAILURE);
-		free (dir);
+		return (update_pwd_oldpwd(mini, dir));
 	}
-	if (str[1])
+	else if (!ft_strncmp(str[1], "-", 1))
+	{
+		dir = save_env(mini, "OLDPWD");
+		if (safe_chdir(mini, &dir[7]) == -1)
+			return (EXIT_FAILURE);
+		return (update_pwd_oldpwd(mini, dir));
+	}
+	else if (!ft_strncmp(&str[1][0], "..", 2))
 	{
 		dir = getcwd(cwd, sizeof(cwd));
-		printf("cd * -> %s/%s\n", dir, str[1]);//
-		if (!ft_strncmp(str[1], "..", 2))
-		{
-			dir = find_last_dir(dir);		
-			printf("cd .. -> %s\n", dir);//
-			if (safe_chdir(mini, dir) == -1)
-				return (EXIT_FAILURE);
-		}
-		else if (safe_chdir(mini, str[1]) == -1)
+		back_cd(mini, str);
+		return (update_pwd_oldpwd(mini, dir));
+	}
+	else
+	{
+		dir = ft_strdup(str[1]);
+		if (safe_chdir(mini, dir) == -1)
 			return (EXIT_FAILURE);
 	}
+	if (!dir)
+		dir = ft_strdup(save_env(mini, "PWD"));
+	update_pwd_oldpwd(mini, dir);
+	free(dir);
 	return (EXIT_SUCCESS);
 }
 
@@ -80,7 +93,7 @@ char	*get_path(t_mini *mini, char *str)
 		if (!ft_strncmp(current->name, str, ft_strlen(str)))
 		{
 			path = ft_split(current->name, '=');
-			//printf("path -> %s\n", path[1]);
+			printf("path -> %s\n", path[1]);
 			dir = ft_strdup(path[1]);
 			free_matriz(path);
 			return (dir);
@@ -88,4 +101,38 @@ char	*get_path(t_mini *mini, char *str)
 		current = current->next;
 	}
 	return (dir);
+}
+
+int	back_cd(t_mini *mini_d, char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[1][i])
+	{
+		if (!ft_strncmp(&str[1][i], "..", 2))
+		{
+			if (safe_chdir(mini_d, "..") == -1)
+				return (EXIT_FAILURE);
+			i ++;
+		}
+		i ++;
+	}
+	return (EXIT_SUCCESS);
+}
+
+int	update_pwd_oldpwd(t_mini *mini, char *last_dir)
+{
+	char	cwd[1024];
+	char	*pwd;
+	//char	*tmp;
+
+	printf("lastdir %s \n", last_dir);
+	//tmp = ft_strjoin("OLDPWD=", last_dir);
+	pwd = getcwd(cwd, sizeof(cwd));
+	printf("PWD %s\n", pwd);
+	replace_env_value(mini, "PWD", pwd);
+	replace_env_value(mini, "OLDPWD", last_dir);
+	//free(tmp);
+	return (EXIT_SUCCESS);
 }

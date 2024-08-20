@@ -213,3 +213,4 @@ Another line
 More data
 EOF
 
+cat << EOF1 > file1 | cat << EOF2 > file2

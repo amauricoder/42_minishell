@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:52:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 16:31:30 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/20 19:37:10 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,54 @@ int	ft_getenv(t_mini *mini_d, char *to_find)
 		current = current->next;
 	}
 	return (false);
+}
+/**
+ * @brief Return a char * of a specific env, or NULL
+ */
+char	*save_env(t_mini *mini_d, char *to_find)
+{
+	t_env	*current;
+	int		i;
+
+	current = mini_d->env_d;
+	while (current)
+	{
+		if (!ft_strncmp(to_find, current->name, ft_strlen(to_find))
+			&& current->name[ft_strlen(to_find)] == '=')
+			break;
+		current = current->next;
+	}
+	i = 0;
+	if (current->name)
+	{
+		while (current->name[i] != '=')
+			i ++;		
+		return (&current->name[i + 1]);
+	}
+	return (NULL);
+}
+
+
+int	replace_env_value(t_mini *mini, char *env_name, char *new)
+{
+	t_env	*head;
+	char	*tmp;
+
+	head = mini->env_d;
+	tmp = ft_strjoin(env_name, "=");
+	while(mini->env_d)
+	{
+		if (!ft_strncmp(mini->env_d->name, env_name, ft_strlen(env_name)))
+		{
+			free(mini->env_d->name);
+			mini->env_d->name = ft_strjoin(tmp, new);
+			free(tmp);
+			mini->env_d = head;
+			return (EXIT_SUCCESS);
+		}
+		mini->env_d = mini->env_d->next;
+	}
+	mini->env_d = head;
+	free(tmp);
+	return (EXIT_SUCCESS);
 }

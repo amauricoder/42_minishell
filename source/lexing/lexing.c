@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:17:04 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 12:51:30 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/20 16:55:12 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	do_lexing(t_mini *mini)
 			create_token(mini, &mini->input[wrd_len], state, (i - wrd_len));
 		}
 	}
-	find_env(mini);
+	define_type_env(mini);
 	return (EXIT_SUCCESS);
 }
 

@@ -6,24 +6,40 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 16:46:33 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/20 13:26:14 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:56:04 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/**
+ * @brief joins the export value when used "+="
+ * @return the full string joined with the "declare -x" and the double quote
+*/
+char	*exp_join(char *old, char *to_add, t_env *env)
+{
+	char	*temp;
+	char	*temp2;
+	char	*save_name;
+	int		i;
+	
+	i = 0;
+	while (old[i] != '=')
+		i++;
+	save_name = ft_strdup_qt(old, ++i);
+	temp = ft_strtrim(ft_strchr(old, '=') + 1, "\"");
+	free (old);
+	free (env->name);
+	temp2 = ft_strjoin(&save_name[11], temp);
+	free (save_name);
+	free (temp);
+	env->name = ft_strjoin(temp2, ft_strchr(to_add, '=') + 1);
+	free (temp2);
+	return (env->name);
+}
+
 void	export_add(t_mini *mini, char *str, char *name)
 {
-	printf("str = %s\n", str);
-	printf("name = %s\n", name);
-	//procurar se str[0] já existe na export
-	//se existir, substituir o valor
-		//se o str[0][ft_strlen(str[0]) - 1] == '+', adicionar o valor ao que ja tinha antes
-	//if str[1] adiciona na env tbm
-	//LEMBRAR DE SEMPRE ADD O = ENTRE AS STRINGS
-	//criar um t_env temporario com a string pra adicionar
-	//criar um temp do export pra correr até o final
-	//temp_exp = env_export(temp_env)
 	t_env	*exp_cpy;
 	t_env	*env;
 	int		i;
@@ -33,24 +49,25 @@ void	export_add(t_mini *mini, char *str, char *name)
 	env->name = ft_strdup(str);
 	env->next = NULL;
 	i = 0;
-	printf("NAME SIZE -> %li\n", ft_strlen(name));
-	printf("str[ft_strlen(name) - 1] -> %c\n", str[ft_strlen(name) - 1]);
 	while (mini->export)
 	{
-		printf("compare-> %i\n", ft_strncmp(mini->export->name, str, ft_strlen(name) - 1));
-		if (!ft_strncmp(mini->export->name, str, ft_strlen(name)))
-		{
-			free(mini->export->name);
-			mini->export->name = ft_strdup(str);
-			return ;
-		}
-		else if (!ft_strncmp(mini->export->name, str, ft_strlen(name) - 1)
+		//caso += -> retorna adicionado
+		if (!ft_strncmp(&mini->export->name[11], str, ft_strlen(name) - 1)
 			&& str[ft_strlen(name) - 1] == '+')
 		{
-			printf("AQUI É PRA SER UM + -> %c\n", str[ft_strlen(name) - 1]);
-			while (str[i] != '=')
-					i++;
-			mini->export->name = ft_strjoin(mini->export->name, &str[++i]);
+			env->name = exp_join(mini->export->name, str, env);
+			mini->export->name = env_export(env);
+			mini->export = exp_cpy;
+			free_env(env);
+			return ;
+		}
+		//caso = se ja houver -> substitui
+		else if (!ft_strncmp(&mini->export->name[11], str, ft_strlen(name)))
+		{
+			free(mini->export->name);
+			mini->export->name = env_export(env);
+			mini->export = exp_cpy;
+			free_env(env);
 			return ;
 		}
 		if (mini->export->next)
@@ -58,7 +75,6 @@ void	export_add(t_mini *mini, char *str, char *name)
 		else
 			break;
 	}
-	printf("ONDE TA -> %s\n", mini->export->name);
 	//chegou no ultimo, tem que adicionar o novo caso nao tenha encontrado
 	//criar um novo t_env e adicionar no final
 	mini->export->next = ft_calloc(sizeof(t_env), 1);

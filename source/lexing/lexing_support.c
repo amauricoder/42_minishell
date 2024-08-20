@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 10:59:36 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/12 16:48:10 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/20 16:55:12 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * @brief Secondary Function for do_lexing_aux.
  * To define the $ as type ENV.
 */
-void	find_env(t_mini *mini_d)
+void	define_type_env(t_mini *mini_d)
 {
 	t_token	*head;
 
