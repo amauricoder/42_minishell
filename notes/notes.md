@@ -167,3 +167,49 @@ O redirecionamento >> anexa ao final de um arquivo existente ou cria um novo arq
     O_WRONLY: Abre o arquivo para escrita.
     O_CREAT: Cria o arquivo se ele não existir.
     O_APPEND: Adiciona dados ao final do arquivo, sem truncá-lo. */
+
+===================================================================================
+
+HERE_DOC
+
+command <<EOF
+line 1
+line 2
+line 3
+EOF
+
+cat <<EOF
+Hello
+World
+EOF
+
+cat <<EOF > output.txt
+This is a test.
+EOF
+cat output.txt
+
+name="Alice"
+cat <<EOF
+Hello, $name
+EOF
+
+name="Alice"
+cat <<'EOF'
+Hello, $name
+EOF
+
+grep "test" <<EOF
+This is a test.
+This is another line.
+EOF
+
+cat <<END
+This is a custom delimiter.
+END
+
+cat <<EOF | grep "data"
+Here is some data
+Another line
+More data
+EOF
+

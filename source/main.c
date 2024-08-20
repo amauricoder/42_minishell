@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 16:02:29 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:15:15 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,3 +41,8 @@ int	main(int argc, char **argv, char **envp)
 	free_main_struct(&mini_d);
 	return (0);
 }
+
+//Preciso
+//Here_Doc
+//Exit Code
+//BuildIns

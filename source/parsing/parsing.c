@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 16:41:52 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/20 13:33:32 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:09:59 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 //Main function that start to build the execution tree.
-void	*build_tree(t_token *token)
+void	*do_parsing(t_token *token)
 {
 	void	*root;
 
@@ -21,7 +21,7 @@ void	*build_tree(t_token *token)
 	token = get_last_or_pipe(token);
 	if (token)
 	{
-		root = parse_pipe(root, build_tree(token->next));
+		root = parse_pipe(root, do_parsing(token->next));
 		return (root);
 	}
 	else

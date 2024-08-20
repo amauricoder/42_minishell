@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 11:22:05 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 14:40:00 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:10:08 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	exec_pipe(t_mini *mini_d, void *root, int p_fd[2], int is_left)
 			err_msg(mini_d, "dup2 failed", EXIT_FAILURE, false);
 		close(p_fd[0]);
 		close(p_fd[1]);
-		start_execution(mini_d, pipe_nd->left);
+		do_execution(mini_d, pipe_nd->left);
 		free_in_execution(mini_d, EXIT_SUCCESS);
 		exit(EXIT_SUCCESS);
 	}
@@ -56,7 +56,7 @@ int	exec_pipe(t_mini *mini_d, void *root, int p_fd[2], int is_left)
 		err_msg(mini_d, "dup2 failed", EXIT_FAILURE, false);
 	close(p_fd[1]);
 	close(p_fd[0]);
-	start_execution(mini_d, pipe_nd->right);
+	do_execution(mini_d, pipe_nd->right);
 	free_in_execution(mini_d, EXIT_SUCCESS);
 	exit(EXIT_SUCCESS);
 }

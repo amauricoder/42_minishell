@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 17:03:57 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/20 12:47:25 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,7 +263,7 @@ int		ft_strlen_char(char *str, char ch);
 //char	*aftdol_position(char *big, char *little);
 
 //parsing/parsing.c
-void	*build_tree(t_token *token);
+void	*do_parsing(t_token *token);
 void	*parse_exec(t_token *token);
 void	*parse_redir(t_token *token, void *root);
 void	*parse_pipe(void *left, void *right);
@@ -294,7 +294,7 @@ void	free_tree(void *root);
 void	free_pipe(void *root);
 
 //exec/execution.c
-int		start_execution(t_mini *mini_d, void *root);
+int		do_execution(t_mini *mini_d, void *root);
 int		handle_exec_cmd(t_mini *mini_d, void *root);
 
 //exec/exec_redir.c
@@ -312,6 +312,10 @@ int		execute_buildins(t_mini *mini, void *root);
 //exec/exec_pipe.c
 int		handle_pipe(t_mini *mini_d, void *root);
 int		exec_pipe(t_mini *mini_d, void *root, int p_fd[2], int is_left);
+
+//exec/exec_herecod.c
+int		handle_heredoc(t_mini *mini_d, void *root);
+int		redirect_heredoc(t_mini *mini_t);
 
 //builtins/support.c
 void	define_builtins(t_mini *mini_d);
