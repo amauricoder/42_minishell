@@ -214,3 +214,6 @@ More data
 EOF
 
 cat << EOF1 > file1 | cat << EOF2 > file2
+
+
+nm -g ./minishell | grep U

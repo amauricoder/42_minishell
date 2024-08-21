@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:18:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 16:40:57 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/21 19:08:24 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,22 @@ int	have_command(t_token *node)
  * @param id Id for future debug possibilities
  * @param node token node that we will get the name of the file.  
  */
-t_redir	*create_redir_node(void *down, int id, t_token *node)
+t_redir	*create_redir_node(void *down, int *id, t_token *node)
 {
 	t_redir	*redir;
 
 	redir = ft_calloc(1, sizeof(t_redir));
-	redir->id = id;
-	id ++;
 	redir->fname = get_redir_name(node);
 	redir->len = ft_strlen(redir->fname);
 	redir->down = down;
 	redir->type = node->type;
+	redir->id = 0;
+	redir->hd_tmp = NULL;
+	if (redir->type == HEREDOC)
+	{
+		redir->id = (*id);
+		(*id) ++;
+	}
 	return (redir);
 }
 

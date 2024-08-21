@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:55:37 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/20 18:01:39 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/21 19:22:32 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 int	do_execution(t_mini *mini_d, void *root)
 {
 	t_exec	*ndcheck;
-
+	
 	if (!root)
 		return (err_msg(mini_d, NO_CMD, 127, 0));
 	ndcheck = root;
-	if (ndcheck->type == HEREDOC)
-		handle_heredoc(mini_d, root);
 	if (ndcheck->type == PIPE)
 		return (handle_pipe(mini_d, root));
 	if (ndcheck->type == WORD)
@@ -30,8 +28,11 @@ int	do_execution(t_mini *mini_d, void *root)
 		handle_exec_cmd(mini_d, root);
 	}
 	else if (ndcheck->type == R_OUT || ndcheck->type == R_IN
-		|| ndcheck->type == D_R_OUT)
+		|| ndcheck->type == D_R_OUT || ndcheck->type == HEREDOC)
+	{
 		handle_redir_nodes(mini_d, root);
+		return (EXIT_SUCCESS);
+	}
 	return (EXIT_SUCCESS);
 }
 

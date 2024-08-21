@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 11:22:05 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 17:10:08 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/21 19:48:11 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	exec_pipe(t_mini *mini_d, void *root, int p_fd[2], int is_left)
 	pipe_nd = root;
 	if (is_left)
 	{
+		printf("got here left\n");
 		if (dup2(p_fd[1], STDOUT_FILENO) == -1)
 			err_msg(mini_d, "dup2 failed", EXIT_FAILURE, false);
 		close(p_fd[0]);
@@ -52,6 +53,7 @@ int	exec_pipe(t_mini *mini_d, void *root, int p_fd[2], int is_left)
 		free_in_execution(mini_d, EXIT_SUCCESS);
 		exit(EXIT_SUCCESS);
 	}
+	printf("got here right\n");
 	if (dup2(p_fd[0], STDIN_FILENO) == -1)
 		err_msg(mini_d, "dup2 failed", EXIT_FAILURE, false);
 	close(p_fd[1]);
