@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/21 14:30:03 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:53:11 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@
 # define FORK_ERR "fork: error during fork"
 # define NO_CMD " : command not found"
 # define NO_DIR " : no such file or directory"
+# define EXP_ERR "minishell: export: not a valid identifier"
 
 /*************************/
 /*    structs and enun	 */
@@ -349,6 +350,11 @@ int		export_create(t_mini *mini);
 char	*env_export(t_env *env);
 int		export_read(t_mini *mini, char **str);
 t_env	*lst_sort(t_env *env);
+
+//builtin/unset.c
+int		unset(t_mini *mini, char **args);
+void	unset_env(t_mini *mini, char *name);
+void	unset_export(t_mini *mini, char *name);
 
 //env/env.c
 int		copy_env(char **env, t_env **env_var);

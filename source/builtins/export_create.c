@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 16:46:33 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/21 15:20:00 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:05:15 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ void	export_add(t_mini *mini, char *str, char *name)
 	mini->export = mini->export->next;
 	mini->export->name = env_export(env);
 	mini->export->next = NULL;
-	mini->export = lst_sort(mini->export);
-	mini->export = exp_cpy;
+	mini->export = lst_sort(exp_cpy);
+//	mini->export = exp_cpy;
 	free_env(env);
 }
 
@@ -114,7 +114,7 @@ int	export_read(t_mini *mini, char **str)
 	t_env	*exp;
 	int		i;
 
-	i = 0;
+	i = 1;
 	tmp = str;
 	if (!str[1])
 	{
@@ -128,45 +128,49 @@ int	export_read(t_mini *mini, char **str)
 	}
 	//ver se o primeiro char é num ou um char especial
 	//se for, retorna msg de erro, mas add noe xport na mesma
-	else
+	while (str[i])
 	{
-		while (str[++i])
+		if (!ft_isalpha(str[i][0]))
 		{
-			tmp = ft_split(str[i], '=');//e so pra ver se tem igual ou nao
-			if (tmp[1])
-			{
-				exp = mini->env_d;
-				while (exp)
-				{
-					// +=
-					//nao ta funcionando, cria um novo
-					if (ft_strlen(tmp[0]) - 1 > 0
-						&& !ft_strncmp(exp->name, tmp[0], ft_strlen(tmp[0]) - 1)
-						&& tmp[0][ft_strlen(tmp[0]) - 1] == '+')
-					{
-						exp->name = env_join(exp->name, str[i], exp);
-						break ;
-					}
-					//se for = e ja tiver->substitui
-					else if (!ft_strncmp(exp->name, tmp[0], ft_strlen(tmp[0])))
-					{
-						free(exp->name);
-						exp->name = ft_strdup(str[i]);
-						break ;
-					}
-					if (!exp->next)
-					{
-						exp->next = ft_calloc(sizeof(t_env), 1);
-						exp->next->name = ft_strdup(str[i]);
-						exp->next->next = NULL;
-						break ;
-					}
-					exp = exp->next;
-				}
-			}
-			export_add(mini, str[i], tmp[0]);
-			free_matriz(tmp);
+			err_msg(mini, EXP_ERR, 1, 0);
+			i++;
+			break ;
 		}
+		tmp = ft_split(str[i], '=');//e so pra ver se tem igual ou nao
+		if (tmp[1] || str[i][ft_strlen(str[i]) - 1] == '=')
+		{
+			exp = mini->env_d;
+			while (exp)
+			{
+				// +=
+				//nao ta funcionando, cria um novo
+				if (ft_strlen(tmp[0]) - 1 > 0
+					&& !ft_strncmp(exp->name, tmp[0], ft_strlen(tmp[0]) - 1)
+					&& tmp[0][ft_strlen(tmp[0]) - 1] == '+')
+				{
+					exp->name = env_join(exp->name, str[i], exp);
+					break ;
+				}
+				//se for = e ja tiver->substitui
+				else if (!ft_strncmp(exp->name, tmp[0], ft_strlen(tmp[0])))
+				{
+					free(exp->name);
+					exp->name = ft_strdup(str[i]);
+					break ;
+				}
+				if (!exp->next)
+				{
+					exp->next = ft_calloc(sizeof(t_env), 1);
+					exp->next->name = ft_strdup(str[i]);
+					exp->next->next = NULL;
+					break ;
+				}
+				exp = exp->next;
+			}
+		}
+		export_add(mini, str[i], tmp[0]);
+		free_matriz(tmp);
+		i++;
 	}
 	return (EXIT_SUCCESS);
 }

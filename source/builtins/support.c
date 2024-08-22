@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   support.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 15:30:24 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 17:00:02 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:58:40 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,9 @@ void	tests_builtins(t_mini *mini, void *root)
 			exit_read(mini, exec_node->args);
 		if (exec_node->builtin == EXPORT)
 			export_read(mini, exec_node->args);
+		if (exec_node->builtin == UNSET)
+			unset(mini, exec_node->args);
+		if (exec_node->builtin == B_ENV)
+			env(mini->env_d);
 	}
 }
