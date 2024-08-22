@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/20 17:51:05 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/21 14:30:03 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -353,7 +353,7 @@ t_env	*lst_sort(t_env *env);
 //env/env.c
 int		copy_env(char **env, t_env **env_var);
 int		ft_getenv(t_mini *mini_d, char *to_find);
-void	env_add(t_mini *mini, char **str);
+t_env	*env_add(char *str);
 char	*save_env(t_mini *mini_d, char *to_find);
 int		replace_env_value(t_mini *mini, char *env_name, char *new);
 

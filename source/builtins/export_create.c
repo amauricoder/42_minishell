@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_create.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 16:46:33 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/20 14:56:04 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/21 15:20:00 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,11 @@ void	export_add(t_mini *mini, char *str, char *name)
 {
 	t_env	*exp_cpy;
 	t_env	*env;
-	int		i;
 
 	exp_cpy = mini->export;
 	env = ft_calloc(sizeof(t_env), 1);
 	env->name = ft_strdup(str);
 	env->next = NULL;
-	i = 0;
 	while (mini->export)
 	{
 		//caso += -> retorna adicionado
@@ -75,17 +73,35 @@ void	export_add(t_mini *mini, char *str, char *name)
 		else
 			break;
 	}
-	//chegou no ultimo, tem que adicionar o novo caso nao tenha encontrado
-	//criar um novo t_env e adicionar no final
 	mini->export->next = ft_calloc(sizeof(t_env), 1);
 	mini->export = mini->export->next;
-	//aqui nao da certo se nao tiver o =
 	mini->export->name = env_export(env);
 	mini->export->next = NULL;
-	//colocar em ordem
 	mini->export = lst_sort(mini->export);
 	mini->export = exp_cpy;
 	free_env(env);
+}
+
+char	*env_join(char *old, char *to_add, t_env *env)
+{
+	char	*temp;
+	char	*temp2;
+	char	*save_name;
+	int		i;
+	
+	i = 0;
+	while (old[i] != '=')
+		i++;
+	save_name = ft_strdup_qt(old, ++i);
+	temp = ft_strtrim(ft_strchr(old, '=') + 1, "\"");
+	free (old);
+	//free (env->name);
+	temp2 = ft_strjoin(save_name, temp);
+	free (save_name);
+	free (temp);
+	env->name = ft_strjoin(temp2, ft_strchr(to_add, '=') + 1);
+	free (temp2);
+	return (env->name);
 }
 
 //faz a leitura do que deve ser feito com o export
@@ -110,14 +126,44 @@ int	export_read(t_mini *mini, char **str)
 		}
 		return (EXIT_SUCCESS);
 	}
+	//ver se o primeiro char é num ou um char especial
+	//se for, retorna msg de erro, mas add noe xport na mesma
 	else
 	{
 		while (str[++i])
 		{
 			tmp = ft_split(str[i], '=');//e so pra ver se tem igual ou nao
-			printf_matriz(tmp);
-			//if (tmp[1])//quer dizer que tinha um "=", lembrar de add ele dps
-			//	env_add(mini, str[i]);
+			if (tmp[1])
+			{
+				exp = mini->env_d;
+				while (exp)
+				{
+					// +=
+					//nao ta funcionando, cria um novo
+					if (ft_strlen(tmp[0]) - 1 > 0
+						&& !ft_strncmp(exp->name, tmp[0], ft_strlen(tmp[0]) - 1)
+						&& tmp[0][ft_strlen(tmp[0]) - 1] == '+')
+					{
+						exp->name = env_join(exp->name, str[i], exp);
+						break ;
+					}
+					//se for = e ja tiver->substitui
+					else if (!ft_strncmp(exp->name, tmp[0], ft_strlen(tmp[0])))
+					{
+						free(exp->name);
+						exp->name = ft_strdup(str[i]);
+						break ;
+					}
+					if (!exp->next)
+					{
+						exp->next = ft_calloc(sizeof(t_env), 1);
+						exp->next->name = ft_strdup(str[i]);
+						exp->next->next = NULL;
+						break ;
+					}
+					exp = exp->next;
+				}
+			}
 			export_add(mini, str[i], tmp[0]);
 			free_matriz(tmp);
 		}
@@ -172,9 +218,11 @@ char	*env_export(t_env *env)
 	size += 13;
 	str = ft_calloc(sizeof(char), size + 1);
 	ft_strlcpy(str, "declare -x ", 12);
-	while (env->name[i] != '=')
+	while (env->name[i] && env->name[i] != '=')
 		i++;
 	ft_strlcpy(&str[11], env->name, i + 2);
+	if (env->name[i] != '=')
+		return (str);
 	ft_strlcpy(&str[11 + i + 1], "\"", 2);
 	while (env->name[i + j])
 		j++;

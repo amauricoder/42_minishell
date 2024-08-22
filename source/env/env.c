@@ -3,37 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:52:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/20 19:37:10 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/21 14:29:56 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	env_add(t_mini *mini, char **str)
+t_env	*env_add(char *str)
 {
-	t_env	*new;
-	t_env	*tmp;
-	int		i;
+	t_env	*to_add;
 
-	i = 0;
-	new = malloc(sizeof(t_env));
-	if (!new)
-		return ;
-	tmp = mini->env_d;
-	while (tmp->next)
-		tmp = tmp->next;
-	while (str[i])
-	{
-		tmp->name = ft_strjoin(str[i], "=");
-		new->name = ft_strjoin(ft_strjoin(str[i], "="), str[i + 1]);
-		i += 2;
-	}
-	tmp->next = new;
-	new->next = NULL;
-	return ;
+	to_add = ft_calloc(sizeof(t_env), 1);
+	to_add->name = ft_strdup(str);
+	to_add->next = NULL;
+	return (to_add);
 }
 
 //clean properly free_env(env_var)??

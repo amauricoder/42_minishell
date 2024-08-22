@@ -6,11 +6,13 @@
 }
 
 {
-   ignore_ft_strjoin_leak
+   ft_strjoin_leak
    Memcheck:Leak
+   match-leak-kinds: definite
    fun:malloc
    fun:ft_strjoin
    fun:get_user_prompt
    fun:get_prompt_msg
+   fun:prompt_and_input
    fun:main
 }
