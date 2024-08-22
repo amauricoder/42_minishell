@@ -102,6 +102,7 @@ make re && clear && valgrind --leak-check=full --track-fds=yes --show-leak-kinds
 - "e"'c'"h""o"
 - echo "WORD" -> the second token was beggining with space and nor in_DQUOTE (do_lexing)
 
+- > "" ---------------- not wokrking as expected
 
 ===== test heredoc ====
 - cat << "EOF" > abc

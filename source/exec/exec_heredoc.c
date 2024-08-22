@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:54:54 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/21 19:19:58 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/22 18:00:26 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void	open_heredocs(t_mini *mini, void *root)
 
 	tmp = root;
 	nd = tmp;
+	if (!nd)
+		return ;
 	if (nd->type == HEREDOC)
 	{
 		handle_heredoc(mini, root);

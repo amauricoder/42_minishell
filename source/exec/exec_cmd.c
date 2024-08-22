@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:28:01 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 13:59:03 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/22 16:51:52 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+// < inacessible_file | cat -e > output
+// erro quando se coloca apenas um redirect e | 
 int	execute_cmd(t_mini *mini_d, void *root)
 {
 	t_exec	*exec_nd;

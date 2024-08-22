@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:40:18 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/15 22:55:39 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/22 18:51:15 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	clean_token(t_mini *mini_d)
 	t_token	*tmp;
 	t_token	*prev;
 
-	while (mini_d->token &&mini_d->token->type == W_SPACE) // changes here because we need the NULL **tmp->len == 0 ||**
+	while (mini_d->token && mini_d->token->type == W_SPACE) // changes here because we need the NULL **tmp->len == 0 ||**
 	{
 		tmp = mini_d->token->next;
 		free(mini_d->token->content);
