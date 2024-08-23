@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/21 12:40:04 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/23 12:20:06 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 //ECHO nao esta printando a $PWD nem $OLDPWD com valor atualizado
 //UPDATE
 // nao estou tratando special characters
+
+//ATUALIZAR O PWD E O OLDPWD TANTO NO ENV QUANTO NO EXPORT
+//fazer funçao join_three
+//cd after unsetting HOME -> minishell: cd: HOME not set
+//export=zzzz -> retorna prompt, nao adiciona nada
 int	cd(t_mini *mini, char **str)
 {
 	printf("nosso cd\n");
@@ -54,7 +59,7 @@ int	cd(t_mini *mini, char **str)
 		dir = ft_strdup(save_env(mini, "PWD"));
 	update_pwd_oldpwd(mini, dir);
 	free(dir);
-	return (EXIT_SUCCESS);
+	return(EXIT_SUCCESS);
 }
 
 int	safe_chdir(t_mini *mini, char *dir)
