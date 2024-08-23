@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/22 15:53:11 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/22 19:01:21 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,6 +331,7 @@ int		pwd(t_mini *mini, char **str);
 
 //builtins/bt_env.c
 void	env(t_env *env_var);
+char	*env_join(char *old, char *to_add, t_env *env);
 
 //builtins/cd.c
 int		cd(t_mini *mini, char **str);
@@ -346,10 +347,17 @@ int		exit_number(t_mini *mini, char **str);
 int		str_digit(char *str);
 
 //builtins/export.c
+int		export(t_mini *mini, char **str);
+void	read_arg(char *str, char **tmp, t_env *exp);
+void	export_add(t_mini *mini, char *str, char *name);
+int		export_add_support(t_mini *mini, char *str, char *name, t_env *env);
+
+//builtins/export_create.c
+char	*exp_join(char *old, char *to_add, t_env *env);
 int		export_create(t_mini *mini);
-char	*env_export(t_env *env);
-int		export_read(t_mini *mini, char **str);
+char	*env_to_export(t_env *env);
 t_env	*lst_sort(t_env *env);
+int		print_export(t_mini *mini);
 
 //builtin/unset.c
 int		unset(t_mini *mini, char **args);

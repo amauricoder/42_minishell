@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 15:30:24 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/22 15:58:40 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/22 16:14:41 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	tests_builtins(t_mini *mini, void *root)
 		if (exec_node->builtin == EXIT)
 			exit_read(mini, exec_node->args);
 		if (exec_node->builtin == EXPORT)
-			export_read(mini, exec_node->args);
+			export(mini, exec_node->args);
 		if (exec_node->builtin == UNSET)
 			unset(mini, exec_node->args);
 		if (exec_node->builtin == B_ENV)

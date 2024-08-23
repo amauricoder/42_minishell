@@ -1,9 +1,9 @@
 {
   "files.associations": {
-	"minishell.h": "c",
-	"signal.h": "c",
-	"typeinfo": "c"
-},
+    "minishell.h": "c",
+    "signal.h": "c",
+    "typeinfo": "c"
+  },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
   "C_Cpp_Runner.debuggerPath": "gdb",

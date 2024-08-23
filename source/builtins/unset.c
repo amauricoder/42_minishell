@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:42:59 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/22 16:00:08 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/22 18:51:42 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	unset_env(t_mini *mini, char *name)
 				prev->next = mini->env_d->next;
 			else
 				env_cpy = mini->env_d->next;
-			free_env(mini->env_d);
+			free(mini->env_d->name);
+			free(mini->env_d);
 			mini->env_d = env_cpy;
 			return ;
 		}
@@ -68,7 +69,8 @@ void	unset_export(t_mini *mini, char *name)
 				prev->next = mini->export->next;
 			else
 				exp_cpy = mini->export->next;
-			free_env(mini->export);
+			free(mini->export->name);
+			free(mini->export);
 			mini->export = exp_cpy;
 			return ;
 		}
