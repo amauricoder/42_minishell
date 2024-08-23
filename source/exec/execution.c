@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:55:37 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/22 16:16:16 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/23 10:50:43 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	do_execution(t_mini *mini_d, void *root)
 		if (ndcheck->builtin != 0)
 			return (execute_buildins(mini_d, root));
 		handle_exec_cmd(mini_d, root);
+		return (EXIT_SUCCESS);
 	}
 	else if (ndcheck->type == R_OUT || ndcheck->type == R_IN
 		|| ndcheck->type == D_R_OUT || ndcheck->type == HEREDOC)

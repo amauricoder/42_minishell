@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/21 19:07:47 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/23 11:02:11 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # include <unistd.h> 
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <locale.h>
 
 /*************************/
 /*     	 LIBFT/GNL 		 */
@@ -247,6 +248,8 @@ void	signals_init(void);
 void	signal_handler(int sig);
 void	signals_child(void);
 void	signal_handler_child(int sig);
+void	 handle_sigpipe(int sig);
+void 	setup_sigpipe_handler();
 
 //expand/expansion.c
 int		find_expansion(t_mini	*mini_d);
