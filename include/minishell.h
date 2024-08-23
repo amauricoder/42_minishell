@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/22 19:01:21 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/23 11:39:00 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # include <unistd.h> 
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <locale.h>
 
 /*************************/
 /*     	 LIBFT/GNL 		 */
@@ -148,6 +149,7 @@ typedef struct s_mini
 	void	*root;
 	int		exit_status;
 	int		stdfds[2];
+	int		qt_heredocs;
 	t_env	*env_d;
 	t_env	*export;
 	t_token	*token;
@@ -177,6 +179,7 @@ typedef struct s_redir
 	char	*fname;
 	int		len;
 	void	*down;
+	char	*hd_tmp;
 }	t_redir;
 
 //global variable
@@ -246,6 +249,8 @@ void	signals_init(void);
 void	signal_handler(int sig);
 void	signals_child(void);
 void	signal_handler_child(int sig);
+void	 handle_sigpipe(int sig);
+void 	setup_sigpipe_handler();
 
 //expand/expansion.c
 int		find_expansion(t_mini	*mini_d);
@@ -264,14 +269,14 @@ int		ft_strlen_char(char *str, char ch);
 //char	*aftdol_position(char *big, char *little);
 
 //parsing/parsing.c
-void	*do_parsing(t_token *token);
+void	*do_parsing(t_mini *mini_d, t_token *token);
 void	*parse_exec(t_token *token);
 void	*parse_redir(t_token *token, void *root);
 void	*parse_pipe(void *left, void *right);
 
 //parsing/tree_support.c
 int		have_command(t_token *node);
-t_redir	*create_redir_node(void *down, int id, t_token *node);
+t_redir	*create_redir_node(void *down, int *id, t_token *node);
 char	*get_redir_name(t_token *node);
 int		get_qt_cmd_tokens(t_token *token);
 void	free_tree(void *root);
@@ -316,7 +321,9 @@ int		exec_pipe(t_mini *mini_d, void *root, int p_fd[2], int is_left);
 
 //exec/exec_herecod.c
 int		handle_heredoc(t_mini *mini_d, void *root);
-int		redirect_heredoc(t_mini *mini_t);
+int		redirect_heredoc(t_mini *mini_t, t_redir *node);
+char	*get_heredoc_name(t_mini *mini, int id, int invert);
+void	open_heredocs(t_mini *mini, void *root);
 
 //builtins/support.c
 void	define_builtins(t_mini *mini_d);

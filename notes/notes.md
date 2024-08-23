@@ -102,6 +102,9 @@ make re && clear && valgrind --leak-check=full --track-fds=yes --show-leak-kinds
 - "e"'c'"h""o"
 - echo "WORD" -> the second token was beggining with space and nor in_DQUOTE (do_lexing)
 
+cat -e << EOF | cat -e << EOF2 | cat -e << EOF3 | cat -e << EOF4
+
+- > "" ---------------- not wokrking as expected
 
 ===== test heredoc ====
 - cat << "EOF" > abc
@@ -214,3 +217,6 @@ More data
 EOF
 
 cat << EOF1 > file1 | cat << EOF2 > file2
+
+
+nm -g ./minishell | grep U

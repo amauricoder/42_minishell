@@ -6,14 +6,14 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 16:41:52 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 17:09:59 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/22 18:08:21 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 //Main function that start to build the execution tree.
-void	*do_parsing(t_token *token)
+void	*do_parsing(t_mini *mini_d, t_token *token)
 {
 	void	*root;
 
@@ -21,7 +21,7 @@ void	*do_parsing(t_token *token)
 	token = get_last_or_pipe(token);
 	if (token)
 	{
-		root = parse_pipe(root, do_parsing(token->next));
+		root = parse_pipe(root, do_parsing(mini_d, token->next));
 		return (root);
 	}
 	else
@@ -32,11 +32,14 @@ void	*do_parsing(t_token *token)
 void	*parse_exec(t_token *token)
 {
 	t_exec		*exec_node;
-	static int	id;
+	int			id;
 	void		*root;
 
 	exec_node = NULL;
-	if (have_command(token))
+	id = 1;
+	if (have_command(token) && (token->type != R_IN
+		&& token->type != R_OUT && token->type != D_R_OUT
+		&& token->type != HEREDOC))
 	{
 		exec_node = ft_calloc(1, sizeof(t_exec));
 		exec_node->id = id;
@@ -55,13 +58,13 @@ void	*parse_exec(t_token *token)
 void	*parse_redir(t_token *token, void *root)
 {
 	t_token		*last;
-	static int	id;
+	int			id;
 
+	id = 1;
 	last = get_last_redir(token, 1);
 	while (last)
 	{
-		root = create_redir_node(root, id, last);
-		id ++;
+		root = create_redir_node(root, &id, last);
 		last = get_last_redir(last, 0);
 		if (!last)
 			return (root);
@@ -72,8 +75,9 @@ void	*parse_redir(t_token *token, void *root)
 void	*parse_pipe(void *left, void *right)
 {
 	t_pipe		*pipe;
-	static int	id;
+	int			id;
 
+	id = 0;
 	pipe = ft_calloc(1, sizeof(t_pipe));
 	pipe->id = id;
 	id ++;

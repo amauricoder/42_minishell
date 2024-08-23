@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+         #
+#    By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
-#    Updated: 2024/08/22 16:08:30 by ismirand         ###   ########.fr        #
+#    Updated: 2024/08/23 11:40:21 by aconceic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,8 @@ SRC = prompt.c frees.c frees2.c lexing/lexing.c lexing/lexing_support.c\
 		builtins/pwd.c builtins/bt_env.c builtins/support.c builtins/cd.c\
 		builtins/exit.c builtins/export.c builtins/export_create.c\
 		builtins/unset.c exec/execution.c exec/exec_redir.c exec/exec_cmd.c\
-		exec/exec_pipe.c exec/exec_heredoc.c debug.c main_support.c\
+		exec/exec_pipe.c exec/exec_heredoc.c exec/exec_heredoc2.c debug.c\
+		main_support.c\
 
 ##############################################
 #                COMPILATION                 #

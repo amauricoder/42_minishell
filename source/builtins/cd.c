@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/20 20:02:25 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/21 12:40:04 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@
 //tratar tbm cd ~ (vai pra home)
 // tratar cd - cd (volta ao caminho anterior)
 //ECHO nao esta printando a $PWD nem $OLDPWD com valor atualizado
+//UPDATE
+// nao estou tratando special characters
 int	cd(t_mini *mini, char **str)
 {
+	printf("nosso cd\n");
 	char	*dir;
 	char	cwd[1024];
 
@@ -25,18 +28,10 @@ int	cd(t_mini *mini, char **str)
 	if ((str[1] && str[2]) || (str[1] && !ft_strncmp(str[1], "...", 3))
 		|| (str[1] && !ft_strncmp(str[1], "--", 2)))
 		return (err_msg(mini, "cd : bad usage", EXIT_FAILURE, 0));
-	if (!str[1] || (!ft_strncmp("~", str[1], 1) && ft_strlen(str[1]) == 1))
+	if (!str[1])
 	{
-		//dir = get_path(mini, "HOME");
-		dir = save_env(mini, "HOME");
+		dir = save_env(mini, "HOME"); // tratar home = NULL
 		if (safe_chdir(mini, dir) == -1)
-			return (EXIT_FAILURE);
-		return (update_pwd_oldpwd(mini, dir));
-	}
-	else if (!ft_strncmp(str[1], "-", 1))
-	{
-		dir = save_env(mini, "OLDPWD");
-		if (safe_chdir(mini, &dir[7]) == -1)
 			return (EXIT_FAILURE);
 		return (update_pwd_oldpwd(mini, dir));
 	}
@@ -50,7 +45,10 @@ int	cd(t_mini *mini, char **str)
 	{
 		dir = ft_strdup(str[1]);
 		if (safe_chdir(mini, dir) == -1)
+		{
+			free(dir);
 			return (EXIT_FAILURE);
+		}
 	}
 	if (!dir)
 		dir = ft_strdup(save_env(mini, "PWD"));
@@ -63,7 +61,7 @@ int	safe_chdir(t_mini *mini, char *dir)
 {
 	if (chdir(dir) == -1)
 	{
-		mini->exit_status = err_msg(mini, CD_ERR_DIR, EXIT_FAILURE, 0);//acho que ta redundante
+		mini->exit_status = err_msg(mini, NULL, EXIT_FAILURE, 0);//acho que ta redundante
 		return (-1);
 	}
 	return (EXIT_SUCCESS);
@@ -128,11 +126,9 @@ int	update_pwd_oldpwd(t_mini *mini, char *last_dir)
 	//char	*tmp;
 
 	printf("lastdir %s \n", last_dir);
-	//tmp = ft_strjoin("OLDPWD=", last_dir);
 	pwd = getcwd(cwd, sizeof(cwd));
 	printf("PWD %s\n", pwd);
 	replace_env_value(mini, "PWD", pwd);
 	replace_env_value(mini, "OLDPWD", last_dir);
-	//free(tmp);
 	return (EXIT_SUCCESS);
 }

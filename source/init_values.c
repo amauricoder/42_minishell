@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 19:46:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 16:08:53 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/21 15:31:14 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	init_main_struct(t_mini *mini_d, char **argv, char **envp)
 	mini_d->token = NULL;
 	mini_d->stdfds[0] = -1;
 	mini_d->stdfds[1] = -1;
+	mini_d->qt_heredocs = 0;
 }
 
 /**

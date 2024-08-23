@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:55:37 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/20 18:01:39 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/23 10:50:43 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 int	do_execution(t_mini *mini_d, void *root)
 {
 	t_exec	*ndcheck;
-
+	
 	if (!root)
 		return (err_msg(mini_d, NO_CMD, 127, 0));
 	ndcheck = root;
-	if (ndcheck->type == HEREDOC)
-		handle_heredoc(mini_d, root);
 	if (ndcheck->type == PIPE)
 		return (handle_pipe(mini_d, root));
 	if (ndcheck->type == WORD)
@@ -28,10 +26,14 @@ int	do_execution(t_mini *mini_d, void *root)
 		if (ndcheck->builtin != 0)
 			return (execute_buildins(mini_d, root));
 		handle_exec_cmd(mini_d, root);
+		return (EXIT_SUCCESS);
 	}
 	else if (ndcheck->type == R_OUT || ndcheck->type == R_IN
-		|| ndcheck->type == D_R_OUT)
+		|| ndcheck->type == D_R_OUT || ndcheck->type == HEREDOC)
+	{
 		handle_redir_nodes(mini_d, root);
+		return (EXIT_SUCCESS);
+	}
 	return (EXIT_SUCCESS);
 }
 
@@ -45,6 +47,7 @@ int	handle_exec_cmd(t_mini *mini_d, void *root)
 		return (err_msg(mini_d, FORK_ERR, 1, 0));
 	else if (pid == 0)
 	{
+		printf("chegou aqui pid %i \n", pid);
 		if (execute_cmd(mini_d, root))
 			exit(free_in_execution(mini_d, 127));
 	}

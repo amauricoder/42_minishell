@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 17:15:15 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/23 11:04:54 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ int	g_exit_status = 0;
 
 //Problema com $$ -> Retorna o PID. Como fazer???
 //set follow-fork child
+//PRECISO
+//EXPANSAO HERE_DOC
+//UNSET
+//VER PROBLEMAS
+//consetar funcao de handle signal for the pipe
 int	main(int argc, char **argv, char **envp)
 {
 	t_mini	mini_d;

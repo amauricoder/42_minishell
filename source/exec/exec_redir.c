@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:44:31 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 17:10:08 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/22 16:12:25 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	handle_redir_nodes(t_mini *mini_d, void *root)
 		exec_redir_out(mini_d, node);
 	else if (node->type == R_IN)
 		exec_redir_in(mini_d, node);
+	else if (node->type == HEREDOC)
+		redirect_heredoc(mini_d, node);
 	if (node->down)
 		do_execution(mini_d, node->down);
 }

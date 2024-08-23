@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:14:59 by ismirand          #+#    #+#             */
-/*   Updated: 2024/06/18 10:29:57 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/23 11:03:06 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	signals_init(void)
 {
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);//ignora o sinal ctrl+\'
+	setup_sigpipe_handler();
 }
 
 void	signal_handler_child(int sig)
@@ -50,4 +51,24 @@ void	signals_child(void)
 {
 	signal(SIGINT, signal_handler_child);
 	signal(SIGQUIT, signal_handler_child);
+}
+
+void handle_sigpipe(int sig)
+{
+	(void)sig;
+   // fprintf(stderr, "Received SIGPIPE (Broken Pipe)\n");
+    // Handle the signal as needed
+}
+
+void setup_sigpipe_handler()
+{
+    struct sigaction sa;
+    sa.sa_handler = handle_sigpipe;
+    sa.sa_flags = 0;
+    sigemptyset(&sa.sa_mask);
+    if (sigaction(SIGPIPE, &sa, NULL) == -1)
+    {
+        perror("sigaction");
+        exit(EXIT_FAILURE);
+    }
 }
