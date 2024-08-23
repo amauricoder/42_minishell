@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:55:37 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/23 10:50:43 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/23 13:50:59 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	handle_exec_cmd(t_mini *mini_d, void *root)
 	else if (pid == 0)
 	{
 		printf("chegou aqui pid %i \n", pid);
+		if (treat_exec_exception(root))
+			exit(free_in_execution(mini_d, 0));
 		if (execute_cmd(mini_d, root))
 			exit(free_in_execution(mini_d, 127));
 	}

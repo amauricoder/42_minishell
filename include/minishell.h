@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/23 11:39:00 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/23 13:55:28 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,6 +314,10 @@ char	**find_path_env(t_mini	*mini_d);
 char	**get_env_matriz(t_mini *mini_d);
 char	*create_cmdpath(char *possible_path, char *command);
 int		execute_buildins(t_mini *mini, void *root);
+
+//exec/exec_cmd2.c
+int		treat_exec_exception(void *root);
+void	treat_exec_exception_aux(t_exec *exec_nd, int *j);
 
 //exec/exec_pipe.c
 int		handle_pipe(t_mini *mini_d, void *root);

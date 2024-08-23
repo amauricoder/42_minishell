@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/23 11:04:54 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/23 12:17:13 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	g_exit_status = 0;
 //UNSET
 //VER PROBLEMAS
 //consetar funcao de handle signal for the pipe
+//tratar LS="ls -l"
+//tratar export=
 int	main(int argc, char **argv, char **envp)
 {
 	t_mini	mini_d;
