@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 16:06:49 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/23 10:34:23 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/23 12:26:36 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	export(t_mini *mini, char **str)
 
 	i = 1;
 	tmp = str;
-	if (!str[1])
+	if (str[0][6] == '\0' && !str[1])
 		return (print_export(mini));
 	while (str[i])
 	{

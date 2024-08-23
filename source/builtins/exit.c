@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:29:54 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/18 17:50:53 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/23 14:05:58 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 //(!ft_strncmp(mini_d.input, "exit", 4)
 //&& ft_strlen(mini_d.input) == 4)
+//nao ta atualizando o exit_status
+//o maximo que aceita sao 18 numeros 9
 void	exit_read(t_mini *mini, char **str) // exitc
 {
 	ft_printf("nossa exit\n"); // modifiquei isso
