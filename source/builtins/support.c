@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 15:30:24 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/22 16:14:41 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/23 15:18:51 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,6 @@ void	tests_builtins(t_mini *mini, void *root)
 		if (exec_node->builtin == UNSET)
 			unset(mini, exec_node->args);
 		if (exec_node->builtin == B_ENV)
-			env(mini->env_d);
+			env(mini, mini->env_d, exec_node->args);
 	}
 }

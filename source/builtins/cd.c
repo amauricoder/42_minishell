@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/23 12:20:06 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/24 11:03:14 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 //ATUALIZAR O PWD E O OLDPWD TANTO NO ENV QUANTO NO EXPORT
 //fazer funçao join_three
 //cd after unsetting HOME -> minishell: cd: HOME not set
-//export=zzzz -> retorna prompt, nao adiciona nada
+//export=zzzz -> retorna prompt, nao adiciona nada --FEITO
 int	cd(t_mini *mini, char **str)
 {
 	printf("nosso cd\n");
@@ -32,7 +32,7 @@ int	cd(t_mini *mini, char **str)
 	dir = NULL;
 	if ((str[1] && str[2]) || (str[1] && !ft_strncmp(str[1], "...", 3))
 		|| (str[1] && !ft_strncmp(str[1], "--", 2)))
-		return (err_msg(mini, "cd : bad usage", EXIT_FAILURE, 0));
+		return (err_msg(mini, join_three(D_CD, str[1], NO_FILE, 0), EXIT_FAILURE, 1));
 	if (!str[1])
 	{
 		dir = save_env(mini, "HOME"); // tratar home = NULL

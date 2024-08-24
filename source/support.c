@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   support.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:02:42 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 16:27:57 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/23 15:12:14 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,4 +108,32 @@ int	err_msg(t_mini *d, char *str, int ev, int fr)
 		free(str);
 	d->exit_status = ev;
 	return (ev);
+}
+
+//flag = 1 -> free s1
+//flag = 2 -> free s2
+//flag = 3 -> free s3
+//flag = 4 -> free s1 and s2
+//flag = 5 -> free s1 and s3
+//flag = 6 -> free s2 and s3
+char	*join_three(char *s1, char *s2, char *s3, int flag)
+{
+	char	*tmp;
+	char 	*s2_new;
+	char	*ret;
+
+	ret = ft_strjoin("\"", s2);
+	s2_new = ft_strjoin(ret, "\"");
+	free(ret);
+	tmp = ft_strjoin(s1, s2_new);
+	free(s2_new);
+	ret = ft_strjoin(tmp, s3);
+	free(tmp);
+	if (flag == 1 || flag == 4 || flag == 5)
+		free(s1);
+	if (flag == 2 || flag == 4 || flag == 6)
+		free(s2);
+	if (flag == 3 || flag == 5 || flag == 6)
+		free(s3);
+	return (ret);
 }

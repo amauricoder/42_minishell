@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/23 13:55:28 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/24 11:03:57 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,15 @@
 # define FORK_ERR "fork: error during fork"
 # define NO_CMD " : command not found"
 # define NO_DIR " : no such file or directory"
-# define EXP_ERR "minishell: export: not a valid identifier"
+
+# define EXP "minishell: export: "
+# define N_VAL ": not a valid identifier"
+
+# define D_ENV "minishell: env: "
+# define D_CD "minishell: cd: "
+# define NO_FILE ": No such file or directory"
+
+# define ENV_ERR "minishell: env: No such file or directory"
 
 /*************************/
 /*    structs and enun	 */
@@ -233,6 +241,7 @@ void	print_nodes(t_mini *mini_d);
 void	printf_matriz(char **to_print);
 char	*ft_strdup_qt(char *str, int qt);
 int		err_msg(t_mini *d, char *str, int ev, int fr);
+char	*join_three(char *s1, char *s2, char *s3, int flag);
 
 //check_input.c
 int		is_argument_valid(int argc, char **env);
@@ -341,7 +350,7 @@ int		is_echoflag(char *str, int *new_line);
 int		pwd(t_mini *mini, char **str);
 
 //builtins/bt_env.c
-void	env(t_env *env_var);
+int		env(t_mini *mini, t_env *env_var, char **str);
 char	*env_join(char *old, char *to_add, t_env *env);
 
 //builtins/cd.c

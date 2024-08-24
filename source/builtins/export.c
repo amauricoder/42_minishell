@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 16:06:49 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/23 12:26:36 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/23 15:09:21 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	export(t_mini *mini, char **str)
 		//ve se o primeiro char é num ou um char especial
 		if (!ft_isalpha(str[i][0]))
 		{
-			err_msg(mini, EXP_ERR, 1, 0);
+			err_msg(mini, join_three(EXP, str[i], N_VAL, 0), 1, 1);
 			i++;
 			continue ;
 		}
@@ -45,7 +45,7 @@ int	export(t_mini *mini, char **str)
 	return (EXIT_SUCCESS);
 }
 
-void	read_arg(char *str, char **tp, t_env *exp)
+void	read_arg(char *str, char **tp, t_env *exp)//se nao tiver node (dps de apagar todos os env), tem que cria a lista do zero
 {
 	while ((tp[1] || str[ft_strlen(str) - 1] == '=') && exp)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/23 12:17:13 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/23 15:02:05 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ int	g_exit_status = 0;
 //consetar funcao de handle signal for the pipe
 //tratar LS="ls -l"
 //tratar export=
+
+//CLEAR ->leaks
+//se apagar todos os env, tem que inicializar dnv quando fizer export ou cd
+//se fizer qualquer comando, da leak (PORQUE??)
 int	main(int argc, char **argv, char **envp)
 {
 	t_mini	mini_d;
