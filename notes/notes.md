@@ -104,6 +104,7 @@ make re && clear && valgrind --leak-check=full --track-fds=yes --show-leak-kinds
 
 cat -e << EOF | cat -e << EOF2 | cat -e << EOF3 | cat -e << EOF4
 
+- << EOF amauri --------- not working as expected
 - > "" ---------------- not wokrking as expected
 
 ===== test heredoc ====

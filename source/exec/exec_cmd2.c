@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:18:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/23 13:55:39 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/24 19:42:53 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	treat_exec_exception(void *root)
     while (exec_nd->args[i])
     {
         len = ft_strlen(exec_nd->args[i]);
-		if (exec_nd->args[0][len - 1] != '=')
+		if (ft_strlen(exec_nd->args[0]) == 0 || exec_nd->args[0][len - 1] != '=')
 			return (0);
         if (len > 0 && exec_nd->args[i][len - 1] == '=')
         {

@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:54:54 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/22 18:00:26 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/24 19:48:47 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,41 @@ int		handle_heredoc(t_mini *mini_d, void *root)
 	char	*line;
 	char	*hd_name;
 	int		hd_fd;
+	int		do_expansion;
+	char	*expanded_line;
 
 	hd_node = root;
 	mini_d->qt_heredocs ++;
+	do_expansion = allow_hd_expansion(hd_node->fname);
+	printf("value %d\n", do_expansion);
 	hd_node->hd_tmp = get_heredoc_name(mini_d, mini_d->qt_heredocs, 0);
 	hd_name = hd_node->hd_tmp;
 	hd_fd = open(hd_name, O_CREAT | O_WRONLY | O_TRUNC, 0744);
+	expanded_line = NULL;
 	if (hd_fd < 0)
 		err_msg(mini_d, NULL, EXIT_FAILURE, 0);
 	while(1)
 	{
 		write(STDOUT_FILENO, "> ", 2);
 		line = get_next_line(STDIN_FILENO);
+		add_history(line);
 		if (!line)
 			break;
 		if (!ft_strncmp(line, hd_node->fname, ft_strlen(hd_node->fname))
 			&& ft_strlen(line) - 1 == ft_strlen(hd_node->fname))
 			break;
-		write(hd_fd, line, ft_strlen(line));
+		if (do_expansion)
+		{
+			expanded_line = expand_heredoc(mini_d, line, 0);
+			printf("retorno expand here_doc -> %s", expanded_line);
+        	if (expanded_line)  // Ensure the expansion was successful
+       		{
+    			write(hd_fd, expanded_line, ft_strlen(expanded_line));
+        		free(expanded_line);  // Free the expanded string after use
+        	}
+		}
+		else
+			write(hd_fd, line, ft_strlen(line));
 		free(line);
 	}
 	get_next_line(-3);
