@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/24 11:03:14 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/24 20:04:51 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@
 // nao estou tratando special characters
 
 //ATUALIZAR O PWD E O OLDPWD TANTO NO ENV QUANTO NO EXPORT
-//fazer funçao join_three
-//cd after unsetting HOME -> minishell: cd: HOME not set
+//fazer funçao join_three --FEITO
+//cd after unsetting HOME -> minishell: cd: HOME not set --FEITO
 //export=zzzz -> retorna prompt, nao adiciona nada --FEITO
+//cd -  -> vai pra OLDPWD e printa ele
+//cd -- vai pra home --FEITO
+//ver o que ta acontecendo com cd .
 int	cd(t_mini *mini, char **str)
 {
 	printf("nosso cd\n");
@@ -30,33 +33,34 @@ int	cd(t_mini *mini, char **str)
 	char	cwd[1024];
 
 	dir = NULL;
-	if ((str[1] && str[2]) || (str[1] && !ft_strncmp(str[1], "...", 3))
-		|| (str[1] && !ft_strncmp(str[1], "--", 2)))
-		return (err_msg(mini, join_three(D_CD, str[1], NO_FILE, 0), EXIT_FAILURE, 1));
-	if (!str[1])
+	if ((str[1] && str[2]) || (str[1] && !ft_strncmp(str[1], "...", 3)))
+		return (err_msg(mini, join_three(D_CD, str[1], NO_FILE, 0), 1, 1));
+	if ((!ft_strncmp(str[1], "--", 2) && !str[1][2]) || !str[1])
 	{
-		dir = save_env(mini, "HOME"); // tratar home = NULL
+		dir = save_env(mini, "HOME");
+		if (!dir)
+			return (err_msg(mini, H_NOT, 1, 0));
 		if (safe_chdir(mini, dir) == -1)
 			return (EXIT_FAILURE);
-		return (update_pwd_oldpwd(mini, dir));
+		return (update_pwd_oldpwd(mini, dir));//consertar funcao, uptade do pwd e do old pwd
 	}
-	else if (!ft_strncmp(&str[1][0], "..", 2))
+	else if (!ft_strncmp(str[1], "..", 2))
 	{
 		dir = getcwd(cwd, sizeof(cwd));
 		back_cd(mini, str);
-		return (update_pwd_oldpwd(mini, dir));
+		return (update_pwd_oldpwd(mini, dir));//e se nao tiver algum dos dois?
 	}
 	else
 	{
 		dir = ft_strdup(str[1]);
-		if (safe_chdir(mini, dir) == -1)
+		if (safe_chdir(mini, dir) == -1)//tentar mandar o str[1] e nao fazer strdup
 		{
 			free(dir);
 			return (EXIT_FAILURE);
 		}
 	}
-	if (!dir)
-		dir = ft_strdup(save_env(mini, "PWD"));
+	if (!dir)//relembrar se precisa disso ou nao
+		dir = ft_strdup(save_env(mini, "PWD"));//tratar se nao tiver pwd
 	update_pwd_oldpwd(mini, dir);
 	free(dir);
 	return(EXIT_SUCCESS);
@@ -83,6 +87,7 @@ char	*find_last_dir(char *dir)
 	return (dir);
 }
 
+//ver o q ela ta fazendo (e igual a safe_env??)
 char	*get_path(t_mini *mini, char *str)
 {
 	t_env	*current;
@@ -130,6 +135,7 @@ int	update_pwd_oldpwd(t_mini *mini, char *last_dir)
 	char	*pwd;
 	//char	*tmp;
 
+	//fazer o update deles no export
 	printf("lastdir %s \n", last_dir);
 	pwd = getcwd(cwd, sizeof(cwd));
 	printf("PWD %s\n", pwd);

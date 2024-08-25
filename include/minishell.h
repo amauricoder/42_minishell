@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/24 11:03:57 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/24 19:24:44 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@
 # define FORK_ERR "fork: error during fork"
 # define NO_CMD " : command not found"
 # define NO_DIR " : no such file or directory"
+# define H_NOT "minishell: cd: HOME not set"
 
 # define EXP "minishell: export: "
 # define N_VAL ": not a valid identifier"

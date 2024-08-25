@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 19:06:41 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/24 10:55:30 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/24 19:41:22 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 	//minishell: env: No such file or directory
 //se tiver algum argumento->msg de erro --FEITO
 	//env: "argumento": No such file or directory
+//se nao tiver PATH -> "minishell: env: No such file or directory"
 int	env(t_mini *mini, t_env *env_var, char **str)
 {
 	if (env_var == NULL)

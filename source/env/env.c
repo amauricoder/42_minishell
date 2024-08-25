@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:52:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/21 14:29:56 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/24 19:46:40 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,12 @@ char	*save_env(t_mini *mini_d, char *to_find)
 		current = current->next;
 	}
 	i = 0;
+	if (!current)
+		return (NULL);
 	if (current->name)
 	{
 		while (current->name[i] != '=')
-			i ++;		
+			i ++;
 		return (&current->name[i + 1]);
 	}
 	return (NULL);
