@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/23 15:02:05 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/25 19:04:51 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	g_exit_status = 0;
 //EXPANSAO HERE_DOC
 //UNSET
 //VER PROBLEMAS
-//consetar funcao de handle signal for the pipe
 //tratar LS="ls -l"
 //tratar export=
 
@@ -54,6 +53,5 @@ int	main(int argc, char **argv, char **envp)
 }
 
 //Preciso
-//Here_Doc
 //Exit Code
 //BuildIns

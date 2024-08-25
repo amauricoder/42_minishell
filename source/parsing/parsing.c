@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 16:41:52 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/22 18:08:21 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/25 18:14:42 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,12 @@ void	*parse_exec(t_token *token)
 
 	exec_node = NULL;
 	id = 1;
-	if (have_command(token) && (token->type != R_IN
-		&& token->type != R_OUT && token->type != D_R_OUT
-		&& token->type != HEREDOC))
+	if (have_command(token))
 	{
 		exec_node = ft_calloc(1, sizeof(t_exec));
 		exec_node->id = id;
 		id ++;
-		exec_node->args = get_cmd(token);
+		exec_node->args = get_cmd(have_command(token));
 		exec_node->type = WORD;
 		exec_node->builtin = token->builtin;
 	}

@@ -6,20 +6,19 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:56:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/20 13:00:09 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/25 18:59:18 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	free_and_exit(t_mini *mini)
+void	free_and_exit(t_mini *mini, int exit_nbr)
 {
 	t_exec	*temp;
 
 	temp = mini->root;
 	if (mini->token)
 	{
-		printf("EXIT STATUS ISABELLA -> %i\n", mini->exit_status);
 		close(mini->stdfds[0]);
 		close(mini->stdfds[1]);
 		free_matriz(temp->args);
@@ -27,7 +26,7 @@ void	free_and_exit(t_mini *mini)
 		free_tokens(mini);
 		free_main_struct(mini);
 	}
-	exit(mini->exit_status);
+	exit(exit_nbr);
 }
 
 /**
@@ -42,7 +41,7 @@ int	free_main_struct(t_mini *mini_d)
 	free_matriz(mini_d->argv_cp);
 	free_env(mini_d->env_d);
 	free_env(mini_d->export);
-	exit(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
 /**

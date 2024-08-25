@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:18:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/21 19:08:24 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/25 18:04:03 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * ex. wc -> this is a node->type = WORD || $USER -> this is a node->type = ENV
  * Both can be possible commands.
  */
-int	have_command(t_token *node)
+t_token	*have_command(t_token *node)
 {
 	t_token	*current;
 
@@ -25,10 +25,10 @@ int	have_command(t_token *node)
 	while (current)
 	{
 		if (current->type == WORD || current->type == ENV)
-			return (true);
+			return (current);
 		current = current->next;
 	}
-	return (false);
+	return (NULL);
 }
 
 /**
@@ -52,7 +52,7 @@ t_redir	*create_redir_node(void *down, int *id, t_token *node)
 	if (redir->type == HEREDOC)
 	{
 		redir->id = (*id);
-		(*id) ++;
+		(*id)++;
 	}
 	return (redir);
 }

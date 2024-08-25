@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:42:59 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/22 18:51:42 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/25 17:34:28 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	unset_export(t_mini *mini, char *name)
 	{
 		if (!ft_strncmp(&mini->export->name[11], name, ft_strlen(name))
 			&& (mini->export->name[ft_strlen(name) + 11] == '='
-			|| mini->export->name[ft_strlen(name) + 11] == '\0'))
+				|| mini->export->name[ft_strlen(name) + 11] == '\0'))
 		{
 			if (prev)
 				prev->next = mini->export->next;

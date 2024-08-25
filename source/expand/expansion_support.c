@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 19:16:49 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/15 22:57:31 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/25 17:49:07 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,10 @@ void	assemble_word_tokens(t_mini *mini_d)
 			tmp->len = ft_strlen(tmp->content);
 			tmp->type = tmp->next->type;
 			free(c_tmp);
-			to_free = tmp->next; //store the next token to free
-			tmp->next = tmp->next->next; //skip the next token
+			to_free = tmp->next;
+			tmp->next = tmp->next->next;
 			free(to_free->content);
 			free(to_free);
-			//Do not advance tmp or prev since we need to check the new tmp->next
 		}
 		else
 		{

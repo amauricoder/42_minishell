@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:15:14 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 17:04:51 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/25 17:20:24 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 //echo -nnnnnnn oi-> printa oi sem o \n
 //echo -n -n -n oi -> printa oi sem o \n
 //echo -noi -> printa -noi
-int	echo(char **str)  //aqui precisa enviar mini_d por causa do exit code
+//aqui precisa enviar mini_d por causa do exit code
+int	echo(char **str)
 {
 	int	i;
 	int	new_line;
@@ -26,7 +27,6 @@ int	echo(char **str)  //aqui precisa enviar mini_d por causa do exit code
 	i = 1;
 	new_line = 1;
 	print = 0;
-	printf("Entrou na echo \n"); // modifiquei isso
 	while (str[i])
 	{
 		print = is_echoflag(str[i], &new_line);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 16:06:49 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/23 15:09:21 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/25 19:04:18 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,13 @@ int	export(t_mini *mini, char **str)
 		return (print_export(mini));
 	while (str[i])
 	{
-		//ve se o primeiro char é num ou um char especial
 		if (!ft_isalpha(str[i][0]))
 		{
 			err_msg(mini, join_three(EXP, str[i], N_VAL, 0), 1, 1);
 			i++;
 			continue ;
 		}
-		tmp = ft_split(str[i], '=');//e so pra ver se tem igual ou nao
+		tmp = ft_split(str[i], '=');
 		exp = mini->env_d;
 		read_arg(str[i], tmp, exp);
 		export_add(mini, str[i], tmp[0]);
@@ -84,7 +83,7 @@ void	export_add(t_mini *mini, char *str, char *name)
 	env->name = ft_strdup(str);
 	env->next = NULL;
 	exist = export_add_support(mini, str, name, env);
-	if (!exist) //se ainda nao tinha, adiciona no final
+	if (!exist)
 	{
 		mini->export->next = ft_calloc(sizeof(t_env), 1);
 		mini->export = mini->export->next;
@@ -93,36 +92,31 @@ void	export_add(t_mini *mini, char *str, char *name)
 		free_env(env);
 	}
 	mini->export = lst_sort(exp_cpy);
-//	mini->export = exp_cpy;
 }
 
 int	export_add_support(t_mini *mini, char *str, char *name, t_env *env)
 {
 	while (mini->export)
 	{
-		//caso += -> retorna adicionado
 		if (!ft_strncmp(&mini->export->name[11], str, ft_strlen(name) - 1)
 			&& str[ft_strlen(name) - 1] == '+')
 		{
 			env->name = exp_join(mini->export->name, str, env);
 			mini->export->name = env_to_export(env);
-			//mini->export = exp_cpy;
 			free_env(env);
 			return (1);
 		}
-		//caso = se ja houver -> substitui
 		else if (!ft_strncmp(&mini->export->name[11], str, ft_strlen(name)))
 		{
 			free(mini->export->name);
 			mini->export->name = env_to_export(env);
-			//mini->export = exp_cpy;
 			free_env(env);
 			return (1);
 		}
 		if (mini->export->next)
 			mini->export = mini->export->next;
 		else
-			break;
+			break ;
 	}
 	return (0);
 }
