@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_create.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 16:46:33 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/22 16:33:50 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/25 17:23:40 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*exp_join(char *old, char *to_add, t_env *env)
 	char	*temp2;
 	char	*save_name;
 	int		i;
-	
+
 	i = 0;
 	while (old[i] != '=')
 		i++;
@@ -41,11 +41,11 @@ char	*exp_join(char *old, char *to_add, t_env *env)
 //cria a linked list export a partir da linked list env
 int	export_create(t_mini *mini)
 {
-	t_env   *new;
-	t_env   *last;
+	t_env	*new;
+	t_env	*last;
 	t_env	*env_cpy;
-	
-	mini->export = NULL; // Garante que a lista começa vazia.
+
+	mini->export = NULL;
 	env_cpy = mini->env_d;
 	while (env_cpy)
 	{
@@ -53,13 +53,13 @@ int	export_create(t_mini *mini)
 		if (!new)
 			return (EXIT_FAILURE);
 		new->id = env_cpy->id;
-		new->name = env_to_export(env_cpy); // Supondo que env[i] contém o nome da variável de ambiente.
+		new->name = env_to_export(env_cpy);
 		new->next = NULL;
 		if (mini->export == NULL)
-			mini->export = new; // Define o primeiro elemento da lista.
+			mini->export = new;
 		else
-			last->next = new; // Adiciona o novo elemento ao final da lista.
-		last = new; // Atualiza a referência ao último elemento.
+			last->next = new;
+		last = new;
 		env_cpy = env_cpy->next;
 	}
 	mini->export = lst_sort(mini->export);
@@ -73,12 +73,12 @@ char	*env_to_export(t_env *env)
 	int		i;
 	int		j;
 	int		size;
-	
+
 	i = 0;
 	j = 0;
 	size = 0;
 	while (env->name[size])
-			size++;
+		size++;
 	size += 13;
 	str = ft_calloc(sizeof(char), size + 1);
 	ft_strlcpy(str, "declare -x ", 12);
@@ -110,7 +110,8 @@ t_env	*lst_sort(t_env *env)
 		tmp2 = tmp->next;
 		while (tmp2)
 		{
-			if (ft_strncmp(&tmp->name[11], &tmp2->name[11], ft_strlen(tmp->name)) > 0)
+			if (ft_strncmp(&tmp->name[11], &tmp2->name[11],
+					ft_strlen(tmp->name)) > 0)
 			{
 				swap = tmp->name;
 				tmp->name = tmp2->name;

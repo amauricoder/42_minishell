@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:10:43 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/22 19:58:19 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/25 18:16:47 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	prompt_and_input(t_mini *mini_d, char **envp)
  * @brief Main function of Minishell
  * where the program runs.
  * Do the lexing, parsin, execution of everything.
- * function to debug //debug_nodes_and_tree(&mini_d)
+ * function to debug -> debug_nodes_and_tree(mini_d)
  */
 void	run_minishell(t_mini *mini_d)
 {
@@ -37,13 +37,12 @@ void	run_minishell(t_mini *mini_d)
 	mini_d->qt_heredocs = 0;
 	add_history(mini_d->input);
 	do_lexing(mini_d);
-	//debug_nodes_and_tree(mini_d);
 	find_expansion(mini_d);
 	define_builtins(mini_d);
 	mini_d->root = do_parsing(mini_d, mini_d->token);
-	//rodar aqui o heredoc
 	open_heredocs(mini_d, mini_d->root);
 	do_execution(mini_d, mini_d->root);
+	//debug_nodes_and_tree(mini_d);
 	free_tree(mini_d->root);
 	free(mini_d->input);
 	free_tokens(mini_d);

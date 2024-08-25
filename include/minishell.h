@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/25 16:10:40 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/25 18:47:48 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ void	debug_nodes_and_tree(t_mini *mini_d);
 char	*get_prompt_msg(char **envp);
 
 //frees.c
-void	free_and_exit(t_mini *mini);
+void	free_and_exit(t_mini *mini, int exit_nbr);
 int		free_main_struct(t_mini *mini_d);
 void	free_matriz(char **dp_char);
 int		free_env(t_env *env);
@@ -249,8 +249,8 @@ void	signals_init(void);
 void	signal_handler(int sig);
 void	signals_child(void);
 void	signal_handler_child(int sig);
-void	 handle_sigpipe(int sig);
-void 	setup_sigpipe_handler();
+void	handle_sigpipe(int sig);
+void	setup_sigpipe_handler(void);
 
 //expand/expansion.c
 int		find_expansion(t_mini	*mini_d);
@@ -275,7 +275,7 @@ void	*parse_redir(t_token *token, void *root);
 void	*parse_pipe(void *left, void *right);
 
 //parsing/tree_support.c
-int		have_command(t_token *node);
+t_token	*have_command(t_token *node);
 t_redir	*create_redir_node(void *down, int *id, t_token *node);
 char	*get_redir_name(t_token *node);
 int		get_qt_cmd_tokens(t_token *token);
@@ -333,9 +333,7 @@ int		handle_heredoc(t_mini *mini_d, t_redir *hd_node);
 int		do_expansion(char *input);
 char	*hd_expand_heredoc(t_mini *mini_d, char *line);
 char	*hd_change_content(t_mini *mini_d, char *line, int i);
-
-//exec/exec_heredoc3.c
-int	write_on_heredoc(t_mini *mini_d, int hd_fd, t_redir *hd_node, char *line);
+int		write_on_heredoc(t_mini *d, int fd, t_redir *nd);
 
 //builtins/support.c
 void	define_builtins(t_mini *mini_d);

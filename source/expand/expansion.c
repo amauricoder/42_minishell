@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:40:18 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/24 16:29:22 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/25 18:15:05 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ char	*env_expanded(t_mini *mini_d, char *cont)
 	tmp = ft_substr(cont, 1, i);
 	if (ft_getenv(mini_d, tmp))
 	{
-		env_expanded = ft_strdup(getenv(tmp));
+		env_expanded = ft_strdup(save_env(mini_d, tmp));
 		free(tmp);
 		return (env_expanded);
 	}

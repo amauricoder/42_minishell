@@ -6,16 +6,12 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:13:07 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/25 16:11:46 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/25 17:29:29 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../include/minishell.h"
 
-//EXPANSAO
-// << EOF -> Expande
-// << 'EOF' -> Nao expande (Expansão Desativada)
-// << "EOF" -> Nao expande
 int	do_expansion(char *input)
 {
 	int	i;
@@ -51,43 +47,39 @@ int		handle_heredoc(t_mini *mini_d, t_redir *hd_node)
 	line = NULL;
 	while(1)
 	{
-		if (write_on_heredoc(mini_d, hd_fd, hd_node, line))
+		if (write_on_heredoc(mini_d, hd_fd, hd_node))
 			break;
 	}
 	get_next_line(-3);
 	return (close(hd_fd), EXIT_SUCCESS);
 }
 
-char	*hd_expand_heredoc(t_mini *mini_d, char *line)
+char	*hd_expand_heredoc(t_mini *mini_d, char *str)
 {
 	char	*tmp_final;
 	int		i;
 
 	i = 0;
-	while (i < (int)ft_strlen(line))
+	while (i < (int)ft_strlen(str))
 	{
-		i += ft_strlen_char(&line[i], '$');
-		if (line[i] == '$' && specch(line[i + 1]))
+		i += ft_strlen_char(&str[i], '$');
+		if (str[i] == '$' && specch(str[i + 1]) && (str[i + 1] != '\0'))
 		{
-			if (line[i + 1] == '\0')
-				break;
 			i += 2;
-			while (line[i] && !specch(line[i]))
-				i++;
-			while (line[i] && line[i] != '$')
+			while ((str[i] && !specch(str[i])) || (str[i] && str[i] != '$'))
 				i++;
 		}
-		if (i < (int)ft_strlen(line))
+		if (i < (int)ft_strlen(str))
 		{
-			tmp_final = hd_change_content(mini_d, line, i);
-			free(line);
-			line = ft_strdup(tmp_final);
+			tmp_final = hd_change_content(mini_d, str, i);
+			free(str);
+			str = ft_strdup(tmp_final);
 			free(tmp_final);
 			tmp_final = NULL;
 			i = 0;
 		}
 	}
-	return (line);
+	return (str);
 }
 
 char	*hd_change_content(t_mini *mini_d, char *line, int i)
@@ -113,4 +105,39 @@ char	*hd_change_content(t_mini *mini_d, char *line, int i)
 	free(tmp_end);
 	free(env_exp);
 	return (tmp);
+}
+
+/**
+ * @param d main struc
+ * @param fd hredoc fd
+ * @param nd node
+ * @param line user input
+ */
+int	write_on_heredoc(t_mini *d, int fd, t_redir *nd)
+{
+	char	*new_line;
+	char	*expanded_line;
+	char	*line;
+
+	line = readline(">");
+	add_history(line);
+	if (!line)
+		return (1);
+	if (!ft_strncmp(line, nd->fname, ft_strlen(nd->fname))
+		&& ft_strlen(line) == ft_strlen(nd->fname))
+		return (free(line), 1);
+	if (do_expansion(nd->fname))
+	{
+		new_line = ft_strtrim(line, "\n");
+		expanded_line = hd_expand_heredoc(d, new_line);
+    	if (expanded_line)
+		{
+    		write(fd, expanded_line, ft_strlen(expanded_line));
+			free(expanded_line);
+		}
+	}
+	else
+		write(fd, line, ft_strlen(line));
+	write(fd, "\n", 1);
+	return (free(line), 0);
 }
