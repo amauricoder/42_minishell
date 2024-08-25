@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/24 19:30:59 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/25 16:10:40 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -324,18 +324,18 @@ int		handle_pipe(t_mini *mini_d, void *root);
 int		exec_pipe(t_mini *mini_d, void *root, int p_fd[2], int is_left);
 
 //exec/exec_heredoc.c
-int		handle_heredoc(t_mini *mini_d, void *root);
 int		redirect_heredoc(t_mini *mini_t, t_redir *node);
 char	*get_heredoc_name(t_mini *mini, int id, int invert);
 void	open_heredocs(t_mini *mini, void *root);
 
 //exec/exec_heredoc2.c
-int		allow_hd_expansion(char *input);
-char	*expand_heredoc(t_mini *mini_d, char *cont, int start);
-char	*ft_strjoin3(char *str1, char *str2, char *str3);
+int		handle_heredoc(t_mini *mini_d, t_redir *hd_node);
+int		do_expansion(char *input);
+char	*hd_expand_heredoc(t_mini *mini_d, char *line);
+char	*hd_change_content(t_mini *mini_d, char *line, int i);
 
 //exec/exec_heredoc3.c
-char	*expand_first(t_mini *mini_d, char *line, int i);
+int	write_on_heredoc(t_mini *mini_d, int hd_fd, t_redir *hd_node, char *line);
 
 //builtins/support.c
 void	define_builtins(t_mini *mini_d);

@@ -6,61 +6,11 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:54:54 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/24 19:48:47 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/25 15:31:15 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../include/minishell.h"
-
-int		handle_heredoc(t_mini *mini_d, void *root)
-{
-	t_redir *hd_node;
-	char	*line;
-	char	*hd_name;
-	int		hd_fd;
-	int		do_expansion;
-	char	*expanded_line;
-
-	hd_node = root;
-	mini_d->qt_heredocs ++;
-	do_expansion = allow_hd_expansion(hd_node->fname);
-	printf("value %d\n", do_expansion);
-	hd_node->hd_tmp = get_heredoc_name(mini_d, mini_d->qt_heredocs, 0);
-	hd_name = hd_node->hd_tmp;
-	hd_fd = open(hd_name, O_CREAT | O_WRONLY | O_TRUNC, 0744);
-	expanded_line = NULL;
-	if (hd_fd < 0)
-		err_msg(mini_d, NULL, EXIT_FAILURE, 0);
-	while(1)
-	{
-		write(STDOUT_FILENO, "> ", 2);
-		line = get_next_line(STDIN_FILENO);
-		add_history(line);
-		if (!line)
-			break;
-		if (!ft_strncmp(line, hd_node->fname, ft_strlen(hd_node->fname))
-			&& ft_strlen(line) - 1 == ft_strlen(hd_node->fname))
-			break;
-		if (do_expansion)
-		{
-			expanded_line = expand_heredoc(mini_d, line, 0);
-			printf("retorno expand here_doc -> %s", expanded_line);
-        	if (expanded_line)  // Ensure the expansion was successful
-       		{
-    			write(hd_fd, expanded_line, ft_strlen(expanded_line));
-        		free(expanded_line);  // Free the expanded string after use
-        	}
-		}
-		else
-			write(hd_fd, line, ft_strlen(line));
-		free(line);
-	}
-	get_next_line(-3);
-	close(hd_fd);
-	if (line)
-		free(line);
-	return (EXIT_SUCCESS);
-}
 
 int	redirect_heredoc(t_mini *mini_d, t_redir *node)
 {
@@ -103,32 +53,20 @@ char	*get_heredoc_name(t_mini *mini, int id, int invert)
 
 void	open_heredocs(t_mini *mini, void *root)
 {
-	void	*tmp;
 	t_redir *nd;
-	t_pipe	*nd_pipe;
 
-	tmp = root;
-	nd = tmp;
-	if (!nd)
-		return ;
+	if (!root)
+		return;
+	nd = (t_redir *)root;
 	if (nd->type == HEREDOC)
-	{
-		handle_heredoc(mini, root);
-		if (nd->down)
-			open_heredocs(mini, nd->down);
-		root = tmp;
-		return ;
-	}
+		handle_heredoc(mini, nd);
 	else if (nd->type == PIPE)
 	{
-		nd_pipe = (t_pipe *)nd;
-		open_heredocs(mini, nd_pipe->left);
-		open_heredocs(mini, nd_pipe->right);	
+		open_heredocs(mini, ((t_pipe *)nd)->left);
+		open_heredocs(mini, ((t_pipe *)nd)->right);
 	}
-	else if (nd->type == R_IN || nd->type == D_R_OUT
-		|| nd->type == R_OUT)
-	{
-		if (nd->down)
-			open_heredocs(mini, nd->down);
-	}
+	if (nd->type == HEREDOC || nd->type == R_IN 
+		|| nd->type == D_R_OUT || nd->type == R_OUT)
+		open_heredocs(mini, nd->down);
 }
+
