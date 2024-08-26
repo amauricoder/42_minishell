@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/26 19:43:53 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/26 19:53:06 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ int	cd(t_mini *mini, char **str)
 	dir = NULL;
 	if ((str[1] && str[2]) || (str[1] && !ft_strncmp(str[1], "...", 3)))
 		return (err_msg(mini, join_three(D_CD, str[1], NO_FILE, 0), 1, 1));
-	if (!ft_strncmp(str[1], ".", 1) && !str[1][1])
+	if (str[1] && !ft_strncmp(str[1], ".", 1) && !str[1][1])
 		return(EXIT_SUCCESS);
-	if ((!ft_strncmp(str[1], "--", 2) && !str[1][2]) || !str[1]
-		|| (!ft_strncmp(str[1], "~", 1) && !str[1][1]))
+	if (str[1] && ((!ft_strncmp(str[1], "--", 2) && !str[1][2]) || !str[1]
+		|| (!ft_strncmp(str[1], "~", 1) && !str[1][1])))
 	{
 		dir = save_env(mini, "HOME");
 		if (!dir)
@@ -48,7 +48,7 @@ int	cd(t_mini *mini, char **str)
 			return (EXIT_FAILURE);
 		return (update_pwd_oldpwd(mini, dir));//consertar funcao, uptade do pwd e do old pwd
 	}
-	else if (!ft_strncmp(str[1], "..", 2) && !str[1][2])
+	else if (str[1] && !ft_strncmp(str[1], "..", 2) && !str[1][2])
 	{
 		dir = getcwd(cwd, sizeof(cwd));
 		back_cd(mini, str);
@@ -63,7 +63,7 @@ int	cd(t_mini *mini, char **str)
 			return (EXIT_FAILURE);
 		return (update_pwd_oldpwd(mini, dir));
 	} */
-	else
+	else if (str[1])
 	{
 		dir = ft_strdup(str[1]);
 		if (safe_chdir(mini, dir) == -1)//tentar mandar o str[1] e nao fazer strdup
