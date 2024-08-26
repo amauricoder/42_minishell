@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:52:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/25 19:04:35 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/26 16:54:15 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+//returns a single node t_env with the str as the name
 t_env	*env_add(char *str)
 {
 	t_env	*to_add;
@@ -50,6 +51,7 @@ int	copy_env(char **env, t_env **env_var)
 	return (EXIT_SUCCESS);
 }
 
+//returns tru if finds the "to_find" variable in the env_d linked list
 int	ft_getenv(t_mini *mini_d, char *to_find)
 {
 	t_env	*current;

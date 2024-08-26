@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/24 20:04:51 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/26 17:55:20 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 //export=zzzz -> retorna prompt, nao adiciona nada --FEITO
 //cd -  -> vai pra OLDPWD e printa ele
 //cd -- vai pra home --FEITO
+//cd ~ vai pra home --FEITO
 //ver o que ta acontecendo com cd .
 int	cd(t_mini *mini, char **str)
 {
@@ -35,7 +36,8 @@ int	cd(t_mini *mini, char **str)
 	dir = NULL;
 	if ((str[1] && str[2]) || (str[1] && !ft_strncmp(str[1], "...", 3)))
 		return (err_msg(mini, join_three(D_CD, str[1], NO_FILE, 0), 1, 1));
-	if ((!ft_strncmp(str[1], "--", 2) && !str[1][2]) || !str[1])
+	if ((!ft_strncmp(str[1], "--", 2) && !str[1][2]) || !str[1]
+		|| (!ft_strncmp(str[1], "~", 1) && !str[1][1]))
 	{
 		dir = save_env(mini, "HOME");
 		if (!dir)
@@ -52,6 +54,7 @@ int	cd(t_mini *mini, char **str)
 	}
 	else
 	{
+		if ()
 		dir = ft_strdup(str[1]);
 		if (safe_chdir(mini, dir) == -1)//tentar mandar o str[1] e nao fazer strdup
 		{
@@ -135,11 +138,14 @@ int	update_pwd_oldpwd(t_mini *mini, char *last_dir)
 	char	*pwd;
 	//char	*tmp;
 
-	//fazer o update deles no export
 	printf("lastdir %s \n", last_dir);
 	pwd = getcwd(cwd, sizeof(cwd));
 	printf("PWD %s\n", pwd);
 	replace_env_value(mini, "PWD", pwd);
 	replace_env_value(mini, "OLDPWD", last_dir);
+	//quando faz cd . -> vai um . pro oldpwd
+	//fazer o update deles no export --FEITO
+	free_env(mini->export);
+	export_create(mini);
 	return (EXIT_SUCCESS);
 }
