@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/26 17:55:20 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/26 19:28:57 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	cd(t_mini *mini, char **str)
 	}
 	else
 	{
-		if ()
 		dir = ft_strdup(str[1]);
 		if (safe_chdir(mini, dir) == -1)//tentar mandar o str[1] e nao fazer strdup
 		{
