@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/26 17:55:20 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/26 19:43:53 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 //cd -  -> vai pra OLDPWD e printa ele
 //cd -- vai pra home --FEITO
 //cd ~ vai pra home --FEITO
-//ver o que ta acontecendo com cd .
+//cd . nao faz nada --FEITO
 int	cd(t_mini *mini, char **str)
 {
 	printf("nosso cd\n");
@@ -36,6 +36,8 @@ int	cd(t_mini *mini, char **str)
 	dir = NULL;
 	if ((str[1] && str[2]) || (str[1] && !ft_strncmp(str[1], "...", 3)))
 		return (err_msg(mini, join_three(D_CD, str[1], NO_FILE, 0), 1, 1));
+	if (!ft_strncmp(str[1], ".", 1) && !str[1][1])
+		return(EXIT_SUCCESS);
 	if ((!ft_strncmp(str[1], "--", 2) && !str[1][2]) || !str[1]
 		|| (!ft_strncmp(str[1], "~", 1) && !str[1][1]))
 	{
@@ -46,15 +48,23 @@ int	cd(t_mini *mini, char **str)
 			return (EXIT_FAILURE);
 		return (update_pwd_oldpwd(mini, dir));//consertar funcao, uptade do pwd e do old pwd
 	}
-	else if (!ft_strncmp(str[1], "..", 2))
+	else if (!ft_strncmp(str[1], "..", 2) && !str[1][2])
 	{
 		dir = getcwd(cwd, sizeof(cwd));
 		back_cd(mini, str);
 		return (update_pwd_oldpwd(mini, dir));//e se nao tiver algum dos dois?
 	}
+/* 	else if (!ft_strncmp(str[1], "-", 1) && !str[1][1])
+	{
+		dir = save_env(mini, "OLDPWD");//essa troca nao ta certa
+		//o oldpwd tem que virar pwd e o pwd tem que virar oldpwd
+		printf("%s\n", dir);
+		if (safe_chdir(mini, dir) == -1)
+			return (EXIT_FAILURE);
+		return (update_pwd_oldpwd(mini, dir));
+	} */
 	else
 	{
-		if ()
 		dir = ft_strdup(str[1]);
 		if (safe_chdir(mini, dir) == -1)//tentar mandar o str[1] e nao fazer strdup
 		{
