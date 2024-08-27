@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/27 18:12:24 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/27 19:48:57 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@
 //fazer funçao join_three --FEITO
 //cd after unsetting HOME -> minishell: cd: HOME not set --FEITO
 //export=zzzz -> retorna prompt, nao adiciona nada --FEITO
-//cd -  -> vai pra OLDPWD e printa ele
+//cd -  -> vai pra OLDPWD e printa ele --FEITO
 //cd -- vai pra home --FEITO
 //cd ~ vai pra home --FEITO
 //cd . nao faz nada --FEITO
+//tratar se nao tiver OLDPWD --FEITO
 int	cd(t_mini *mini, char **str)
 {
-	printf("nosso cd\n");
 	char	*dir;
 	char	*last_dir;
 	char	cwd[1024];
@@ -39,11 +39,10 @@ int	cd(t_mini *mini, char **str)
 	if (str[1] && str[2])
 		return (err_msg(mini, ft_strjoin(D_CD, TOO_ARGS), 1, 1));
 	if (str[1] && !ft_strncmp(str[1], ".", 1) && !str[1][1])
-		return(EXIT_SUCCESS);
+		return (EXIT_SUCCESS);
 	if ((str[1] && !ft_strncmp(str[1], "--", 2) && !str[1][2]) || !str[1]
 		|| (!ft_strncmp(str[1], "~", 1) && !str[1][1]))
 	{
-		//se nao tiver HOME, o ~ tem que funcionar na mesm (fazer uma funcao so pros casos que vai pra home e se for ~ usar a getenv)
 		dir = expand(mini, "HOME");
 		if (!dir && !ft_strncmp(str[1], "~", 1) && !str[1][1])
 			dir = getenv("HOME");
@@ -63,8 +62,9 @@ int	cd(t_mini *mini, char **str)
 	else if (str[1] && !ft_strncmp(str[1], "-", 1) && !str[1][1])
 	{
 		dir = expand(mini, "OLDPWD");//essa troca nao ta certa
+		if (!dir)
+			return (err_msg(mini, OLDPWD_NOT, 1, 0));
 		last_dir = getcwd(cwd, sizeof(cwd));
-		//o oldpwd tem que virar pwd e o pwd tem que virar oldpwd
 		printf("%s\n", dir);
 		if (safe_chdir(mini, dir) == -1)
 			return (EXIT_FAILURE);
@@ -75,8 +75,8 @@ int	cd(t_mini *mini, char **str)
 		if (safe_chdir(mini, str[1]) == -1)
 			return (EXIT_FAILURE);
 	}
-	if (!dir)//relembrar se precisa disso ou nao
-		dir = ft_strdup(expand(mini, "PWD"));//tratar se nao tiver pwd
+	//if (!dir)//relembrar se precisa disso ou nao
+	//	dir = ft_strdup(expand(mini, "PWD"));//tratar se nao tiver pwd
 	update_pwd_oldpwd(mini, dir);
 	free(dir);
 	return(EXIT_SUCCESS);

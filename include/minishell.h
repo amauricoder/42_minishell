@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/27 18:01:06 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/27 19:31:54 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@
 # define NO_CMD " : command not found"
 # define NO_DIR " : no such file or directory"
 # define H_NOT "minishell: cd: HOME not set"
+# define OLDPWD_NOT "minishell: cd: OLDPWD not set"
 
 # define EXP "minishell: export: "
 # define N_VAL ": not a valid identifier"
