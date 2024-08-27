@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:40:18 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/27 18:01:06 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/27 21:40:37 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	*env_expanded(t_mini *mini_d, char *cont)
 
 	i = 0;
 	if (cont && cont[0] && cont[1] && cont[1] == '?')
-		return (ft_itoa(mini_d->exit_status));
+		return (ft_itoa(mini_d->exst_printable));
 	if (cont[i] == '$' && ft_isdigit(cont[i + 1]) && cont[i + 1] != '0')
 		return (ft_strdup(&cont[i + 2]));
 	else if (cont[i] == '$' && ft_isdigit(cont[i + 1]) && cont[i + 1] == '0')

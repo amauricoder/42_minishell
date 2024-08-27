@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 11:22:05 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/27 18:52:39 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/27 21:01:37 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,28 @@
 int	handle_pipe(t_mini *mini_d, void *root)
 {
 	int		p_fd[2];
-	int		pid1;
-	int		pid2;
+	int		pid[2];
+	int		status;
 
 	if (pipe(p_fd) == -1)
 		return (err_msg(mini_d, "pipe failed", EXIT_FAILURE, false));
-	pid1 = fork();
-	if (pid1 == -1)
+	pid[0] = fork();
+	if (pid[0] == -1)
 		return (err_msg(mini_d, "fork failed", EXIT_FAILURE, false));
-	if (pid1 == 0)
+	if (pid[0] == 0)
 		exec_pipe(mini_d, root, p_fd, true);
-	pid2 = fork();
-	if (pid2 == -1)
+	pid[1] = fork();
+	if (pid[1] == -1)
 		return (err_msg(mini_d, "fork failed", EXIT_FAILURE, false));
-	if (pid2 == 0)
+	if (pid[1] == 0)
 		exec_pipe(mini_d, root, p_fd, false);
 	close(p_fd[0]);
 	close(p_fd[1]);
-	waitpid(pid1, NULL, 0);
-	waitpid(pid2, NULL, 0);
+	while (waitpid(-1, &status, 0) > 0)
+	{
+		if (WIFEXITED(status))
+			mini_d->exit_status = WEXITSTATUS(status);
+	}
 	return (EXIT_SUCCESS);
 }
 
@@ -42,6 +45,7 @@ int	exec_pipe(t_mini *mini_d, void *root, int p_fd[2], int is_left)
 	t_pipe	*pipe_nd;
 
 	pipe_nd = root;
+	default_sig();
 	if (is_left)
 	{
 		if (dup2(p_fd[1], STDOUT_FILENO) == -1)

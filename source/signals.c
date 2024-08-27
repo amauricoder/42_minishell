@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:14:59 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/25 17:16:53 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/27 21:48:53 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@ exit_status > 128 = processo foi terminado por um sinal
  */
 void	signal_handler(int sig)
 {
-	(void)sig;
-	rl_replace_line("", 0);//limpa a linha atual do input
-	rl_on_new_line();//pede um novo prompt
-	printf("\n");//imprime uma nova linha
-	rl_redisplay();//atualiza a exibicao do readline
-	g_exit_status = 130;
+	if (sig == SIGINT)
+	{
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		printf("\n");
+		rl_redisplay();
+		g_exit_status = 130;
+	}
 }
 
 /* 
@@ -35,32 +37,41 @@ configura os manipuladores de sinais
 void	signals_init(void)
 {
 	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, SIG_IGN);//ignora o sinal ctrl+\'
-	setup_sigpipe_handler();
+	signal(SIGQUIT, SIG_IGN);
 }
-
-void	signal_handler_child(int sig)
+void	default_sig(void)
 {
-	if (sig == SIGINT)
-		printf("\n");//porque nao fazer igual na signal_handler?
-	else
-		printf("Quit (core dumped)\n");
-}
+	struct sigaction	sig;
 
-void	signals_child(void)
+	ft_memset(&sig, 0, sizeof(sig));
+	sig.sa_handler = SIG_DFL;
+	sigaction(SIGQUIT, &sig, NULL);
+	sigaction(SIGINT, &sig, NULL);
+}
+void	update_signals(void)
 {
-	signal(SIGINT, signal_handler_child);
-	signal(SIGQUIT, signal_handler_child);
-}
+	struct sigaction	sig;
 
-void	handle_sigpipe(int sig)
+	ft_memset(&sig, 0, sizeof(sig));
+	sig.sa_handler = SIG_IGN;
+	sigaction(SIGINT, &sig, NULL);
+}
+/* void	signals_child(void)
+{
+	struct sigaction	sig;
+
+	ft_memset(&sig, 0, sizeof(sig));
+	sig.sa_handler = SIG_DFL;
+	sigaction(SIGQUIT, &sig, NULL);
+	sigaction(SIGINT, &sig, NULL);
+} */
+
+/* void	handle_sigpipe(int sig)
 {
 	(void)sig;
-	// fprintf(stderr, "Received SIGPIPE (Broken Pipe)\n");
-	// Handle the signal as needed
-}
+} */
 
-void	setup_sigpipe_handler(void)
+/* void	setup_sigpipe_handler(void)
 {
 	struct sigaction	sa;
 
@@ -72,4 +83,4 @@ void	setup_sigpipe_handler(void)
 		perror("sigaction");
 		exit(EXIT_FAILURE);
 	}
-}
+} */

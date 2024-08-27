@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:55:37 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/27 18:54:00 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/27 21:06:29 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,34 @@ int	handle_exec_cmd(t_mini *mini_d, void *root)
 	int	status;
 
 	pid = fork();
+	status = 0;
 	if (pid < 0)
 		return (err_msg(mini_d, FORK_ERR, 1, 0));
 	else if (pid == 0)
 	{
+		default_sig();
 		if (treat_exec_exception(root))
 			exit(free_in_execution(mini_d, 0));
 		if (execute_cmd(mini_d, root))
 			exit(free_in_execution(mini_d, 127));
 	}
+	update_signals();
 	waitpid(pid, &status, 0);
-	mini_d->exit_status = WEXITSTATUS(status);
+	set_child_exit(status, mini_d);
 	return (mini_d->exit_status);
+}
+void	set_child_exit(int wstatus, t_mini *mini)
+{
+	if (WIFSIGNALED(wstatus))
+	{
+		if (WCOREDUMP(wstatus))
+		{
+			write(1, "Quit (core dumped)\n", 19);
+			mini->exit_status = 131;
+		}
+		else if (WTERMSIG(wstatus) == SIGINT)
+			mini->exit_status = 130;
+	}
+	else
+		mini->exit_status = wstatus / 256;
 }

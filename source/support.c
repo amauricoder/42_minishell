@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   support.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:02:42 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/23 15:12:14 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/27 21:44:41 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	err_msg(t_mini *d, char *str, int ev, int fr)
 	if (!str)
 	{
 		perror("minishell ");
-		d->exit_status = ev;
+		d->exst_printable = ev;
 		return (ev);
 	}
 	if (!ft_strncmp(str, NO_CMD, ft_strlen(NO_CMD))
@@ -106,7 +106,7 @@ int	err_msg(t_mini *d, char *str, int ev, int fr)
 	ft_putendl_fd(str, 2);
 	if (fr)
 		free(str);
-	d->exit_status = ev;
+	d->exst_printable = ev;
 	return (ev);
 }
 

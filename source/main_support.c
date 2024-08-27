@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:10:43 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/27 19:59:36 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/27 21:50:24 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,11 @@ void	run_minishell(t_mini *mini_d)
 	}
 	close(mini_d->stdfds[0]);
 	close(mini_d->stdfds[1]);
+}
+
+void	update_exit_status(t_mini *mini_d)
+{
+	mini_d->exst_printable = mini_d->exit_status;
+	mini_d->exit_status = 0;
+	g_exit_status = 0;
 }

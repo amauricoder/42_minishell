@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/27 19:59:30 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/27 21:39:56 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ typedef struct s_mini
 	int		token_type;
 	void	*root;
 	int		exit_status;
+	int		exst_printable;
 	int		stdfds[2];
 	int		qt_heredocs;
 	t_env	*env_d;
@@ -202,7 +203,7 @@ int		main(int argc, char **argv, char **envp);
 //main_support.c
 void	run_minishell(t_mini *mini_d);
 void	prompt_and_input(t_mini *mini);
-
+void	update_exit_status(t_mini *mini_d);
 //debug.c
 void	debug_nodes_and_tree(t_mini *mini_d);
 
@@ -259,10 +260,8 @@ int		is_next_word_invalid(char *input);
 //signals.c
 void	signals_init(void);
 void	signal_handler(int sig);
-void	signals_child(void);
-void	signal_handler_child(int sig);
-void	handle_sigpipe(int sig);
-void	setup_sigpipe_handler(void);
+void	default_sig(void);
+void	update_signals(void);
 
 //expand/expansion.c
 int		find_expansion(t_mini	*mini_d);
@@ -314,6 +313,7 @@ void	free_pipe(void *root);
 //exec/execution.c
 int		do_execution(t_mini *mini_d, void *root);
 int		handle_exec_cmd(t_mini *mini_d, void *root);
+void	set_child_exit(int wstatus, t_mini *mini);
 
 //exec/exec_redir.c
 void	handle_redir_nodes(t_mini *mini_d, void *root);
