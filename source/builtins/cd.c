@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/26 19:48:51 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/27 18:12:24 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,49 +31,52 @@ int	cd(t_mini *mini, char **str)
 {
 	printf("nosso cd\n");
 	char	*dir;
+	char	*last_dir;
 	char	cwd[1024];
 
 	dir = NULL;
-	if ((str[1] && str[2]) || (str[1] && !ft_strncmp(str[1], "...", 3)))
-		return (err_msg(mini, join_three(D_CD, str[1], NO_FILE, 0), 1, 1));
-	if (!ft_strncmp(str[1], ".", 1) && !str[1][1])
+	last_dir = NULL;
+	if (str[1] && str[2])
+		return (err_msg(mini, ft_strjoin(D_CD, TOO_ARGS), 1, 1));
+	if (str[1] && !ft_strncmp(str[1], ".", 1) && !str[1][1])
 		return(EXIT_SUCCESS);
-	if ((!ft_strncmp(str[1], "--", 2) && !str[1][2]) || !str[1]
+	if ((str[1] && !ft_strncmp(str[1], "--", 2) && !str[1][2]) || !str[1]
 		|| (!ft_strncmp(str[1], "~", 1) && !str[1][1]))
 	{
-		dir = save_env(mini, "HOME");
+		//se nao tiver HOME, o ~ tem que funcionar na mesm (fazer uma funcao so pros casos que vai pra home e se for ~ usar a getenv)
+		dir = expand(mini, "HOME");
+		if (!dir && !ft_strncmp(str[1], "~", 1) && !str[1][1])
+			dir = getenv("HOME");
 		if (!dir)
 			return (err_msg(mini, H_NOT, 1, 0));
+		last_dir = getcwd(cwd, sizeof(cwd));//ver se tem que dar free
 		if (safe_chdir(mini, dir) == -1)
 			return (EXIT_FAILURE);
-		return (update_pwd_oldpwd(mini, dir));//consertar funcao, uptade do pwd e do old pwd
+		return (update_pwd_oldpwd(mini, last_dir));
 	}
-	else if (!ft_strncmp(str[1], "..", 2) && !str[1][2])
+	else if (str[1] && !ft_strncmp(str[1], "..", 2) && !str[1][2])
 	{
 		dir = getcwd(cwd, sizeof(cwd));
 		back_cd(mini, str);
 		return (update_pwd_oldpwd(mini, dir));//e se nao tiver algum dos dois?
 	}
-/* 	else if (!ft_strncmp(str[1], "-", 1) && !str[1][1])
+	else if (str[1] && !ft_strncmp(str[1], "-", 1) && !str[1][1])
 	{
-		dir = save_env(mini, "OLDPWD");//essa troca nao ta certa
+		dir = expand(mini, "OLDPWD");//essa troca nao ta certa
+		last_dir = getcwd(cwd, sizeof(cwd));
 		//o oldpwd tem que virar pwd e o pwd tem que virar oldpwd
 		printf("%s\n", dir);
 		if (safe_chdir(mini, dir) == -1)
 			return (EXIT_FAILURE);
-		return (update_pwd_oldpwd(mini, dir));
-	} */
-	else
+		return (update_pwd_oldpwd(mini, last_dir));
+	}
+	else if (str[1])
 	{
-		dir = ft_strdup(str[1]);
-		if (safe_chdir(mini, dir) == -1)//tentar mandar o str[1] e nao fazer strdup
-		{
-			free(dir);
+		if (safe_chdir(mini, str[1]) == -1)
 			return (EXIT_FAILURE);
-		}
 	}
 	if (!dir)//relembrar se precisa disso ou nao
-		dir = ft_strdup(save_env(mini, "PWD"));//tratar se nao tiver pwd
+		dir = ft_strdup(expand(mini, "PWD"));//tratar se nao tiver pwd
 	update_pwd_oldpwd(mini, dir);
 	free(dir);
 	return(EXIT_SUCCESS);
@@ -83,7 +86,7 @@ int	safe_chdir(t_mini *mini, char *dir)
 {
 	if (chdir(dir) == -1)
 	{
-		mini->exit_status = err_msg(mini, NULL, EXIT_FAILURE, 0);//acho que ta redundante
+		mini->exit_status = err_msg(mini, join_three(D_CD, dir, NO_FILE, 0), 1, 1);
 		return (-1);
 	}
 	return (EXIT_SUCCESS);

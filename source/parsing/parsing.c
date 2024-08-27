@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 16:41:52 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/25 18:14:42 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/27 19:12:29 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	*parse_exec(t_token *token)
 	id = 1;
 	if (have_command(token))
 	{
+		if (!ft_strncmp(token->content, " ", 1) && token->next)
+			token = token->next;
 		exec_node = ft_calloc(1, sizeof(t_exec));
 		exec_node->id = id;
 		id ++;

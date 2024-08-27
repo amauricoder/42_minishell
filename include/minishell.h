@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/25 19:02:22 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/27 18:01:06 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@
 # define D_ENV "minishell: env: "
 # define D_CD "minishell: cd: "
 # define NO_FILE ": No such file or directory"
+# define TOO_ARGS "too many arguments"
 
 # define ENV_ERR "minishell: env: No such file or directory"
 
@@ -395,7 +396,7 @@ void	unset_export(t_mini *mini, char *name);
 int		copy_env(char **env, t_env **env_var);
 int		ft_getenv(t_mini *mini_d, char *to_find);
 t_env	*env_add(char *str);
-char	*save_env(t_mini *mini_d, char *to_find);
+char	*expand(t_mini *mini_d, char *to_find);
 int		replace_env_value(t_mini *mini, char *env_name, char *new);
 
 #endif
