@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/25 19:04:51 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/27 19:43:02 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char **argv, char **envp)
 	init_main_struct(&mini_d, argv, envp);
 	while (1)
 	{
-		prompt_and_input(&mini_d, envp);
+		prompt_and_input(&mini_d);
 		if (!mini_d.input)
 			break ;
 		else if (is_input_invalid(&mini_d, mini_d.input))

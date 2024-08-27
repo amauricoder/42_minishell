@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:10:43 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/27 18:38:53 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/27 19:42:31 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,16 @@
  * @brief Support function to main(), constructed to eat lines
  * construct the prompt and get the user input
  */
-void	prompt_and_input(t_mini *mini_d, char **envp)
+void	prompt_and_input(t_mini *mini_d)
 {
+	char	**minishell_env;
+
+	minishell_env = get_env_matriz(mini_d);
 	if (mini_d->prompt != NULL)
 		free(mini_d->prompt);
-	mini_d->prompt = get_prompt_msg(envp);
+	mini_d->prompt = get_prompt_msg(minishell_env);
 	mini_d->input = readline(mini_d->prompt);
+	free_matriz(minishell_env);
 }
 
 /**
@@ -40,7 +44,7 @@ void	run_minishell(t_mini *mini_d)
 	find_expansion(mini_d);
 	define_builtins(mini_d);
 	mini_d->root = do_parsing(mini_d, mini_d->token);
-	debug_nodes_and_tree(mini_d);
+	//debug_nodes_and_tree(mini_d);
 	open_heredocs(mini_d, mini_d->root);
 	do_execution(mini_d, mini_d->root);
 	free_tree(mini_d->root);

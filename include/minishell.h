@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/27 18:01:06 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/27 19:42:56 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ int		main(int argc, char **argv, char **envp);
 
 //main_support.c
 void	run_minishell(t_mini *mini_d);
-void	prompt_and_input(t_mini *mini, char **envp);
+void	prompt_and_input(t_mini *mini);
 
 //debug.c
 void	debug_nodes_and_tree(t_mini *mini_d);
