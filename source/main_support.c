@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:10:43 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/25 18:16:47 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/27 18:38:53 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	run_minishell(t_mini *mini_d)
 	find_expansion(mini_d);
 	define_builtins(mini_d);
 	mini_d->root = do_parsing(mini_d, mini_d->token);
+	debug_nodes_and_tree(mini_d);
 	open_heredocs(mini_d, mini_d->root);
 	do_execution(mini_d, mini_d->root);
-	//debug_nodes_and_tree(mini_d);
 	free_tree(mini_d->root);
 	free(mini_d->input);
 	free_tokens(mini_d);

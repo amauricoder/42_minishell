@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:13:07 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/25 17:29:29 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/27 17:41:14 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	do_expansion(char *input)
 			d_quotes++;
 		i++;
 	}
-	if (d_quotes || s_quotes)
+	if (d_quotes || s_quotes || input[ft_strlen(input) - 1] == ' ')
 		return (0);
 	return(1);
 	
@@ -141,3 +141,4 @@ int	write_on_heredoc(t_mini *d, int fd, t_redir *nd)
 	write(fd, "\n", 1);
 	return (free(line), 0);
 }
+

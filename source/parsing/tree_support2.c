@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:58:41 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/22 18:24:37 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/27 18:12:41 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ char	**get_cmd(t_token *token)
 {
 	t_token	*current;
 	char	**args;
+	char	*tmp;
 	int		i;
 
 	current = token;
-	args = NULL;
 	i = get_qt_cmd_tokens(token);
 	if (i == 0)
 		return (NULL);
@@ -49,6 +49,13 @@ char	**get_cmd(t_token *token)
 		if (current->type == WORD || current->type == ENV)
 			args[++ i] = ft_strdup(current->content);
 		current = current->next;
+	}
+	if (!args[1])
+	{
+		tmp = ft_strdup(args[0]);
+		free_matriz(args);
+		args = ft_split(tmp, ' ');
+		free(tmp);
 	}
 	return (args);
 }
