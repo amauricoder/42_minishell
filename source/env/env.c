@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:52:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/26 16:54:15 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/27 18:01:06 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	ft_getenv(t_mini *mini_d, char *to_find)
 /**
  * @brief Return a char * of a specific env, or NULL
  */
-char	*save_env(t_mini *mini_d, char *to_find)
+char	*expand(t_mini *mini_d, char *to_find)
 {
 	t_env	*current;
 	int		i;
