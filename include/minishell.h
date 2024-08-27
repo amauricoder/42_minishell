@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/27 19:42:56 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/27 19:59:30 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@
 # define NO_CMD " : command not found"
 # define NO_DIR " : no such file or directory"
 # define H_NOT "minishell: cd: HOME not set"
+# define OLDPWD_NOT "minishell: cd: OLDPWD not set"
 
 # define EXP "minishell: export: "
 # define N_VAL ": not a valid identifier"

@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:52:47 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/27 18:01:06 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/08/27 19:28:20 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ int	replace_env_value(t_mini *mini, char *env_name, char *new)
 	char	*tmp;
 
 	head = mini->env_d;
+	if (!new)
+		return (EXIT_FAILURE);
 	tmp = ft_strjoin(env_name, "=");
 	while (mini->env_d)
 	{
