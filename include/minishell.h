@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/27 21:39:56 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/29 17:45:53 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -364,6 +364,8 @@ char	*env_join(char *old, char *to_add, t_env *env);
 
 //builtins/cd.c
 int		cd(t_mini *mini, char **str);
+int		cd_home(t_mini *mini, char **str);
+int		cd_oldpwd(t_mini *mini, char **str);
 int		safe_chdir(t_mini *mini, char *dir);
 char	*find_last_dir(char *dir);
 char	*get_path(t_mini *mini, char *str);
