@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:10:43 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/31 14:13:26 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/31 20:13:33 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	run_minishell(t_mini *mini_d)
 {
 	mini_d->stdfds[0] = dup(STDOUT_FILENO);
 	mini_d->stdfds[1] = dup(STDIN_FILENO);
-	mini_d->qt_heredocs = 0;
+	mini_d->qt_heredocs = get_heredoc_qt(mini_d);
 	add_history(mini_d->input);
 	do_lexing(mini_d);
 	find_expansion(mini_d);
@@ -65,4 +65,23 @@ void	update_exit_status(t_mini *mini_d)
 		mini_d->exst_printable = g_exit_status;
 	mini_d->exit_status = 0;
 	g_exit_status = 0;
+}
+
+int	get_heredoc_qt(t_mini *mini_d)
+{
+	int	qt;
+	int	i;
+
+	qt = 0;
+	i = 0;
+	while (mini_d->input[i])
+	{
+		if (!strncmp("<<", &mini_d->input[i], 2))
+		{
+			qt ++;
+			i += 2;
+		}
+		i ++;
+	}
+	return (qt);
 }

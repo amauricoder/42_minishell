@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:13:07 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/31 14:12:14 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/31 19:40:06 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,36 @@ int	do_expansion(t_redir *node, char *input)
 
 int		handle_heredoc(t_mini *mini_d, t_redir *hd_node)
 {
-	char	*line;
 	int		hd_fd;
-
-	hd_node->hd_tmp = get_heredoc_name(mini_d, mini_d->qt_heredocs ++, 0);
+	int		pid;
+	int		status = 0;
+	
+	hd_node->hd_tmp = get_heredoc_name(mini_d, hd_node->id, 0);
+	printf("Heredoc Name %s \n", hd_node->hd_tmp);
 	hd_fd = open(hd_node->hd_tmp, O_CREAT | O_WRONLY | O_TRUNC, 0744);
 	if (hd_fd < 0)
 		err_msg(mini_d, NULL, EXIT_FAILURE, 0);
-	line = NULL;
-	while(1)
+	signal(SIGINT, SIG_IGN);
+	pid = fork();
+	if (pid == -1)
+		err_msg(mini_d, FORK_ERR, EXIT_FAILURE, 0);
+	else if (pid == 0)
 	{
-		if (write_on_heredoc(mini_d, hd_fd, hd_node))
-			break;
+		update_sig_heredoc();
+		while(g_exit_status != 130)
+		{
+			if (write_on_heredoc(mini_d, hd_fd, hd_node))
+				break;
+		}
+		get_next_line(-3);
+		close(hd_fd);
+		free_in_execution(mini_d, EXIT_SUCCESS);
+		exit(g_exit_status);
 	}
-	get_next_line(-3);
-	return (close(hd_fd), EXIT_SUCCESS);
+	waitpid(pid, &status, 0);
+	update_signals();
+	close(hd_fd);
+	return (set_child_exit(status, mini_d));
 }
 
 char	*hd_expand_heredoc(t_mini *mini_d, char *str)
@@ -119,12 +134,12 @@ int	write_on_heredoc(t_mini *d, int fd, t_redir *nd)
 	char	*expanded_line;
 	char	*line;
 
-	line = readline(">");
-	add_history(line);
+	write(1, "> ", 2);
+	line = get_next_line(STDIN_FILENO);
 	if (!line)
 		return (1);
 	if (!ft_strncmp(line, nd->fname, ft_strlen(nd->fname))
-		&& ft_strlen(line) == ft_strlen(nd->fname))
+		&& ft_strlen(line) - 1 == ft_strlen(nd->fname))
 		return (free(line), 1);
 	if (do_expansion(nd, nd->fname))
 	{

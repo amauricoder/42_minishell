@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:54:54 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/31 13:00:37 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/31 20:18:07 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,14 @@ void	open_heredocs(t_mini *mini, void *root)
 		return;
 	nd = (t_redir *)root;
 	if (nd->type == HEREDOC)
-		handle_heredoc(mini, nd);
+	{
+		if (handle_heredoc(mini, nd) == 130 && mini->qt_heredocs > 1)
+		{
+			/* free_in_execution(mini, 130);
+			exit(130); */
+			return ;
+		}
+	}
 	else if (nd->type == PIPE)
 	{
 		open_heredocs(mini, ((t_pipe *)nd)->left);

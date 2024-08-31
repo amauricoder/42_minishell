@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:55:37 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/31 11:58:22 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/31 19:16:04 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	handle_exec_cmd(t_mini *mini_d, void *root)
 	set_child_exit(status, mini_d);
 	return (mini_d->exit_status);
 }
-void	set_child_exit(int wstatus, t_mini *mini)
+int	set_child_exit(int wstatus, t_mini *mini)
 {
 	if (WIFSIGNALED(wstatus))
 	{
@@ -73,4 +73,5 @@ void	set_child_exit(int wstatus, t_mini *mini)
 	}
 	else
 		mini->exst_printable = wstatus / 256;
+	return (mini->exst_printable);
 }

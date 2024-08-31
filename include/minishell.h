@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/31 14:12:49 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/31 20:13:44 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,8 @@ int		main(int argc, char **argv, char **envp);
 void	run_minishell(t_mini *mini_d);
 void	prompt_and_input(t_mini *mini);
 void	update_exit_status(t_mini *mini_d);
+int		get_heredoc_qt(t_mini *mini_d);
+
 //debug.c
 void	debug_nodes_and_tree(t_mini *mini_d);
 
@@ -264,6 +266,8 @@ void	signals_init(void);
 void	signal_handler(int sig);
 void	default_sig(void);
 void	update_signals(void);
+void	heredoc_sig_handler(int sig);
+void	update_sig_heredoc(void);
 
 //expand/expansion.c
 int		find_expansion(t_mini	*mini_d);
@@ -315,7 +319,7 @@ void	free_pipe(void *root);
 //exec/execution.c
 int		do_execution(t_mini *mini_d, void *root);
 int		handle_exec_cmd(t_mini *mini_d, void *root);
-void	set_child_exit(int wstatus, t_mini *mini);
+int		set_child_exit(int wstatus, t_mini *mini);
 
 //exec/exec_redir.c
 void	handle_redir_nodes(t_mini *mini_d, void *root);
@@ -340,7 +344,7 @@ int		exec_pipe(t_mini *mini_d, void *root, int p_fd[2], int is_left);
 //exec/exec_heredoc.c
 int		redirect_heredoc(t_mini *mini_t, t_redir *node);
 char	*get_heredoc_name(t_mini *mini, int id, int invert);
-void	open_heredocs(t_mini *mini, void *root);
+void		open_heredocs(t_mini *mini, void *root);
 
 //exec/exec_heredoc2.c
 int		handle_heredoc(t_mini *mini_d, t_redir *hd_node);
