@@ -6,13 +6,13 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:13:07 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/27 17:41:14 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/31 14:12:14 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../include/minishell.h"
 
-int	do_expansion(char *input)
+int	do_expansion(t_redir *node, char *input)
 {
 	int	i;
 	int	s_quotes;
@@ -29,7 +29,7 @@ int	do_expansion(char *input)
 			d_quotes++;
 		i++;
 	}
-	if (d_quotes || s_quotes || input[ft_strlen(input) - 1] == ' ')
+	if (d_quotes || s_quotes || node->hd_ex)
 		return (0);
 	return(1);
 	
@@ -126,7 +126,7 @@ int	write_on_heredoc(t_mini *d, int fd, t_redir *nd)
 	if (!ft_strncmp(line, nd->fname, ft_strlen(nd->fname))
 		&& ft_strlen(line) == ft_strlen(nd->fname))
 		return (free(line), 1);
-	if (do_expansion(nd->fname))
+	if (do_expansion(nd, nd->fname))
 	{
 		new_line = ft_strtrim(line, "\n");
 		expanded_line = hd_expand_heredoc(d, new_line);

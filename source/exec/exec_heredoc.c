@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:54:54 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/25 15:31:15 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/31 13:00:37 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@ int	redirect_heredoc(t_mini *mini_d, t_redir *node)
 {
 	int		tmp_fd;
 
-	ft_putstr_fd("nome ->", 2);
-	ft_putstr_fd(node->hd_tmp, 2);
-	ft_putchar_fd('\n', 2);
 	tmp_fd = open(node->hd_tmp, O_RDONLY);
 	if (tmp_fd == -1)
 		return (err_msg(mini_d, NULL, EXIT_FAILURE, 0));

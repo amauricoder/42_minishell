@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:17:04 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/25 19:24:36 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/31 12:15:42 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	in_quote(t_mini *mini_d, int *i, int *state, char flag)
 		if (mini_d->input[*i] == '\'')
 		{
 			mini_d->token_type = WORD;
-			create_token(mini_d, " ", *state, 2);
+			create_token(mini_d, "", *state, 2);
 			return ;
 		}
 	}
@@ -119,7 +119,7 @@ void	in_quote(t_mini *mini_d, int *i, int *state, char flag)
 		{
 			//criar um token de espaco
 			mini_d->token_type = WORD;
-			create_token(mini_d, " ", *state, 2);
+			create_token(mini_d, "", *state, 2);
 			return ;
 		}
 	}

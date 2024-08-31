@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:40:18 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/27 21:40:37 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/31 14:14:11 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	find_expansion(t_mini	*mini_d)
 		mini_d->token = mini_d->token->next;
 	}
 	mini_d->token = token_head;
+	heredoc_expand_exception(mini_d);
 	clean_token(mini_d);
 	assemble_word_tokens(mini_d);
 	update_word_to_file(mini_d);

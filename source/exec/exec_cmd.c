@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:28:01 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/31 12:09:41 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/31 12:24:55 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 // < inacessible_file | cat -e > output
 // erro quando se coloca apenas um redirect e | 
-int	execute_cmd(t_mini *mini_d, void *root)
+int	execute_cmd(t_mini *mini_d, t_exec *exec_nd)
 {
-	t_exec	*exec_nd;
 	char	**path_env;
 	char	**envs;
 	char	*possible_path;
 	int		i;
 
-	exec_nd = root;
+	if (!exec_nd->args[0])
+		return (err_msg(mini_d, ft_strjoin("''", NO_CMD), 127, 1));
 	path_env = find_path_env(mini_d);
 	if (path_env == NULL)
 		return (err_msg(mini_d, ft_strjoin(exec_nd->args[0], NO_DIR), 127, 1));
