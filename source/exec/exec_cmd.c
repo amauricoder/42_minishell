@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:28:01 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/26 19:44:52 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/31 12:09:41 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,27 +119,25 @@ char	*create_cmdpath(char *possible_path, char *command)
 	return (path);
 }
 
-int	execute_buildins(t_mini *mini, void *root)
+int	execute_buildins(t_mini *mini, t_exec *exec_node)
 {
-	t_exec	*exec_node;
 
-	exec_node = (t_exec *)root;  //Function under construction. This comment is here just because norminette will remaind me to correct this shit
 	if (exec_node->builtin)
 	{
 		if (exec_node->builtin == ECHO)
-			return (echo(exec_node->args));
+			return (mini->exst_printable = echo(exec_node->args));
 		if (exec_node->builtin == PWD)
-			return (pwd(mini, exec_node->args));
+			return (mini->exst_printable = pwd(mini, exec_node->args));
 		if (exec_node->builtin == CD)
-			return (cd(mini, exec_node->args));
+			return (mini->exst_printable = cd(mini, exec_node->args));
 		if (exec_node->builtin == EXIT)
 			exit_read(mini, exec_node->args); // esssa tem que retornar valor
 		if (exec_node->builtin == EXPORT)
-			return (export(mini, exec_node->args));
+			return (mini->exst_printable = export(mini, exec_node->args));
 		if (exec_node->builtin == B_ENV)
-			return (env(mini, mini->env_d, exec_node->args));
+			return (mini->exst_printable = env(mini, mini->env_d, exec_node->args));
 		if (exec_node->builtin == UNSET)
-			return (unset(mini, exec_node->args));
+			return (mini->exst_printable = unset(mini, exec_node->args));
 	}
 	return (EXIT_FAILURE);
 }

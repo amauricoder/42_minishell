@@ -6,13 +6,11 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:14:59 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/27 21:48:53 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/08/31 11:51:36 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-//falta lidar com sinais de processos filhos
 
 /* 
 chamado quando o processo recebe um sinal
@@ -31,9 +29,6 @@ void	signal_handler(int sig)
 	}
 }
 
-/* 
-configura os manipuladores de sinais
- */
 void	signals_init(void)
 {
 	signal(SIGINT, signal_handler);
