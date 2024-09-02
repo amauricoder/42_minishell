@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/02 15:43:39 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/02 16:49:42 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,6 @@ int		main(int argc, char **argv, char **envp);
 void	run_minishell(t_mini *mini_d);
 void	prompt_and_input(t_mini *mini);
 void	update_exit_status(t_mini *mini_d);
-int		get_heredoc_qt(t_mini *mini_d);
 
 //debug.c
 void	debug_nodes_and_tree(t_mini *mini_d);
@@ -222,6 +221,7 @@ int		free_env(t_env *env);
 void	free_tokens(t_mini *mini_d);
 //frees2.c
 int		free_in_execution(t_mini *mini_d, int exit_status);
+void	free_run_minishell(t_mini *mini_d, int set_g);
 
 //init_values.c
 void	init_main_struct(t_mini *mini_d, char **argv, char **envp);
@@ -322,9 +322,9 @@ int		handle_exec_cmd(t_mini *mini_d, void *root);
 int		set_child_exit(int wstatus, t_mini *mini);
 
 //exec/exec_redir.c
-void	handle_redir_nodes(t_mini *mini_d, void *root);
-void	exec_redir_in(t_mini *mini_d, t_redir *node);
-void	exec_redir_out(t_mini *mini_d, t_redir *node);
+int		handle_redir_nodes(t_mini *mini_d, void *root);
+int		exec_redir_in(t_mini *mini_d, t_redir *node);
+int		exec_redir_out(t_mini *mini_d, t_redir *node);
 
 //exec/exec_cmd.c
 int	execute_cmd(t_mini *mini_d, t_exec *exec_nd);
@@ -345,7 +345,7 @@ int		exec_pipe(t_mini *mini_d, void *root, int p_fd[2], int is_left);
 int		redirect_heredoc(t_mini *mini_t, t_redir *node);
 char	*get_heredoc_name(t_mini *mini, int id, int invert);
 void	open_heredocs(t_mini *mini, void *root);
-void	treat_heredocs(t_mini *mini, void *root);
+int		treat_heredocs(t_mini *mini, void *root);
 
 //exec/exec_heredoc2.c
 int		handle_heredoc(t_mini *mini_d, t_redir *hd_node);

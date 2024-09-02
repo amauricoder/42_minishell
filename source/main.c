@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/31 14:49:56 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/02 16:55:39 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ int g_exit_status = 0;
 // se apagar todos os env, tem que inicializar dnv quando fizer export ou cd
 // se fizer qualquer comando, da leak (PORQUE??)
 
-// TRATAR UPDATE DO EXIT_CODE QUANDO APERTA CONTROL + C
+// TRATAR UPDATE DO EXIT_CODE QUANDO APERTA CONTROL + C --- FEITO
+// exit ''
 //
 // echo "' $$$$"' "' << teste safado(mas esta ok)
-// exit a a a --> atualiza exit status
+// exit a a a --> atualizar exit status --> FEITO
 // ls | exit --> leak
-// exit ''
-// ech''o ooo"ss" > ''
-// << end - ctrl + c precisa sair do heredoc
+// ech''o ooo"ss" > '' -- FEITO(imita o comportamento do bash)
+// << end - ctrl + c precisa sair do heredoc --- FEITO
 int main(int argc, char **argv, char **envp)
 {
 	t_mini mini_d;

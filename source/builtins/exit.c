@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:29:54 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/25 18:52:13 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/02 16:35:42 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 //(!ft_strncmp(mini_d.input, "exit", 4)
 //&& ft_strlen(mini_d.input) == 4)
-//nao ta atualizando o exit_status
 //o maximo que aceita sao 18 numeros 9
 void	exit_read(t_mini *mini, char **str) // exitc
 {
@@ -25,7 +24,7 @@ void	exit_read(t_mini *mini, char **str) // exitc
 	else
 	{
 		err_msg(mini, EXIT_ERR_NUM, 2, 0);
-		free_and_exit(mini, mini->exit_status);
+		free_and_exit(mini, mini->exst_printable);
 	}
 }
 

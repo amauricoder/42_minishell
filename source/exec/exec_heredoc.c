@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:54:54 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/02 15:43:39 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/02 16:09:05 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	open_heredocs(t_mini *mini, void *root)
 		open_heredocs(mini, nd->down);
 }
 
-void	treat_heredocs(t_mini *mini, void *root)
+int	treat_heredocs(t_mini *mini, void *root)
 {
 	int	pid;
 	int status;
@@ -78,10 +78,7 @@ void	treat_heredocs(t_mini *mini, void *root)
 	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid < 0)
-	{
-		err_msg(mini, FORK_ERR, EXIT_FAILURE, 0);
-		return ;
-	}
+		return (err_msg(mini, FORK_ERR, EXIT_FAILURE, 0));
 	if (pid == 0)
 	{
 		update_sig_heredoc();
@@ -91,5 +88,5 @@ void	treat_heredocs(t_mini *mini, void *root)
 	}
 	update_signals();
 	waitpid(pid, &status, 0);
-	set_child_exit(status, mini);
+	return (status / 256);
 }

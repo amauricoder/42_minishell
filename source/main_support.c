@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:10:43 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/02 15:43:39 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/02 16:30:51 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,26 +38,20 @@ void	run_minishell(t_mini *mini_d)
 {
 	mini_d->stdfds[0] = dup(STDOUT_FILENO);
 	mini_d->stdfds[1] = dup(STDIN_FILENO);
-	//mini_d->qt_heredocs = get_heredoc_qt(mini_d);
 	mini_d->qt_heredocs = 0;
 	add_history(mini_d->input);
 	do_lexing(mini_d);
 	find_expansion(mini_d);
 	define_builtins(mini_d);
 	mini_d->root = do_parsing(mini_d, mini_d->token);
-	treat_heredocs(mini_d, mini_d->root);
-	do_execution(mini_d, mini_d->root);
-	free_tree(mini_d->root);
-	free(mini_d->input);
-	free_tokens(mini_d);
-	if (dup2(mini_d->stdfds[0], STDOUT_FILENO) == -1
-		|| dup2(mini_d->stdfds[1], STDIN_FILENO) == -1)
+	if (treat_heredocs(mini_d, mini_d->root) == 130
+		&& mini_d->qt_heredocs > 0)
 	{
-		perror("dup2 failed");
-		err_msg(mini_d, "Error redir exec", 1, 0);
+		free_run_minishell(mini_d, 1);
+		return ;
 	}
-	close(mini_d->stdfds[0]);
-	close(mini_d->stdfds[1]);
+	do_execution(mini_d, mini_d->root);
+	free_run_minishell(mini_d, 0);
 }
 
 //update exit status
@@ -69,22 +63,3 @@ void	update_exit_status(t_mini *mini_d)
 	g_exit_status = 0;
 }
 
-//unused function for now
-int	get_heredoc_qt(t_mini *mini_d)
-{
-	int	qt;
-	int	i;
-
-	qt = 0;
-	i = 0;
-	while (mini_d->input[i])
-	{
-		if (!strncmp("<<", &mini_d->input[i], 2))
-		{
-			qt ++;
-			i += 2;
-		}
-		i ++;
-	}
-	return (qt);
-}

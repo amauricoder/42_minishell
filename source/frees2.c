@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   frees2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:14:36 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/26 17:09:14 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/02 16:25:55 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,17 @@ int	free_in_execution(t_mini *mini_d, int exit_status)
 	free_env(mini_d->env_d);
 	free_env(mini_d->export);
 	return (exit_status);
+}
+void	free_run_minishell(t_mini *mini_d, int set_g)
+{
+	if (set_g)
+		g_exit_status = 130;
+	free_tree(mini_d->root);
+	free(mini_d->input);
+	free_tokens(mini_d);
+	if (dup2(mini_d->stdfds[0], STDOUT_FILENO) == -1
+		|| dup2(mini_d->stdfds[1], STDIN_FILENO) == -1)
+		err_msg(mini_d, NULL, 1, 0);
+	close(mini_d->stdfds[0]);
+	close(mini_d->stdfds[1]);
 }
