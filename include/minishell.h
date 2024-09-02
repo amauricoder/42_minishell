@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/31 20:13:44 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:43:39 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,13 +287,13 @@ int		ft_strlen_char(char *str, char ch);
 
 //parsing/parsing.c
 void	*do_parsing(t_mini *mini_d, t_token *token);
-void	*parse_exec(t_token *token);
-void	*parse_redir(t_token *token, void *root);
+void	*parse_exec(t_mini *mini, t_token *token);
+void	*parse_redir(t_mini *mini, t_token *token, void *root);
 void	*parse_pipe(void *left, void *right);
 
 //parsing/tree_support.c
 t_token	*have_command(t_token *node);
-t_redir	*create_redir_node(void *down, int *id, t_token *node);
+t_redir	*create_redir_node(t_mini *d, void *down, int *id, t_token *node);
 char	*get_redir_name(t_token *node);
 int		get_qt_cmd_tokens(t_token *token);
 void	free_tree(void *root);
@@ -344,7 +344,8 @@ int		exec_pipe(t_mini *mini_d, void *root, int p_fd[2], int is_left);
 //exec/exec_heredoc.c
 int		redirect_heredoc(t_mini *mini_t, t_redir *node);
 char	*get_heredoc_name(t_mini *mini, int id, int invert);
-void		open_heredocs(t_mini *mini, void *root);
+void	open_heredocs(t_mini *mini, void *root);
+void	treat_heredocs(t_mini *mini, void *root);
 
 //exec/exec_heredoc2.c
 int		handle_heredoc(t_mini *mini_d, t_redir *hd_node);

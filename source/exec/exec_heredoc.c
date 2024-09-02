@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:54:54 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/31 20:18:07 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:43:39 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,7 @@ void	open_heredocs(t_mini *mini, void *root)
 	nd = (t_redir *)root;
 	if (nd->type == HEREDOC)
 	{
-		if (handle_heredoc(mini, nd) == 130 && mini->qt_heredocs > 1)
-		{
-			/* free_in_execution(mini, 130);
-			exit(130); */
-			return ;
-		}
+		handle_heredoc(mini, nd);
 	}
 	else if (nd->type == PIPE)
 	{
@@ -74,3 +69,27 @@ void	open_heredocs(t_mini *mini, void *root)
 		open_heredocs(mini, nd->down);
 }
 
+void	treat_heredocs(t_mini *mini, void *root)
+{
+	int	pid;
+	int status;
+
+	status = 0;
+	signal(SIGINT, SIG_IGN);
+	pid = fork();
+	if (pid < 0)
+	{
+		err_msg(mini, FORK_ERR, EXIT_FAILURE, 0);
+		return ;
+	}
+	if (pid == 0)
+	{
+		update_sig_heredoc();
+		open_heredocs(mini, root);
+		free_in_execution(mini, EXIT_SUCCESS);
+		exit(g_exit_status);
+	}
+	update_signals();
+	waitpid(pid, &status, 0);
+	set_child_exit(status, mini);
+}

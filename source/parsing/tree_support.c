@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:18:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/31 19:30:41 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:45:25 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_token	*have_command(t_token *node)
  * @param id Id for future debug possibilities
  * @param node token node that we will get the name of the file.  
  */
-t_redir	*create_redir_node(void *down, int *id, t_token *node)
+t_redir	*create_redir_node(t_mini *d, void *down, int *id, t_token *node)
 {
 	t_redir	*redir;
 
@@ -52,9 +52,9 @@ t_redir	*create_redir_node(void *down, int *id, t_token *node)
 	redir->hd_ex = 0;
 	if (redir->type == HEREDOC)
 	{
-		redir->id = (*id);
-		(*id)++;
-		redir->hd_ex = node->hd_exception;
+		redir->id = d->qt_heredocs ++;
+		redir->hd_tmp = get_heredoc_name(d, d->qt_heredocs, 0);
+		(*id)++; // esse id nao esta sendo utilizado
 	}
 	return (redir);
 }

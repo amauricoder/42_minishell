@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 16:41:52 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/27 19:12:29 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/02 14:50:44 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*do_parsing(t_mini *mini_d, t_token *token)
 {
 	void	*root;
 
-	root = parse_exec(token);
+	root = parse_exec(mini_d, token);
 	token = get_last_or_pipe(token);
 	if (token)
 	{
@@ -29,7 +29,7 @@ void	*do_parsing(t_mini *mini_d, t_token *token)
 }
 
 //Function to start the construction of the tree
-void	*parse_exec(t_token *token)
+void	*parse_exec(t_mini *mini, t_token *token)
 {
 	t_exec		*exec_node;
 	int			id;
@@ -51,11 +51,11 @@ void	*parse_exec(t_token *token)
 	else
 		exec_node = NULL;
 	root = exec_node;
-	root = parse_redir(token, root);
+	root = parse_redir(mini, token, root);
 	return (root);
 }
 
-void	*parse_redir(t_token *token, void *root)
+void	*parse_redir(t_mini *mini, t_token *token, void *root)
 {
 	t_token		*last;
 	int			id;
@@ -64,7 +64,7 @@ void	*parse_redir(t_token *token, void *root)
 	last = get_last_redir(token, 1);
 	while (last)
 	{
-		root = create_redir_node(root, &id, last);
+		root = create_redir_node(mini, root, &id, last);
 		last = get_last_redir(last, 0);
 		if (!last)
 			return (root);

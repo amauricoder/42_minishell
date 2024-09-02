@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:55:37 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/31 19:16:04 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:36:30 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,13 @@ int	set_child_exit(int wstatus, t_mini *mini)
 		{
 			write(1, "Quit (core dumped)\n", 19);
 			mini->exst_printable = 131;
+			g_exit_status = 131;
 		}
 		else if (WTERMSIG(wstatus) == SIGINT)
+		{
 			mini->exst_printable = 130;
+			g_exit_status = 130;
+		}
 	}
 	else
 		mini->exst_printable = wstatus / 256;

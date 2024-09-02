@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:13:07 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/31 19:40:06 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:46:02 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,35 +38,15 @@ int	do_expansion(t_redir *node, char *input)
 int		handle_heredoc(t_mini *mini_d, t_redir *hd_node)
 {
 	int		hd_fd;
-	int		pid;
-	int		status = 0;
-	
-	hd_node->hd_tmp = get_heredoc_name(mini_d, hd_node->id, 0);
-	printf("Heredoc Name %s \n", hd_node->hd_tmp);
+
 	hd_fd = open(hd_node->hd_tmp, O_CREAT | O_WRONLY | O_TRUNC, 0744);
-	if (hd_fd < 0)
-		err_msg(mini_d, NULL, EXIT_FAILURE, 0);
-	signal(SIGINT, SIG_IGN);
-	pid = fork();
-	if (pid == -1)
-		err_msg(mini_d, FORK_ERR, EXIT_FAILURE, 0);
-	else if (pid == 0)
+	while(g_exit_status != 130)
 	{
-		update_sig_heredoc();
-		while(g_exit_status != 130)
-		{
-			if (write_on_heredoc(mini_d, hd_fd, hd_node))
-				break;
-		}
-		get_next_line(-3);
-		close(hd_fd);
-		free_in_execution(mini_d, EXIT_SUCCESS);
-		exit(g_exit_status);
+		if (write_on_heredoc(mini_d, hd_fd, hd_node))
+			break;
 	}
-	waitpid(pid, &status, 0);
-	update_signals();
-	close(hd_fd);
-	return (set_child_exit(status, mini_d));
+	get_next_line(-3);
+	return (close(hd_fd));
 }
 
 char	*hd_expand_heredoc(t_mini *mini_d, char *str)

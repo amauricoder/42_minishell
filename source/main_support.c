@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:10:43 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/31 20:13:33 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:43:39 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,14 @@ void	run_minishell(t_mini *mini_d)
 {
 	mini_d->stdfds[0] = dup(STDOUT_FILENO);
 	mini_d->stdfds[1] = dup(STDIN_FILENO);
-	mini_d->qt_heredocs = get_heredoc_qt(mini_d);
+	//mini_d->qt_heredocs = get_heredoc_qt(mini_d);
+	mini_d->qt_heredocs = 0;
 	add_history(mini_d->input);
 	do_lexing(mini_d);
 	find_expansion(mini_d);
 	define_builtins(mini_d);
 	mini_d->root = do_parsing(mini_d, mini_d->token);
-	open_heredocs(mini_d, mini_d->root);
+	treat_heredocs(mini_d, mini_d->root);
 	do_execution(mini_d, mini_d->root);
 	free_tree(mini_d->root);
 	free(mini_d->input);
@@ -59,6 +60,7 @@ void	run_minishell(t_mini *mini_d)
 	close(mini_d->stdfds[1]);
 }
 
+//update exit status
 void	update_exit_status(t_mini *mini_d)
 {
 	if (g_exit_status == 130 || g_exit_status == 131)
@@ -67,6 +69,7 @@ void	update_exit_status(t_mini *mini_d)
 	g_exit_status = 0;
 }
 
+//unused function for now
 int	get_heredoc_qt(t_mini *mini_d)
 {
 	int	qt;
