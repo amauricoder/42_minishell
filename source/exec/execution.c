@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:55:37 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/02 21:17:51 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 18:23:25 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,18 @@ int	handle_exec_cmd(t_mini *mini_d, void *root)
 		return (err_msg(mini_d, FORK_ERR, 1, 0));
 	else if (pid == 0)
 	{
-		default_sig();
+		signals_child();
 		if (treat_exec_exception(root))
 			exit(free_in_execution(mini_d, 0));
 		if (execute_cmd(mini_d, root))
 			exit(free_in_execution(mini_d, 127));
 	}
 	waitpid(pid, &status, 0);
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
+	signals_init();
 	set_child_exit(status, mini_d);
-	return (mini_d->exit_status);
+	return (EXIT_SUCCESS);
 }
+
 int	set_child_exit(int wstatus, t_mini *mini)
 {
 	if (WIFSIGNALED(wstatus))

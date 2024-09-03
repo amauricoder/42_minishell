@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 15:28:01 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:41:06 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,11 +264,11 @@ int		is_next_word_invalid(char *input);
 //signals.c
 void	signals_init(void);
 void	signal_handler(int sig);
-void	default_sig(void);
-void	update_signals(void);
+void	signals_child(void);
 void	heredoc_sig_handler(int sig);
 void	update_sig_heredoc(void);
 t_mini	*get_shell(t_mini *new);
+void	signal_handler_child(int sig);
 
 //expand/expansion.c
 int		find_expansion(t_mini	*mini_d);

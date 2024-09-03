@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:14:59 by ismirand          #+#    #+#             */
-/*   Updated: 2024/09/03 15:14:17 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:52:19 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,26 @@ void	signal_handler(int sig)
 	}
 }
 
+void	signal_handler_child(int sig)
+{
+	t_mini *shell;
+
+	(void)sig;
+	shell = get_shell(NULL);
+	free_in_execution(shell, 130);
+	exit(130);
+}
+
 void	signals_init(void)
 {
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
-void	default_sig(void)
-{
-	/* struct sigaction	sig;
 
-	ft_memset(&sig, 0, sizeof(sig));
-	sig.sa_handler = SIG_DFL;
-	sigaction(SIGQUIT, &sig, NULL); */
-	signal(SIGINT, SIG_DFL);
+void	signals_child(void)
+{
+	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_DFL);
-}
-void	update_signals(void)
-{
-	struct sigaction	sig;
-
-	ft_memset(&sig, 0, sizeof(sig));
-	sig.sa_handler = SIG_IGN;
-	sigaction(SIGINT, &sig, NULL);
 }
 
 void	heredoc_sig_handler(int sig)
@@ -74,6 +72,7 @@ t_mini	*get_shell(t_mini *new)
 		mini = new;
 	return (mini);
 }
+
 void	update_sig_heredoc(void)
 {
 	struct sigaction sa;

@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/02 20:29:52 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:10:58 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int g_exit_status = 0;
 // ls | exit --> leak
 // ech''o ooo"ss" > '' -- FEITO(imita o comportamento do bash)
 // << end - ctrl + c precisa sair do heredoc --- FEITO
-// ls | cat -> ctrl + c tratar isso
+// cat | ls -> tratar isso --->
 int main(int argc, char **argv, char **envp)
 {
 	t_mini mini_d;

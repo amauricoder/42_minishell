@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:18:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 15:07:12 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:22:51 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_token	*have_command(t_token *node)
 	{
 		if (current->type == WORD || current->type == ENV)
 			return (current);
+		if (current->next && current->next->type == PIPE)
+			break ;
 		current = current->next;
 	}
 	return (NULL);

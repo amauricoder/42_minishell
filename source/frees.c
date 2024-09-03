@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:56:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/02 18:15:50 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:53:29 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	free_and_exit(t_mini *mini, int exit_nbr)
 		free_tokens(mini);
 		free_main_struct(mini);
 	}
-	printf("caiu no exit\n");
 	exit(exit_nbr);
 }
 
