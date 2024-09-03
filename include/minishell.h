@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 15:08:49 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:28:01 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@
 
 # define D_ENV "minishell: env: "
 # define D_CD "minishell: cd: "
-# define NO_FILE ": No such file or directory"
+# define NOF ": No such file or directory"
 # define TOO_ARGS "too many arguments"
 # define ENV_ERR "minishell: env: No such file or directory"
 
@@ -368,6 +368,7 @@ int		is_echoflag(char *str, int *new_line);
 
 //builtins/pwd.c
 int		pwd(t_mini *mini, char **str);
+int		update_pwd_oldpwd(t_mini *mini, char *last_dir);
 
 //builtins/bt_env.c
 int		env(t_mini *mini, t_env *env_var, char **str);
@@ -378,10 +379,6 @@ int		cd(t_mini *mini, char **str);
 int		cd_home(t_mini *mini, char **str);
 int		cd_oldpwd(t_mini *mini, char **str);
 int		safe_chdir(t_mini *mini, char *dir);
-char	*find_last_dir(char *dir);
-char	*get_path(t_mini *mini, char *str);
-int		back_cd(t_mini *mini_d, char **str);
-int		update_pwd_oldpwd(t_mini *mini, char *last_dir);
 
 //builtins/exit.c
 void	exit_read(t_mini *mini_d, char **str);

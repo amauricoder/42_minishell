@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 16:06:49 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/25 19:04:18 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:21:18 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	export(t_mini *mini, char **str)
 	return (EXIT_SUCCESS);
 }
 
-void	read_arg(char *str, char **tp, t_env *exp)//se nao tiver node (dps de apagar todos os env), tem que cria a lista do zero
+void	read_arg(char *str, char **tp, t_env *exp)
 {
 	while ((tp[1] || str[ft_strlen(str) - 1] == '=') && exp)
 	{
