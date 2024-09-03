@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:14:59 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/31 19:09:08 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 14:51:24 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,13 @@ void	signals_init(void)
 }
 void	default_sig(void)
 {
-	struct sigaction	sig;
+	/* struct sigaction	sig;
 
 	ft_memset(&sig, 0, sizeof(sig));
 	sig.sa_handler = SIG_DFL;
-	sigaction(SIGQUIT, &sig, NULL);
-	sigaction(SIGINT, &sig, NULL);
+	sigaction(SIGQUIT, &sig, NULL); */
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
 void	update_signals(void)
 {
@@ -54,11 +55,25 @@ void	update_signals(void)
 
 void	heredoc_sig_handler(int sig)
 {
-	(void)sig;
-	write(1, "\n", 1);
-	g_exit_status = 130;
+	t_mini *shell;
+
+	if (sig == SIGINT)
+	{
+		shell = get_shell(NULL);
+		write(1, "\n", 1);
+		g_exit_status = 130;
+		free_in_execution(shell, 130);
+		exit(130);
+	}	
 }
 
+t_mini	*get_shell(t_mini *new)
+{
+	static	t_mini *mini = NULL;
+	if (new)
+		mini = new;
+	return (mini);
+}
 void	update_sig_heredoc(void)
 {
 	struct sigaction sa;

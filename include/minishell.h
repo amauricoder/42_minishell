@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/02 16:49:42 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/02 20:25:44 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@
 # define D_CD "minishell: cd: "
 # define NO_FILE ": No such file or directory"
 # define TOO_ARGS "too many arguments"
-
 # define ENV_ERR "minishell: env: No such file or directory"
 
 /*************************/
@@ -268,6 +267,7 @@ void	default_sig(void);
 void	update_signals(void);
 void	heredoc_sig_handler(int sig);
 void	update_sig_heredoc(void);
+t_mini	*get_shell(t_mini *new);
 
 //expand/expansion.c
 int		find_expansion(t_mini	*mini_d);

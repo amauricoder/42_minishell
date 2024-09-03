@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:55:37 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/02 16:53:29 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/02 21:17:51 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	handle_exec_cmd(t_mini *mini_d, void *root)
 	int	pid;
 	int	status;
 
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	status = 0;
 	if (pid < 0)
@@ -52,8 +53,9 @@ int	handle_exec_cmd(t_mini *mini_d, void *root)
 		if (execute_cmd(mini_d, root))
 			exit(free_in_execution(mini_d, 127));
 	}
-	update_signals();
 	waitpid(pid, &status, 0);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	set_child_exit(status, mini_d);
 	return (mini_d->exit_status);
 }
@@ -71,6 +73,7 @@ int	set_child_exit(int wstatus, t_mini *mini)
 		{
 			mini->exst_printable = 130;
 			g_exit_status = 130;
+			printf("\n");
 		}
 	}
 	else

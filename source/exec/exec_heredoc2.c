@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:13:07 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/02 15:46:02 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 14:56:55 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		handle_heredoc(t_mini *mini_d, t_redir *hd_node)
 {
 	int		hd_fd;
 
-	hd_fd = open(hd_node->hd_tmp, O_CREAT | O_WRONLY | O_TRUNC, 0744);
+	hd_fd = open(hd_node->hd_tmp, O_CREAT | O_WRONLY | O_TRUNC, 0744); // salvar isso na estrutura para fazer clesorekspoerka
 	while(g_exit_status != 130)
 	{
 		if (write_on_heredoc(mini_d, hd_fd, hd_node))
@@ -116,6 +116,7 @@ int	write_on_heredoc(t_mini *d, int fd, t_redir *nd)
 
 	write(1, "> ", 2);
 	line = get_next_line(STDIN_FILENO);
+	//line = readline(">");
 	if (!line)
 		return (1);
 	if (!ft_strncmp(line, nd->fname, ft_strlen(nd->fname))

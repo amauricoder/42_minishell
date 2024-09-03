@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:56:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/25 18:59:18 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/02 18:15:50 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	free_and_exit(t_mini *mini, int exit_nbr)
 	{
 		close(mini->stdfds[0]);
 		close(mini->stdfds[1]);
-		free_matriz(temp->args);
-		free(mini->root);
+		free_tree(mini->root);
 		free_tokens(mini);
 		free_main_struct(mini);
 	}
+	printf("caiu no exit\n");
 	exit(exit_nbr);
 }
 
@@ -56,7 +56,10 @@ void	free_matriz(char **dp_char)
 	if (!dp_char)
 		return ;
 	while (dp_char[i])
-		free(dp_char[i ++]);
+	{
+		free(dp_char[i]);
+		i ++;
+	}
 	free(dp_char);
 }
 
