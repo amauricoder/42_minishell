@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/29 17:45:17 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:10:16 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 //tratar se nao tiver OLDPWD --FEITO
 //unset HOME (usar getenv) --FEITO 
 //cd ../../.. -> nao ta salvando o oldpwd certo --FEITO (chdir faz sozinho)
-//no bash cd~ nao funciona, e no nosso funciona
+//no bash cd~ nao funciona, e no nosso funciona --FEITO
 int	cd(t_mini *mini, char **str)
 {
 	char	*dir;
@@ -47,7 +47,6 @@ int	cd(t_mini *mini, char **str)
 	else if (str[1])// cd .. cai aqui
 	{
 		dir = getcwd(cwd, sizeof(cwd));
-		//printf("dir -> %s\n", dir);
 		if (safe_chdir(mini, str[1]) == -1)
 			return (EXIT_FAILURE);
 		return (update_pwd_oldpwd(mini, dir));
@@ -110,7 +109,7 @@ int	safe_chdir(t_mini *mini, char *dir)
 	}
 	return (EXIT_SUCCESS);
 }
-
+/* 
 char	*find_last_dir(char *dir)
 {
 	int	i;
@@ -120,33 +119,9 @@ char	*find_last_dir(char *dir)
 		i--;
 	dir[i] = '\0';
 	return (dir);
-}
+} */
 
-//ver o q ela ta fazendo (e igual a safe_env??)
-char	*get_path(t_mini *mini, char *str)
-{
-	t_env	*current;
-	char	**path;
-	char	*dir;
-
-	current = mini->env_d;
-	dir = NULL;
-	while (current)
-	{
-		if (!ft_strncmp(current->name, str, ft_strlen(str)))
-		{
-			path = ft_split(current->name, '=');
-			//printf("path -> %s\n", path[1]);
-			dir = ft_strdup(path[1]);
-			free_matriz(path);
-			return (dir);
-		}
-		current = current->next;
-	}
-	return (dir);
-}
-
-int	back_cd(t_mini *mini_d, char **str)
+/* int	back_cd(t_mini *mini_d, char **str)
 {
 	int	i;
 
@@ -162,20 +137,4 @@ int	back_cd(t_mini *mini_d, char **str)
 		i ++;
 	}
 	return (EXIT_SUCCESS);
-}
-
-int	update_pwd_oldpwd(t_mini *mini, char *last_dir)
-{
-	char	cwd[1024];
-	char	*pwd;
-	//char	*tmp;
-
-	//printf("lastdir %s \n", last_dir);
-	pwd = getcwd(cwd, sizeof(cwd));
-	//printf("PWD %s\n", pwd);
-	replace_env_value(mini, "PWD", pwd);
-	replace_env_value(mini, "OLDPWD", last_dir);
-	free_env(mini->export);
-	export_create(mini);
-	return (EXIT_SUCCESS);
-}
+} */
