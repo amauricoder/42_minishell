@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:55:37 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 18:23:25 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 20:03:32 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	do_execution(t_mini *mini_d, void *root)
 {
 	t_exec	*ndcheck;
-	
+
 	if (!root)
 		return (err_msg(mini_d, NO_CMD, 127, 0));
 	ndcheck = root;
@@ -41,6 +41,7 @@ int	handle_exec_cmd(t_mini *mini_d, void *root)
 	int	status;
 
 	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	status = 0;
 	if (pid < 0)

@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:14:59 by ismirand          #+#    #+#             */
-/*   Updated: 2024/09/03 17:52:19 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 20:18:41 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	signal_handler(int sig)
 
 void	signal_handler_child(int sig)
 {
-	t_mini *shell;
+	t_mini	*shell;
 
 	(void)sig;
 	shell = get_shell(NULL);
@@ -53,7 +53,7 @@ void	signals_child(void)
 
 void	heredoc_sig_handler(int sig)
 {
-	t_mini *shell;
+	t_mini	*shell;
 
 	if (sig == SIGINT)
 	{
@@ -62,12 +62,13 @@ void	heredoc_sig_handler(int sig)
 		g_exit_status = 130;
 		free_in_execution(shell, 130);
 		exit(130);
-	}	
+	}
 }
 
 t_mini	*get_shell(t_mini *new)
 {
-	static	t_mini *mini = NULL;
+	static t_mini	*mini = NULL;
+
 	if (new)
 		mini = new;
 	return (mini);
@@ -75,37 +76,9 @@ t_mini	*get_shell(t_mini *new)
 
 void	update_sig_heredoc(void)
 {
-	struct sigaction sa;
-
-	ft_memset(&sa, 0, sizeof(sa));
-    sa.sa_handler = heredoc_sig_handler;
-    sigaction(SIGINT, &sa, NULL);
-}
-/* void	signals_child(void)
-{
-	struct sigaction	sig;
-
-	ft_memset(&sig, 0, sizeof(sig));
-	sig.sa_handler = SIG_DFL;
-	sigaction(SIGQUIT, &sig, NULL);
-	sigaction(SIGINT, &sig, NULL);
-} */
-
-/* void	handle_sigpipe(int sig)
-{
-	(void)sig;
-} */
-
-/* void	setup_sigpipe_handler(void)
-{
 	struct sigaction	sa;
 
-	sa.sa_handler = handle_sigpipe;
-	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
-	if (sigaction(SIGPIPE, &sa, NULL) == -1)
-	{
-		perror("sigaction");
-		exit(EXIT_FAILURE);
-	}
-} */
+	ft_memset(&sa, 0, sizeof(sa));
+	sa.sa_handler = heredoc_sig_handler;
+	sigaction(SIGINT, &sa, NULL);
+}

@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:44:31 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/02 16:55:18 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:55:37 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * @brief "Filter" cases of redir_in, redir_out e double_redir out.
  * 
  */
-int		handle_redir_nodes(t_mini *mini_d, void *root)
+int	handle_redir_nodes(t_mini *mini_d, void *root)
 {
 	t_redir	*node;
 

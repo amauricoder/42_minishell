@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:02:42 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/31 11:56:15 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 20:14:41 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,16 +110,16 @@ int	err_msg(t_mini *d, char *str, int ev, int fr)
 	return (ev);
 }
 
-//flag = 1 -> free s1
-//flag = 2 -> free s2
-//flag = 3 -> free s3
-//flag = 4 -> free s1 and s2
-//flag = 5 -> free s1 and s3
-//flag = 6 -> free s2 and s3
+/**
+ * @brief Concatenate 3 strings
+ * flag = 1 -> free s1, flag = 2 -> free s2, flag = 3 -> free s3
+ * flag = 4 -> free s1 and s2, flag = 5 -> free s1 and s3,
+ * flag = 6 -> free s2 and s3
+ */
 char	*join_three(char *s1, char *s2, char *s3, int flag)
 {
 	char	*tmp;
-	char 	*s2_new;
+	char	*s2_new;
 	char	*ret;
 
 	ret = ft_strjoin("\"", s2);

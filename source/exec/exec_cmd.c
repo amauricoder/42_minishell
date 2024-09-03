@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:28:01 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 17:29:58 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:57:35 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,6 @@ char	*create_cmdpath(char *possible_path, char *command)
 
 int	execute_buildins(t_mini *mini, t_exec *exec_node)
 {
-
 	if (exec_node->builtin)
 	{
 		if (exec_node->builtin == ECHO)
@@ -131,11 +130,12 @@ int	execute_buildins(t_mini *mini, t_exec *exec_node)
 		if (exec_node->builtin == CD)
 			return (mini->exst_printable = cd(mini, exec_node->args));
 		if (exec_node->builtin == EXIT)
-			exit_read(mini, exec_node->args); // esssa tem que retornar valor
+			exit_read(mini, exec_node->args);
 		if (exec_node->builtin == EXPORT)
 			return (mini->exst_printable = export(mini, exec_node->args));
 		if (exec_node->builtin == B_ENV)
-			return (mini->exst_printable = env(mini, mini->env_d, exec_node->args));
+			return (mini->exst_printable
+				= env(mini, mini->env_d, exec_node->args));
 		if (exec_node->builtin == UNSET)
 			return (mini->exst_printable = unset(mini, exec_node->args));
 	}

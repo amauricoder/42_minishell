@@ -6,11 +6,11 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:54:54 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 16:50:50 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 20:02:40 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../include/minishell.h"
+#include "../../include/minishell.h"
 
 int	redirect_heredoc(t_mini *mini_d, t_redir *node)
 {
@@ -22,10 +22,10 @@ int	redirect_heredoc(t_mini *mini_d, t_redir *node)
 	if (dup2(tmp_fd, STDIN_FILENO) == -1)
 	{
 		close(tmp_fd);
-		return (err_msg(mini_d, NULL, EXIT_FAILURE, 0));	
+		return (err_msg(mini_d, NULL, EXIT_FAILURE, 0));
 	}
 	close(tmp_fd);
-	return(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
 char	*get_heredoc_name(t_mini *mini, int id, int invert)
@@ -33,7 +33,7 @@ char	*get_heredoc_name(t_mini *mini, int id, int invert)
 	char	*hd_name;
 	char	*hd_itoa;
 	int		actual_id;
- 
+
 	if (invert)
 	{
 		actual_id = mini->qt_heredocs - id + 1;
@@ -50,10 +50,10 @@ char	*get_heredoc_name(t_mini *mini, int id, int invert)
 
 void	open_heredocs(t_mini *mini, void *root)
 {
-	t_redir *nd;
+	t_redir	*nd;
 
 	if (!root)
-		return;
+		return ;
 	nd = (t_redir *)root;
 	if (nd->type == HEREDOC)
 	{
@@ -64,7 +64,7 @@ void	open_heredocs(t_mini *mini, void *root)
 		open_heredocs(mini, ((t_pipe *)nd)->left);
 		open_heredocs(mini, ((t_pipe *)nd)->right);
 	}
-	if (nd->type == HEREDOC || nd->type == R_IN 
+	if (nd->type == HEREDOC || nd->type == R_IN
 		|| nd->type == D_R_OUT || nd->type == R_OUT)
 		open_heredocs(mini, nd->down);
 }
@@ -72,7 +72,7 @@ void	open_heredocs(t_mini *mini, void *root)
 int	treat_heredocs(t_mini *mini, void *root)
 {
 	int	pid;
-	int status;
+	int	status;
 
 	status = 0;
 	signal(SIGINT, SIG_IGN);

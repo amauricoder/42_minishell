@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 11:22:05 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 18:25:10 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 20:03:15 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,12 @@ int	handle_pipe(t_mini *mini_d, void *root)
 	}
 	close(p_fd[0]);
 	close(p_fd[1]);
-	/* while (waitpid(-1, &status, 0) > 0)
-	{
-		if (WIFEXITED(status))
-			mini_d->exst_printable = WEXITSTATUS(status);
-		if (status / 256 == 130)
-			printf("\n");
-	} */
 	waitpid(pid[0], &status[0], 0);
 	waitpid(pid[1], &status[1], 0);
 	if (WIFEXITED(status[1]))
-			mini_d->exst_printable = WEXITSTATUS(status[1]);
-	if (status[1] / 256 == 130)
-			printf("\n");
+		mini_d->exst_printable = WEXITSTATUS(status[1]);
+	if (status[1] / 256 == 130 || status[0] / 256 == 130)
+		printf("\n");
 	return (EXIT_SUCCESS);
 }
 
@@ -82,5 +75,4 @@ int	exec_pipe(t_mini *mini_d, void *root, int p_fd[2], int is_left)
 	close(p_fd[0]);
 	do_execution(mini_d, pipe_nd->right);
 	exit(free_in_execution(mini_d, mini_d->exst_printable));
-	//exit(EXIT_SUCCESS);
 }

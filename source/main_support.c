@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:10:43 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 16:46:23 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 20:15:07 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	run_minishell(t_mini *mini_d)
 		free_run_minishell(mini_d, 1);
 		return ;
 	}
-	//debug_nodes_and_tree(mini_d);
 	do_execution(mini_d, mini_d->root);
 	free_run_minishell(mini_d, 0);
 }
@@ -64,4 +63,3 @@ void	update_exit_status(t_mini *mini_d)
 	mini_d->exit_status = 0;
 	g_exit_status = 0;
 }
-

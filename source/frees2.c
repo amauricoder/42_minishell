@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:14:36 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 15:15:32 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 20:15:43 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	free_in_execution(t_mini *mini_d, int exit_status)
 	free_env(mini_d->export);
 	return (exit_status);
 }
+
 void	free_run_minishell(t_mini *mini_d, int set_g)
 {
 	if (set_g)
