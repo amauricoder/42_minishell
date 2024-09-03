@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 15:01:09 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:08:49 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,7 @@ typedef struct s_redir
 	void	*down;
 	char	*hd_tmp;
 	int		hd_ex;
+	int		hd_fd;
 }	t_redir;
 
 //global variable

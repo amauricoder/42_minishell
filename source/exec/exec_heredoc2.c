@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:13:07 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 14:56:55 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:16:46 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,14 @@ int	do_expansion(t_redir *node, char *input)
 
 int		handle_heredoc(t_mini *mini_d, t_redir *hd_node)
 {
-	int		hd_fd;
-
-	hd_fd = open(hd_node->hd_tmp, O_CREAT | O_WRONLY | O_TRUNC, 0744); // salvar isso na estrutura para fazer clesorekspoerka
+	hd_node->hd_fd = open(hd_node->hd_tmp, O_CREAT | O_WRONLY | O_TRUNC, 0744); // salvar isso na estrutura para fazer clesorekspoerka
 	while(g_exit_status != 130)
 	{
-		if (write_on_heredoc(mini_d, hd_fd, hd_node))
+		if (write_on_heredoc(mini_d, hd_node->hd_fd, hd_node))
 			break;
 	}
 	get_next_line(-3);
-	return (close(hd_fd));
+	return (close(hd_node->hd_fd));
 }
 
 char	*hd_expand_heredoc(t_mini *mini_d, char *str)
@@ -114,13 +112,13 @@ int	write_on_heredoc(t_mini *d, int fd, t_redir *nd)
 	char	*expanded_line;
 	char	*line;
 
-	write(1, "> ", 2);
-	line = get_next_line(STDIN_FILENO);
-	//line = readline(">");
+	//write(1, "> ", 2);
+	//line = get_next_line(STDIN_FILENO);
+	line = readline(">");
 	if (!line)
 		return (1);
 	if (!ft_strncmp(line, nd->fname, ft_strlen(nd->fname))
-		&& ft_strlen(line) - 1 == ft_strlen(nd->fname))
+		&& ft_strlen(line) == ft_strlen(nd->fname))
 		return (free(line), 1);
 	if (do_expansion(nd, nd->fname))
 	{

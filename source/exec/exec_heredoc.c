@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:54:54 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 14:52:11 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:26:33 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,5 @@ int	treat_heredocs(t_mini *mini, void *root)
 		exit(g_exit_status);
 	}
 	waitpid(pid, &status, 0);
-	(void)root;
 	return (status / 256);
 }

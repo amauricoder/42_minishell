@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:18:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/02 15:45:25 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:07:12 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_redir	*create_redir_node(t_mini *d, void *down, int *id, t_token *node)
 	redir->id = 0;
 	redir->hd_tmp = NULL;
 	redir->hd_ex = 0;
+	redir->hd_fd = -1;
 	if (redir->type == HEREDOC)
 	{
 		redir->id = d->qt_heredocs ++;
