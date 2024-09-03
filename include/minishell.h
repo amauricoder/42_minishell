@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/02 20:25:44 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:01:09 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -374,6 +374,8 @@ char	*env_join(char *old, char *to_add, t_env *env);
 
 //builtins/cd.c
 int		cd(t_mini *mini, char **str);
+int		cd_home(t_mini *mini, char **str);
+int		cd_oldpwd(t_mini *mini, char **str);
 int		safe_chdir(t_mini *mini, char *dir);
 char	*find_last_dir(char *dir);
 char	*get_path(t_mini *mini, char *str);
