@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 19:16:49 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 20:04:37 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/03 20:21:31 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 void	assemble_word_tokens(t_mini *mini_d)
 {
 	t_token	*tmp;
+	t_token	*prev;
 	t_token	*to_free;
 	char	*c_tmp;
 
@@ -47,6 +48,7 @@ void	assemble_word_tokens(t_mini *mini_d)
 			tmp = tmp->next;
 		}
 	}
+	(void)prev;
 }
 
 /**
