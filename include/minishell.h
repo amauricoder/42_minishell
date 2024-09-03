@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 15:10:19 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:26:19 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@
 
 # define D_ENV "minishell: env: "
 # define D_CD "minishell: cd: "
-# define NO_FILE ": No such file or directory"
+# define NOF ": No such file or directory"
 # define TOO_ARGS "too many arguments"
 
 # define ENV_ERR "minishell: env: No such file or directory"
@@ -368,8 +368,6 @@ int		cd(t_mini *mini, char **str);
 int		cd_home(t_mini *mini, char **str);
 int		cd_oldpwd(t_mini *mini, char **str);
 int		safe_chdir(t_mini *mini, char *dir);
-//char	*find_last_dir(char *dir);
-//int		back_cd(t_mini *mini_d, char **str);
 
 //builtins/exit.c
 void	exit_read(t_mini *mini_d, char **str);

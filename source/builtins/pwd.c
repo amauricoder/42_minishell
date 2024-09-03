@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:32:23 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 15:09:40 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:22:06 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,8 @@ int	update_pwd_oldpwd(t_mini *mini, char *last_dir)
 {
 	char	cwd[1024];
 	char	*pwd;
-	//char	*tmp;
 
-	//printf("lastdir %s \n", last_dir);
 	pwd = getcwd(cwd, sizeof(cwd));
-	//printf("PWD %s\n", pwd);
 	replace_env_value(mini, "PWD", pwd);
 	replace_env_value(mini, "OLDPWD", last_dir);
 	free_env(mini->export);
