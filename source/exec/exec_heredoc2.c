@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:13:07 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 18:23:23 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 18:27:44 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*expand_heredoc(t_mini *mini_d, char *str)
 void	heredoc_expand(t_mini *mini)
 {
 	t_token	*head;
-	int flag;
+	int		flag;
 
 	flag = 0;
 	head = mini->token;
@@ -55,12 +55,13 @@ void	heredoc_expand(t_mini *mini)
 		if (mini->token->type == HEREDOC)
 		{
 			mini->token = mini->token->next;
-			while(mini->token->type == W_SPACE)
+			while (mini->token->type == W_SPACE)
 				mini->token = mini->token->next;
-			if (mini->token->state == IN_DQUOTE || mini->token->state == IN_QUOTE)
+			if (mini->token->state == IN_DQUOTE
+				|| mini->token->state == IN_QUOTE)
 				flag = 1;
-			while(mini->token->type != HEREDOC)
-					mini->token = mini->token->prev;
+			while (mini->token->type != HEREDOC)
+				mini->token = mini->token->prev;
 			mini->token->expand_heredoc = flag;
 		}
 		mini->token = mini->token->next;

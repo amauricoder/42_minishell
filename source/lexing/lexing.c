@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:17:04 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 20:09:08 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 20:10:54 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	redir_env(t_mini *mini_d, int *i, int *state, int type)
  * @brief Secondary Function for do_lexing_aux.
  * for creation of the token of ''.
 */
-void	in_quote(t_mini *mini_d, int *i, int *state, char flag)
+int	in_quote(t_mini *mini, int *i, int *state, char flag)
 {
 	int	wrd_len;
 
@@ -105,32 +105,24 @@ void	in_quote(t_mini *mini_d, int *i, int *state, char flag)
 	if (flag == 's')
 	{
 		*state = IN_QUOTE;
-		if (mini_d->input[*i] == '\'')
-		{
-			mini_d->token_type = WORD;
-			create_token(mini_d, "", *state, 2);
-			return ;
-		}
+		if (mini->input[*i] == '\'')
+			return (create_empty_token(mini, "", state, 2));
 	}
 	else if (flag == 'd')
 	{
 		*state = IN_DQUOTE;
-		if (mini_d->input[*i] == '\"')
-		{
-			mini_d->token_type = WORD;
-			create_token(mini_d, "", *state, 2);
-			return ;
-		}
+		if (mini->input[*i] == '\"')
+			return (create_empty_token(mini, "", state, 2));
 	}
-	mini_d->token_type = WORD;
+	mini->token_type = WORD;
 	wrd_len = *i;
 	if (flag == 's')
-		while (mini_d->input[*i] && specch(mini_d->input[*i]) != S_QUOTE)
+		while (mini->input[*i] && specch(mini->input[*i]) != S_QUOTE)
 			(*i)++;
 	else if (flag == 'd')
-		while (mini_d->input[*i] && specch(mini_d->input[*i]) != D_QUOTE)
+		while (mini->input[*i] && specch(mini->input[*i]) != D_QUOTE)
 			(*i)++;
-	create_token(mini_d, &mini_d->input[wrd_len], *state, (*i - wrd_len));
+	return (create_token(mini, &mini->input[wrd_len], *state, (*i - wrd_len)));
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 16:41:52 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 15:56:27 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 18:29:08 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	*parse_redir(t_mini *mini, t_token *token, void *root)
 	last = get_last_redir(token, 1);
 	while (last)
 	{
-		root = create_redir_node(mini, root, &id, last);
+		root = create_redir_node(mini, root, last);
 		last = get_last_redir(last, 0);
 		if (!last)
 			return (root);

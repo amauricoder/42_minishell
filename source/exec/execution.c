@@ -6,12 +6,12 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:55:37 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 17:00:54 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 19:56:55 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-//ls > file1 > file2 > file3
+
 int	do_execution(t_mini *mini_d, void *root)
 {
 	t_exec	*ndcheck;
@@ -21,7 +21,7 @@ int	do_execution(t_mini *mini_d, void *root)
 	ndcheck = root;
 	if (ndcheck->type == PIPE)
 		return (handle_pipe(mini_d, root));
-	if (ndcheck->type == WORD)
+	if (ndcheck->type == WORD || ndcheck->type == ENV)
 	{
 		if (ndcheck->builtin != 0)
 			return (execute_buildins(mini_d, root));
@@ -29,9 +29,7 @@ int	do_execution(t_mini *mini_d, void *root)
 	}
 	else if (ndcheck->type == R_OUT || ndcheck->type == R_IN
 		|| ndcheck->type == D_R_OUT || ndcheck->type == HEREDOC)
-	{
 		handle_redir_nodes(mini_d, root);
-	}
 	return (EXIT_SUCCESS);
 }
 

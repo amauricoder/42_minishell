@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 11:22:05 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 20:03:15 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 20:50:27 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ int	handle_pipe(t_mini *mini_d, void *root)
 	int		pid[2];
 	int		status[2];
 
-	signal(SIGPIPE, signal_handler_child);
-	signal(SIGINT, SIG_IGN);
+	signals_pipe();
 	if (pipe(p_fd) == -1)
 		return (err_msg(mini_d, "pipe failed", EXIT_FAILURE, false));
 	pid[0] = fork();
@@ -27,9 +26,7 @@ int	handle_pipe(t_mini *mini_d, void *root)
 		return (err_msg(mini_d, "fork failed", EXIT_FAILURE, false));
 	if (pid[0] == 0)
 	{
-		close(p_fd[0]);
-		exec_pipe(mini_d, root, p_fd, true);
-		close(p_fd[1]);
+		treat_pipe_child(mini_d, root, p_fd, true);
 		exit(EXIT_SUCCESS);
 	}
 	pid[1] = fork();
@@ -37,20 +34,10 @@ int	handle_pipe(t_mini *mini_d, void *root)
 		return (err_msg(mini_d, "fork failed", EXIT_FAILURE, false));
 	if (pid[1] == 0)
 	{
-		close(p_fd[1]);
-		exec_pipe(mini_d, root, p_fd, false);
-		close(p_fd[0]);
+		treat_pipe_child(mini_d, root, p_fd, false);
 		exit(EXIT_SUCCESS);
 	}
-	close(p_fd[0]);
-	close(p_fd[1]);
-	waitpid(pid[0], &status[0], 0);
-	waitpid(pid[1], &status[1], 0);
-	if (WIFEXITED(status[1]))
-		mini_d->exst_printable = WEXITSTATUS(status[1]);
-	if (status[1] / 256 == 130 || status[0] / 256 == 130)
-		printf("\n");
-	return (EXIT_SUCCESS);
+	return (end_handle_pipe(mini_d, p_fd, pid, status));
 }
 
 int	exec_pipe(t_mini *mini_d, void *root, int p_fd[2], int is_left)
@@ -75,4 +62,32 @@ int	exec_pipe(t_mini *mini_d, void *root, int p_fd[2], int is_left)
 	close(p_fd[0]);
 	do_execution(mini_d, pipe_nd->right);
 	exit(free_in_execution(mini_d, mini_d->exst_printable));
+}
+
+int	end_handle_pipe( t_mini *mini, int p_fd[2], int pid[2], int status[2])
+{
+	close(p_fd[0]);
+	close(p_fd[1]);
+	waitpid(pid[0], &status[0], 0);
+	waitpid(pid[1], &status[1], 0);
+	if (WIFEXITED(status[1]))
+		mini->exst_printable = WEXITSTATUS(status[1]);
+	if (status[1] / 256 == 130 || status[0] / 256 == 130)
+		printf("\n");
+	return (EXIT_SUCCESS);
+}
+
+int	treat_pipe_child(t_mini *mini, void	*root, int p_fd[2], int is_left)
+{
+	if (is_left)
+	{
+		close(p_fd[0]);
+		exec_pipe(mini, root, p_fd, is_left);
+		close(p_fd[1]);
+		return (EXIT_SUCCESS);
+	}
+	close(p_fd[1]);
+	exec_pipe(mini, root, p_fd, false);
+	close(p_fd[0]);
+	return (EXIT_SUCCESS);
 }

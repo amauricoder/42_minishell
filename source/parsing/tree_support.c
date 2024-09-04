@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:18:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 18:16:04 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 18:30:38 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_token	*have_command(t_token *node)
  * @param id Id for future debug possibilities
  * @param node token node that we will get the name of the file.  
  */
-t_redir	*create_redir_node(t_mini *d, void *down, int *id, t_token *node)
+t_redir	*create_redir_node(t_mini *d, void *down, t_token *node)
 {
 	t_redir	*redir;
 
@@ -58,7 +58,6 @@ t_redir	*create_redir_node(t_mini *d, void *down, int *id, t_token *node)
 		redir->id = d->qt_heredocs ++;
 		redir->hd_tmp = get_heredoc_name(d, d->qt_heredocs, 0);
 		redir->hd_ex = node->expand_heredoc;
-		(*id)++; // esse id nao esta sendo utilizado
 	}
 	return (redir);
 }
@@ -100,7 +99,7 @@ int	get_qt_cmd_tokens(t_token *token)
 	current = token;
 	while (current && current->type != PIPE)
 	{
-		if ((current->type == WORD) 
+		if ((current->type == WORD)
 			|| (current->type == ENV && current->len > 0))
 			i ++;
 		current = current->next;

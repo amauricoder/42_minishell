@@ -6,21 +6,14 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 17:27:17 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 19:56:40 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 int	g_exit_status = 0;
-
-// TRATAR UPDATE DO EXIT_CODE QUANDO APERTA CONTROL + C --- FEITO
-// exit ''
-//
-// cat | ls -> tratar isso --->
-// cd $a $USER
-// ls $a
-// Unset HOME + cd --
+// exit ''  <<< not the same behaviour
 
 int	main(int argc, char **argv, char **envp)
 {

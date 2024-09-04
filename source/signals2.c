@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:05:26 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 14:12:30 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 20:50:36 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,10 @@ void	update_sig_heredoc(void)
 	ft_memset(&sa, 0, sizeof(sa));
 	sa.sa_handler = heredoc_sig_handler;
 	sigaction(SIGINT, &sa, NULL);
+}
+
+void	signals_pipe(void)
+{
+	signal(SIGPIPE, signal_handler_child);
+	signal(SIGINT, SIG_IGN);
 }

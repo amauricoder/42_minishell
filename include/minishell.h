@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 18:24:47 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 21:17:22 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ void	init_main_struct(t_mini *mini_d, char **argv, char **envp);
 //lexing.c
 int		do_lexing(t_mini *mini_d);
 void	do_lexing_aux(t_mini *mini_d, int *i, int *state);
-void	in_quote(t_mini *mini_d, int *i, int *state, char flag);
+int		in_quote(t_mini *mini_d, int *i, int *state, char flag);
 void	in_special(t_mini *mini_d, int *i, int *state, int type);
 void	redir_env(t_mini *mini_d, int *i, int *state, int type);
 
@@ -246,6 +246,7 @@ void	redir_env(t_mini *mini_d, int *i, int *state, int type);
 void	define_type_env(t_mini *mini_d);
 int		create_token(t_mini *mini_d, char *input, int state, int len);
 int		specch(char ch);
+int		create_empty_token(t_mini *mini_d, char *input, int *state, int len);
 
 //token.c
 t_token	*init_token(char *content, int type, int id);
@@ -279,6 +280,7 @@ void	signal_handler_child(int sig);
 //signals2.c
 void	heredoc_sig_handler(int sig);
 void	update_sig_heredoc(void);
+void	signals_pipe(void);
 
 //expand/expansion.c
 int		find_expansion(t_mini	*mini_d);
@@ -306,7 +308,7 @@ void	*parse_pipe(void *left, void *right);
 
 //parsing/tree_support.c
 t_token	*have_command(t_token *node);
-t_redir	*create_redir_node(t_mini *d, void *down, int *id, t_token *node);
+t_redir	*create_redir_node(t_mini *d, void *down, t_token *node);
 char	*get_redir_name(t_token *node);
 int		get_qt_cmd_tokens(t_token *token);
 void	free_tree(void *root);
@@ -343,13 +345,15 @@ int		execute_buildins(t_mini *mini, t_exec *exec_node);
 
 //exec/exec_cmd2.c
 int		treat_exec_exception(t_mini *mini_d, t_exec *exec_node);
+int		check_and_handle_equal_arg(t_exec *exec_node);
 void	move_args_left(t_exec *exec_nd, int *j);
-int	is_valid_cmd(t_mini *mini_d, char *argument);
+int		is_cmd_valid(t_mini *mini_d, char *argument);
 
 //exec/exec_pipe.c
 int		handle_pipe(t_mini *mini_d, void *root);
 int		exec_pipe(t_mini *mini_d, void *root, int p_fd[2], int is_left);
-
+int		end_handle_pipe(t_mini *mini, int p_fd[2], int pid[2], int status[2]);
+int		treat_pipe_child(t_mini *mini, void	*root, int p_fd[2], int is_left);
 //exec/exec_heredoc.c
 int		treat_heredocs(t_mini *mini, void *root);
 void	open_heredocs(t_mini *mini, void *root);

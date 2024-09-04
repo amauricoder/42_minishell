@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:18:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 17:12:32 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 21:17:22 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,24 @@
 
 int	treat_exec_exception(t_mini *mini_d, t_exec *exec_node)
 {
+	if (!exec_node->args)
+		return (1);
+	if (is_cmd_valid(mini_d, exec_node->args[0]))
+		return (0);
+	return (check_and_handle_equal_arg(exec_node));
+}
+
+int	check_and_handle_equal_arg(t_exec *exec_node)
+{
 	int		i;
 	int		j;
-	int		len;
 	char	*equal_pos;
 
 	i = 0;
-	j = 0;
-	if (is_valid_cmd(mini_d, exec_node->args[i]))
-		return(0);
 	while (exec_node->args[i])
 	{
 		if (exec_node->args[i][0] == '=')
-			return(0);
-		len = ft_strlen(exec_node->args[i]);
+			return (0);
 		equal_pos = ft_strchr(exec_node->args[i], '=');
 		if (equal_pos)
 		{
@@ -58,7 +62,11 @@ void	move_args_left(t_exec *exec_nd, int *j)
 	exec_nd->args[*j] = NULL;
 }
 
-int	is_valid_cmd(t_mini *mini_d, char *argument)
+/**
+ * @brief Check if a command is a valid command
+ * Ex. ls -> return (1). lol -> return (0);
+ */
+int	is_cmd_valid(t_mini *mini_d, char *argument)
 {
 	char	**path_env;
 	char	**envs;

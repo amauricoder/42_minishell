@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:28:01 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 19:57:35 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 19:31:56 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	execute_cmd(t_mini *mini_d, t_exec *exec_nd)
 	char	*possible_path;
 	int		i;
 
-	if (!exec_nd->args[0])
+	if (!exec_nd->args)
 		return (err_msg(mini_d, ft_strjoin("''", NO_CMD), 127, 1));
 	path_env = find_path_env(mini_d);
 	if (path_env == NULL)
