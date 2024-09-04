@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 16:06:49 by ismirand          #+#    #+#             */
-/*   Updated: 2024/09/03 15:21:18 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:12:16 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	export(t_mini *mini, char **str)
 		tmp = ft_split(str[i], '=');
 		exp = mini->env_d;
 		read_arg(str[i], tmp, exp);
-		export_add(mini, str[i], tmp[0]);
+		export_add(mini, str[i], tmp[0], 0);
 		free_matriz(tmp);
 		i++;
 	}
@@ -71,7 +71,8 @@ void	read_arg(char *str, char **tp, t_env *exp)
 	}
 }
 
-void	export_add(t_mini *mini, char *str, char *name)
+//flag 1 -> tem que ser add na env tbm
+void	export_add(t_mini *mini, char *str, char *name, int flag)
 {
 	t_env	*exp_cpy;
 	t_env	*env;
@@ -80,7 +81,13 @@ void	export_add(t_mini *mini, char *str, char *name)
 	exist = 0;
 	exp_cpy = mini->export;
 	env = ft_calloc(sizeof(t_env), 1);
-	env->name = ft_strdup(str);
+	if (flag)
+	{
+		env->name = ft_strjoin(name, str);
+		env_add_one(mini, name, str);
+	}
+	else
+		env->name = ft_strdup(str);
 	env->next = NULL;
 	exist = export_add_support(mini, str, name, env);
 	if (!exist)

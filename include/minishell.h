@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 17:41:06 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:13:02 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -373,6 +373,7 @@ int		update_pwd_oldpwd(t_mini *mini, char *last_dir);
 //builtins/bt_env.c
 int		env(t_mini *mini, t_env *env_var, char **str);
 char	*env_join(char *old, char *to_add, t_env *env);
+void	env_add_one(t_mini *mini, char *name, char *str);
 
 //builtins/cd.c
 int		cd(t_mini *mini, char **str);
@@ -388,14 +389,14 @@ int		str_digit(char *str);
 //builtins/export.c
 int		export(t_mini *mini, char **str);
 void	read_arg(char *str, char **tmp, t_env *exp);
-void	export_add(t_mini *mini, char *str, char *name);
+void	export_add(t_mini *mini, char *str, char *name, int flag);
 int		export_add_support(t_mini *mini, char *str, char *name, t_env *env);
 
 //builtins/export_create.c
 char	*exp_join(char *old, char *to_add, t_env *env);
 int		export_create(t_mini *mini);
 char	*env_to_export(t_env *env);
-t_env	*lst_sort(t_env *env);
+t_env	*lst_sort(t_env *exp);
 int		print_export(t_mini *mini);
 
 //builtin/unset.c

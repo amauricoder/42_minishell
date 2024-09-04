@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 15:26:03 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:09:24 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	cd_home(t_mini *mini, char **str)
 		|| (!ft_strncmp(str[1], "~", 1) && !str[1][1]))
 	{
 		dir = expand(mini, "HOME");
-		if (!dir && !ft_strncmp(str[1], "~", 1) && !str[1][1])
+		if (!dir && str[1] && !ft_strncmp(str[1], "~", 1) && !str[1][1])
 			dir = getenv("HOME");
 		if (!dir)
 			return (err_msg(mini, H_NOT, 1, 0));
