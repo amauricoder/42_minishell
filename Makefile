@@ -6,7 +6,7 @@
 #    By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
-#    Updated: 2024/09/04 14:51:50 by aconceic         ###   ########.fr        #
+#    Updated: 2024/09/04 21:28:16 by aconceic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,6 +104,9 @@ fclean :
 
 re : fclean all
 	@echo "$(GREEN)[✔]$(RESET) $(MAGENTA)Refresh Ok!$(RESET) "
+
+valgrind :
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell
 
 .SILENT:
 .PHONY: all clean fclean re
