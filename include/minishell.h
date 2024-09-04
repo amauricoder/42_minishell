@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 16:31:48 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 16:41:13 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -342,7 +342,7 @@ char	*create_cmdpath(char *possible_path, char *command);
 int		execute_buildins(t_mini *mini, t_exec *exec_node);
 
 //exec/exec_cmd2.c
-int		treat_exec_exception(void *root);
+int		treat_exec_exception(t_exec *exec_node);
 void	treat_exec_exception_aux(t_exec *exec_nd, int *j);
 
 //exec/exec_pipe.c
