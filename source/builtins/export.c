@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 16:06:49 by ismirand          #+#    #+#             */
-/*   Updated: 2024/09/04 14:12:16 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:40:21 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	export(t_mini *mini, char **str)
 		free_matriz(tmp);
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (mini->exst_printable);
 }
 
 void	read_arg(char *str, char **tp, t_env *exp)

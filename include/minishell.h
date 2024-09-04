@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 15:34:44 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 16:31:48 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@
 # define EXP "minishell: export: "
 # define N_VAL ": not a valid identifier"
 
-# define D_ENV "minishell: env: "
+# define D_ENV "env: "
 # define D_CD "minishell: cd: "
 # define NOF ": No such file or directory"
 # define TOO_ARGS "too many arguments"

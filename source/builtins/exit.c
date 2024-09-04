@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 14:29:54 by ismirand          #+#    #+#             */
-/*   Updated: 2024/09/03 18:02:48 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:37:21 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,13 @@ int	exit_number(t_mini *mini, char **str)
 
 	status = ft_atoi(str[1]);
 	if (str[2])
-		return (err_msg(mini, EXIT_ERR_ARG, 1, 0));
+	{
+		if (mini->exst_printable)
+			status = mini->exst_printable;
+		else
+			status = 1;
+		return (err_msg(mini, EXIT_ERR_ARG, status, 0));
+	}
 	else
 	{
 		while (status < 0)
