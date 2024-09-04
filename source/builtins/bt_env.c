@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 19:06:41 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 15:26:03 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:12:50 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,19 @@ char	*env_join(char *old, char *to_add, t_env *env)
 	env->name = ft_strjoin(temp2, ft_strchr(to_add, '=') + 1);
 	free (temp2);
 	return (env->name);
+}
+
+//add one more node to the env_d list
+void	env_add_one(t_mini *mini, char *name, char *str)
+{
+	t_env *env_cpy;
+
+	env_cpy = mini->env_d;
+	while (mini->env_d->next)
+		mini->env_d = mini->env_d->next;
+	mini->env_d->next = ft_calloc(sizeof(t_env), 1);
+	mini->env_d = mini->env_d->next;
+	mini->env_d->name = ft_strjoin(name, str);
+	mini->env_d->next = NULL;
+	mini->env_d = env_cpy;
 }

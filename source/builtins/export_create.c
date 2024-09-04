@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_create.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 16:46:33 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/25 17:23:40 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 13:43:23 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,15 +96,15 @@ char	*env_to_export(t_env *env)
 }
 
 //coloca a linked list export em ordem alfabética
-t_env	*lst_sort(t_env *env)
+t_env	*lst_sort(t_env *exp)
 {
 	t_env	*tmp;
 	t_env	*tmp2;
 	char	*swap;
 
-	if (!env)
+	if (!exp)
 		return (NULL);
-	tmp = env;
+	tmp = exp;
 	while (tmp)
 	{
 		tmp2 = tmp->next;
@@ -121,7 +121,7 @@ t_env	*lst_sort(t_env *env)
 		}
 		tmp = tmp->next;
 	}
-	return (env);
+	return (exp);
 }
 
 int	print_export(t_mini *mini)
