@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 14:15:14 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:34:44 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,9 +210,16 @@ t_mini	*get_shell(t_mini *new);
 
 //debug.c
 void	debug_nodes_and_tree(t_mini *mini_d);
+void	print_tree(void *node, const char *prefix, bool isLeft);
+void	print_exec(void *node, const char *prefix, bool isLeft);
+void	print_redir(void *node, const char *prefix, bool isLeft);
+void	print_pipe(void *node, const char *prefix, bool isLeft);
 
 //prompt.c
 char	*get_prompt_msg(char **envp);
+char	*get_user_prompt(char **envp);
+char	*get_pwd_prompt(void);
+char	*clean_prompt(char *str, int flag);
 
 //frees.c
 void	free_and_exit(t_mini *mini, int exit_nbr);
@@ -220,6 +227,7 @@ int		free_main_struct(t_mini *mini_d);
 void	free_matriz(char **dp_char);
 int		free_env(t_env *env);
 void	free_tokens(t_mini *mini_d);
+
 //frees2.c
 int		free_in_execution(t_mini *mini_d, int exit_status);
 void	free_run_minishell(t_mini *mini_d, int set_g);
@@ -277,16 +285,18 @@ int		find_expansion(t_mini	*mini_d);
 char	*env_expanded(t_mini *mini_d, char *content);
 void	expand_dollar(t_mini *mini_d, t_token *token, int i);
 char	*change_content(t_mini *mini_d, t_token *token, int i);
+
+//expand/expansion2.c
 void	clean_token(t_mini *mini_d);
 void	update_word_to_file(t_mini *mini_d);
+void	assemble_word_tokens(t_mini *mini_d);
+void	assemble_word_tokens_aux(t_token *tmp);
 
 //expand/expansion_support.c
-void	assemble_word_tokens(t_mini *mini_d);
 int		check_dollar(char *nd_content);
 int		have_spacial_char(char *word);
 int		aftdol_len(char *content);
 int		ft_strlen_char(char *str, char ch);
-//char	*aftdol_position(char *big, char *little);
 
 //parsing/parsing.c
 void	*do_parsing(t_mini *mini_d, t_token *token);
@@ -304,14 +314,9 @@ void	free_tree(void *root);
 //parsing/tree_support2.c
 t_token	*get_last_or_pipe(t_token *to_advance);
 char	**get_cmd(t_token *token);
+char	**split_env_variable(char	**args);
 t_token	*get_last_redir(t_token *node, int first_interaction);
 t_token	*get_last_redir_aux(t_token *last);
-
-//parsing/tree_debug.c
-void	print_tree(void *node, const char *prefix, bool isLeft);
-void	print_exec(void *node, const char *prefix, bool isLeft);
-void	print_redir(void *node, const char *prefix, bool isLeft);
-void	print_pipe(void *node, const char *prefix, bool isLeft);
 
 //parsing/tree_free.c
 void	free_exec(void *root);
@@ -345,20 +350,18 @@ int		handle_pipe(t_mini *mini_d, void *root);
 int		exec_pipe(t_mini *mini_d, void *root, int p_fd[2], int is_left);
 
 //exec/exec_heredoc.c
+int		treat_heredocs(t_mini *mini, void *root);
+void	open_heredocs(t_mini *mini, void *root);
+int		handle_heredoc(t_mini *mini_d, t_redir *hd_node);
+int		write_on_heredoc(t_mini *d, int fd, t_redir *nd);
+int		do_hd_expansion(t_redir *node, char *input);
+
+//exec/exec_heredoc2.c
+char	*expand_heredoc(t_mini *mini_d, char *line);
+void	heredoc_expand_exception(t_mini *mini);
+char	*hd_change_content(t_mini *mini_d, char *line, int i);
 int		redirect_heredoc(t_mini *mini_t, t_redir *node);
 char	*get_heredoc_name(t_mini *mini, int id, int invert);
-void	open_heredocs(t_mini *mini, void *root);
-int		treat_heredocs(t_mini *mini, void *root);
-
-//exec/exec_heredoc2.c
-int		handle_heredoc(t_mini *mini_d, t_redir *hd_node);
-int		do_expansion(t_redir *node, char *input);
-char	*hd_expand_heredoc(t_mini *mini_d, char *line);
-char	*hd_change_content(t_mini *mini_d, char *line, int i);
-int		write_on_heredoc(t_mini *d, int fd, t_redir *nd);
-
-//exec/exec_heredoc2.c
-void	heredoc_expand_exception(t_mini *mini);
 
 //builtins/support.c
 void	define_builtins(t_mini *mini_d);

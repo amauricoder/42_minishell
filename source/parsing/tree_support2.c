@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:58:41 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/27 18:12:41 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:56:09 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,11 @@ char	**get_cmd(t_token *token)
 {
 	t_token	*current;
 	char	**args;
-	char	*tmp;
 	int		i;
+	int		is_env;
 
 	current = token;
+	is_env = 0;
 	i = get_qt_cmd_tokens(token);
 	if (i == 0)
 		return (NULL);
@@ -47,16 +48,26 @@ char	**get_cmd(t_token *token)
 	while (current && current->type != PIPE)
 	{
 		if (current->type == WORD || current->type == ENV)
+		{
+			if (current->type == ENV)
+				is_env = 1;
 			args[++ i] = ft_strdup(current->content);
+		}
 		current = current->next;
 	}
-	if (!args[1])
-	{
-		tmp = ft_strdup(args[0]);
-		free_matriz(args);
-		args = ft_split(tmp, ' ');
-		free(tmp);
-	}
+	if (!args[1] && is_env)
+		args = split_env_variable(args);
+	return (args);
+}
+
+char	**split_env_variable(char	**args)
+{
+	char	*tmp;
+
+	tmp = ft_strdup(args[0]);
+	free_matriz(args);
+	args = ft_split(tmp, ' ');
+	free(tmp);
 	return (args);
 }
 

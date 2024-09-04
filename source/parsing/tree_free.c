@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:55:52 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 15:12:18 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:52:17 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	free_tree(void *root)
 	if (!root)
 		return ;
 	type = *((int *)root);
-	if (type == WORD)
+	if (type == WORD || type == ENV)
 		free_exec(root);
 	else if (type == R_IN || type == R_OUT
 		|| type == D_R_OUT || type == HEREDOC)

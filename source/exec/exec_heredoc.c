@@ -6,46 +6,33 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:54:54 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 20:02:40 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:46:03 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	redirect_heredoc(t_mini *mini_d, t_redir *node)
+int	treat_heredocs(t_mini *mini, void *root)
 {
-	int		tmp_fd;
+	int	pid;
+	int	status;
 
-	tmp_fd = open(node->hd_tmp, O_RDONLY);
-	if (tmp_fd == -1)
-		return (err_msg(mini_d, NULL, EXIT_FAILURE, 0));
-	if (dup2(tmp_fd, STDIN_FILENO) == -1)
+	status = 0;
+	signal(SIGINT, SIG_IGN);
+	pid = fork();
+	if (pid < 0)
+		return (err_msg(mini, FORK_ERR, EXIT_FAILURE, 0));
+	if (pid == 0)
 	{
-		close(tmp_fd);
-		return (err_msg(mini_d, NULL, EXIT_FAILURE, 0));
+		g_exit_status = 0;
+		update_sig_heredoc();
+		open_heredocs(mini, root);
+		free_in_execution(mini, EXIT_SUCCESS);
+		exit(g_exit_status);
 	}
-	close(tmp_fd);
-	return (EXIT_SUCCESS);
-}
-
-char	*get_heredoc_name(t_mini *mini, int id, int invert)
-{
-	char	*hd_name;
-	char	*hd_itoa;
-	int		actual_id;
-
-	if (invert)
-	{
-		actual_id = mini->qt_heredocs - id + 1;
-		hd_itoa = ft_itoa(actual_id);
-		hd_name = ft_strjoin("/tmp/hd", hd_itoa);
-		free(hd_itoa);
-		return (hd_name);
-	}
-	hd_itoa = ft_itoa(id);
-	hd_name = ft_strjoin("/tmp/hd", hd_itoa);
-	free(hd_itoa);
-	return (hd_name);
+	waitpid(pid, &status, 0);
+	signals_init();
+	return (status / 256);
 }
 
 void	open_heredocs(t_mini *mini, void *root)
@@ -69,25 +56,70 @@ void	open_heredocs(t_mini *mini, void *root)
 		open_heredocs(mini, nd->down);
 }
 
-int	treat_heredocs(t_mini *mini, void *root)
+int	handle_heredoc(t_mini *mini_d, t_redir *hd_node)
 {
-	int	pid;
-	int	status;
-
-	status = 0;
-	signal(SIGINT, SIG_IGN);
-	pid = fork();
-	if (pid < 0)
-		return (err_msg(mini, FORK_ERR, EXIT_FAILURE, 0));
-	if (pid == 0)
+	hd_node->hd_fd = open(hd_node->hd_tmp, O_CREAT | O_WRONLY | O_TRUNC, 0744);
+	while (g_exit_status != 130)
 	{
-		g_exit_status = 0;
-		update_sig_heredoc();
-		open_heredocs(mini, root);
-		free_in_execution(mini, EXIT_SUCCESS);
-		exit(g_exit_status);
+		if (write_on_heredoc(mini_d, hd_node->hd_fd, hd_node))
+			break ;
 	}
-	waitpid(pid, &status, 0);
-	signals_init();
-	return (status / 256);
+	get_next_line(-3);
+	return (close(hd_node->hd_fd));
+}
+
+/**
+ * @param d main struc
+ * @param fd hredoc fd
+ * @param nd node
+ * @param line user input
+ */
+int	write_on_heredoc(t_mini *d, int fd, t_redir *nd)
+{
+	char	*new_line;
+	char	*expanded_line;
+	char	*line;
+
+	line = readline(">");
+	if (!line)
+		return (1);
+	if (!ft_strncmp(line, nd->fname, ft_strlen(nd->fname))
+		&& ft_strlen(line) == ft_strlen(nd->fname))
+		return (free(line), 1);
+	if (do_hd_expansion(nd, nd->fname))
+	{
+		new_line = ft_strtrim(line, "\n");
+		expanded_line = expand_heredoc(d, new_line);
+		if (expanded_line)
+		{
+			write(fd, expanded_line, ft_strlen(expanded_line));
+			free(expanded_line);
+		}
+	}
+	else
+		write(fd, line, ft_strlen(line));
+	write(fd, "\n", 1);
+	return (free(line), 0);
+}
+
+int	do_hd_expansion(t_redir *node, char *input)
+{
+	int	i;
+	int	s_quotes;
+	int	d_quotes;
+
+	i = 0;
+	s_quotes = 0;
+	d_quotes = 0;
+	while (input[i])
+	{
+		if (input[i] == '\'' && d_quotes % 2 == 0)
+			s_quotes++;
+		else if (input[i] == '\"')
+			d_quotes++;
+		i++;
+	}
+	if (d_quotes || s_quotes || node->hd_ex)
+		return (0);
+	return (1);
 }

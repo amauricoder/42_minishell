@@ -6,7 +6,7 @@
 #    By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
-#    Updated: 2024/09/04 14:05:04 by aconceic         ###   ########.fr        #
+#    Updated: 2024/09/04 14:51:50 by aconceic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,14 +48,14 @@ SRC_DIR = ./source/
 
 SRC = prompt.c frees.c frees2.c lexing/lexing.c lexing/lexing_support.c\
 		lexing/token.c support.c check_input.c check_input2.c signals.c signals2.c\
-		expand/expansion.c expand/expansion_support.c parsing/parsing.c\
-		parsing/tree_debug.c parsing/tree_support.c parsing/tree_free.c\
+		expand/expansion.c expand/expansion2.c expand/expansion_support.c\
+		parsing/parsing.c parsing/tree_support.c parsing/tree_free.c\
 		parsing/tree_support2.c env/env.c init_values.c builtins/echo.c\
 		builtins/pwd.c builtins/bt_env.c builtins/support.c builtins/cd.c\
 		builtins/exit.c builtins/export.c builtins/export_create.c\
 		builtins/unset.c exec/execution.c exec/exec_redir.c exec/exec_cmd.c\
 		exec/exec_cmd2.c exec/exec_pipe.c exec/exec_heredoc.c exec/exec_heredoc2.c\
-		exec/exec_heredoc3.c debug.c main_support.c\
+		debug.c main_support.c\
 
 ##############################################
 #                COMPILATION                 #

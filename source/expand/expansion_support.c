@@ -6,50 +6,11 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 19:16:49 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 20:21:31 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:55:35 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-/**
- * @attention Secondary function for find_expansion()
- * @brief Cleans the excess of white spaces token
- * 0 for WORD, 5 for ENV
-*/
-void	assemble_word_tokens(t_mini *mini_d)
-{
-	t_token	*tmp;
-	t_token	*prev;
-	t_token	*to_free;
-	char	*c_tmp;
-
-	prev = NULL;
-	tmp = mini_d->token;
-	while (tmp && tmp->next)
-	{
-		if ((tmp->type == WORD || tmp->type == ENV)
-			&& (tmp->next->type == WORD || tmp->next->type == ENV))
-		{
-			c_tmp = ft_strdup(tmp->content);
-			free(tmp->content);
-			tmp->content = ft_strjoin(c_tmp, tmp->next->content);
-			tmp->len = ft_strlen(tmp->content);
-			tmp->type = tmp->next->type;
-			free(c_tmp);
-			to_free = tmp->next;
-			tmp->next = tmp->next->next;
-			free(to_free->content);
-			free(to_free);
-		}
-		else
-		{
-			prev = tmp;
-			tmp = tmp->next;
-		}
-	}
-	(void)prev;
-}
 
 /**
  * @brief Check for how many dollars signs exists in a phrase
@@ -126,23 +87,3 @@ int	ft_strlen_char(char *str, char ch)
 	}
 	return (i);
 }
-
-/* char	*aftdol_position(char *big, char *little)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	if (little[0] == '\0')
-		return ((char *)big);
-	while (big[i] != '\0')
-	{
-		j = 0;
-		while (little[j] == big[i + j] && big[i + j] != '\0')
-			j++;
-		if (big && big[i + j + 1] == '$')
-			return ((char *)&big[i + j + 1]);
-		i++;
-	}
-	return (NULL);
-} */

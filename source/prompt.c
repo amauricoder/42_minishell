@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:16:59 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 15:29:27 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:24:50 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static char	*get_user_prompt(char **envp);
-static char	*get_pwd_prompt(void);
-static char	*clean_prompt(char *str, int flag);
 //See function to know how to use it.
 //static char	*get_colorful_prompt(char *prompt, int green);
 
@@ -44,7 +41,7 @@ char	*get_prompt_msg(char **envp)
  * if no USER envp is available, display a regular msg.
  * @return Char * with information of the user.
 */
-static	char	*get_user_prompt(char **envp)
+char	*get_user_prompt(char **envp)
 {
 	int		i;
 	int		is_user;
@@ -71,7 +68,7 @@ static	char	*get_user_prompt(char **envp)
  * of envp to display only necessary parts
  * @return Char * with the "clean" information of the USER variable.
 */
-static char	*clean_prompt(char *str, int flag)
+char	*clean_prompt(char *str, int flag)
 {
 	char	**str_split;
 	int		i;
@@ -99,7 +96,7 @@ static char	*clean_prompt(char *str, int flag)
  * if no PWD envp is available, display a regular msg.
  * @return Char * with information of the PWD.
 */
-static char	*get_pwd_prompt(void)
+char	*get_pwd_prompt(void)
 {
 	char	cwd[1024];
 	char	*directory;
@@ -110,7 +107,7 @@ static char	*get_pwd_prompt(void)
 	return (ft_strjoin(directory, "-> "));
 }
 /**
- * @Brief - due to a bug, this function in unused
+ * @Brief - due to a bug, this function is unused
  * to use it, on function get_prompt_message(), you need to
  * declare "prompt = get_colorful_prompt(prompt, 1);" 
  * after prompt = clean_prompt(prompt, 0);

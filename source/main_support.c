@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:10:43 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 14:12:20 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:54:26 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,11 @@ void	run_minishell(t_mini *mini_d)
 	free_run_minishell(mini_d, 0);
 }
 
-//update exit status
+/**
+ * @brief Support function to main()
+ * Update the exit_status and the exit_status_printable
+ * to always have the right exit_status on the next round
+*/
 void	update_exit_status(t_mini *mini_d)
 {
 	if (g_exit_status == 130 || g_exit_status == 131)
@@ -64,6 +68,12 @@ void	update_exit_status(t_mini *mini_d)
 	g_exit_status = 0;
 }
 
+/**
+ * @brief Support function to signals(), initialized in run_minishell
+ * and called mostly in the signals().
+ * Used to save a pointer of the main struct. This way, we can clean
+ * after setting and using SIGINT signal.
+*/
 t_mini	*get_shell(t_mini *new)
 {
 	static t_mini	*mini = NULL;

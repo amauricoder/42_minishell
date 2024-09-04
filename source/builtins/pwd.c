@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:32:23 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 13:57:09 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:20:17 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,9 @@ int	update_pwd_oldpwd(t_mini *mini, char *last_dir)
 	pwd = getcwd(cwd, sizeof(cwd));
 	env = NULL;
 	if (!expand(mini, "PWD"))
-	{
-		//env = ft_strjoin("PWD=", pwd);
-		//env_add(env);
-		//free(env);
 		export_add(mini, pwd, "PWD=", 1);
-	}
 	if (!expand(mini, "OLDPWD"))
-	{
-		//env = ft_strjoin("OLDPWD=", last_dir);
-		//env_add(env);
-		//free(env);
 		export_add(mini, pwd, "OLDPWD=", 1);
-	}
 	replace_env_value(mini, "PWD", pwd);
 	replace_env_value(mini, "OLDPWD", last_dir);
 	free_env(mini->export);

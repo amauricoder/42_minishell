@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bt_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 19:06:41 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 14:12:50 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:19:00 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*env_join(char *old, char *to_add, t_env *env)
 //add one more node to the env_d list
 void	env_add_one(t_mini *mini, char *name, char *str)
 {
-	t_env *env_cpy;
+	t_env	*env_cpy;
 
 	env_cpy = mini->env_d;
 	while (mini->env_d->next)
