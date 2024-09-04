@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 16:41:13 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 18:24:47 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ typedef struct s_token
 	char			*content;
 	int				type;
 	int				builtin;
-	int				hd_exception;
+	int				expand_heredoc;
 	enum e_token	state;
 	struct s_token	*head;
 	struct s_token	*tail;
@@ -342,8 +342,9 @@ char	*create_cmdpath(char *possible_path, char *command);
 int		execute_buildins(t_mini *mini, t_exec *exec_node);
 
 //exec/exec_cmd2.c
-int		treat_exec_exception(t_exec *exec_node);
-void	treat_exec_exception_aux(t_exec *exec_nd, int *j);
+int		treat_exec_exception(t_mini *mini_d, t_exec *exec_node);
+void	move_args_left(t_exec *exec_nd, int *j);
+int	is_valid_cmd(t_mini *mini_d, char *argument);
 
 //exec/exec_pipe.c
 int		handle_pipe(t_mini *mini_d, void *root);
@@ -354,11 +355,10 @@ int		treat_heredocs(t_mini *mini, void *root);
 void	open_heredocs(t_mini *mini, void *root);
 int		handle_heredoc(t_mini *mini_d, t_redir *hd_node);
 int		write_on_heredoc(t_mini *d, int fd, t_redir *nd);
-int		do_hd_expansion(t_redir *node, char *input);
 
 //exec/exec_heredoc2.c
 char	*expand_heredoc(t_mini *mini_d, char *line);
-void	heredoc_expand_exception(t_mini *mini);
+void	heredoc_expand(t_mini *mini);
 char	*hd_change_content(t_mini *mini_d, char *line, int i);
 int		redirect_heredoc(t_mini *mini_t, t_redir *node);
 char	*get_heredoc_name(t_mini *mini, int id, int invert);

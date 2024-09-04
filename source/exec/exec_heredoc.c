@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:54:54 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 14:46:03 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 18:24:32 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	write_on_heredoc(t_mini *d, int fd, t_redir *nd)
 	if (!ft_strncmp(line, nd->fname, ft_strlen(nd->fname))
 		&& ft_strlen(line) == ft_strlen(nd->fname))
 		return (free(line), 1);
-	if (do_hd_expansion(nd, nd->fname))
+	if (!nd->hd_ex)
 	{
 		new_line = ft_strtrim(line, "\n");
 		expanded_line = expand_heredoc(d, new_line);
@@ -100,26 +100,4 @@ int	write_on_heredoc(t_mini *d, int fd, t_redir *nd)
 		write(fd, line, ft_strlen(line));
 	write(fd, "\n", 1);
 	return (free(line), 0);
-}
-
-int	do_hd_expansion(t_redir *node, char *input)
-{
-	int	i;
-	int	s_quotes;
-	int	d_quotes;
-
-	i = 0;
-	s_quotes = 0;
-	d_quotes = 0;
-	while (input[i])
-	{
-		if (input[i] == '\'' && d_quotes % 2 == 0)
-			s_quotes++;
-		else if (input[i] == '\"')
-			d_quotes++;
-		i++;
-	}
-	if (d_quotes || s_quotes || node->hd_ex)
-		return (0);
-	return (1);
 }

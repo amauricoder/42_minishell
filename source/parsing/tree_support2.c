@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:58:41 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 15:56:09 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:28:56 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	**get_cmd(t_token *token)
 	i = -1;
 	while (current && current->type != PIPE)
 	{
-		if (current->type == WORD || current->type == ENV)
+		if ((current->type == WORD) || (current->type == ENV && current->len > 0))
 		{
 			if (current->type == ENV)
 				is_env = 1;

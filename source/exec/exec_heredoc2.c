@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:13:07 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 14:46:17 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 18:23:23 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,25 @@ char	*expand_heredoc(t_mini *mini_d, char *str)
 /**
  * @brief treat heredoc expection EOF"" for expansion
 */
-void	heredoc_expand_exception(t_mini *mini)
+void	heredoc_expand(t_mini *mini)
 {
 	t_token	*head;
+	int flag;
 
+	flag = 0;
 	head = mini->token;
 	while (mini->token)
 	{
 		if (mini->token->type == HEREDOC)
 		{
-			while (mini->token->type != WORD)
+			mini->token = mini->token->next;
+			while(mini->token->type == W_SPACE)
 				mini->token = mini->token->next;
-			if (mini->token->next && mini->token->next->len == 0)
-			{
-				while (mini->token->type != HEREDOC)
+			if (mini->token->state == IN_DQUOTE || mini->token->state == IN_QUOTE)
+				flag = 1;
+			while(mini->token->type != HEREDOC)
 					mini->token = mini->token->prev;
-				mini->token->hd_exception ++;
-			}
+			mini->token->expand_heredoc = flag;
 		}
 		mini->token = mini->token->next;
 	}

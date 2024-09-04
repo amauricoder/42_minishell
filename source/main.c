@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 20:11:05 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:27:17 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ int	g_exit_status = 0;
 // exit ''
 //
 // cat | ls -> tratar isso --->
+// cd $a $USER
+// ls $a
+// Unset HOME + cd --
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_mini	mini_d;
