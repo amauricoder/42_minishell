@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:10:43 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 20:15:07 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:12:20 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,13 @@ void	update_exit_status(t_mini *mini_d)
 		mini_d->exst_printable = g_exit_status;
 	mini_d->exit_status = 0;
 	g_exit_status = 0;
+}
+
+t_mini	*get_shell(t_mini *new)
+{
+	static t_mini	*mini = NULL;
+
+	if (new)
+		mini = new;
+	return (mini);
 }
