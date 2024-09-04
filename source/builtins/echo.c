@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:15:14 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/25 17:20:24 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:22:08 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-//not done. just a scketch
 //echo -n oi-> printa oi sem o \n
 //echo -nnnnnnn oi-> printa oi sem o \n
 //echo -n -n -n oi -> printa oi sem o \n
 //echo -noi -> printa -noi
+//echo oi -n -> printa oi -n
 //aqui precisa enviar mini_d por causa do exit code
 int	echo(char **str)
 {
@@ -29,7 +29,8 @@ int	echo(char **str)
 	print = 0;
 	while (str[i])
 	{
-		print = is_echoflag(str[i], &new_line);
+		if (!print)
+			print = is_echoflag(str[i], &new_line);
 		if (print)
 		{
 			printf("%s", str[i]);

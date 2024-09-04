@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:18:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/25 17:40:06 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 16:15:01 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	treat_exec_exception(void *root)
 		len = ft_strlen(node->args[i]);
 		if (ft_strlen(node->args[0]) == 0 || node->args[0][len - 1] != '=')
 			return (0);
+		//if (node->args[i][j] && node->args[i][j] == '=')
 		if (len > 0 && node->args[i][len - 1] == '=')
 		{
 			if (!node->args[i + 1])
