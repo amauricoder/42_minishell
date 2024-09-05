@@ -6,14 +6,13 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 21:33:17 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/05 11:27:25 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 int	g_exit_status = 0;
-// exit ''  <<< not the same behaviour
 
 int	main(int argc, char **argv, char **envp)
 {
