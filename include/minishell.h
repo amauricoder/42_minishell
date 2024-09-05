@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/05 10:46:01 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/05 10:59:27 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -401,6 +401,7 @@ int		export(t_mini *mini, char **str);
 void	read_arg(char *str, char **tmp, t_env *exp);
 void	export_add(t_mini *mini, char *str, char *name, int flag);
 int		export_add_support(t_mini *mini, char *str, char *name, t_env *env);
+int		find_specific_char(char *str, char to_find, char del);
 
 //builtins/export_create.c
 char	*exp_join(char *old, char *to_add, t_env *env);
