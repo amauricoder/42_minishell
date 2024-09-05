@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:58:41 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/05 11:58:06 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:55:54 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,4 +118,3 @@ t_token	*get_last_redir_aux(t_token *last)
 	}
 	return (NULL);
 }
- 
