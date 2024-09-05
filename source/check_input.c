@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:07:33 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/23 15:16:26 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:35:07 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	is_input_invalid(t_mini *mini, char *input)
 	if (!is_quotes_closed(input) || is_pipe_last_or_first(input)
 		|| is_redir_invalid(input))
 		return (err_msg(mini, SYNTAX_ERR, 2, 0));
+	else if (is_only_space(input))
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
@@ -67,4 +69,22 @@ int	is_quotes_closed(char *input)
 		i++;
 	}
 	return (s_quotes % 2 == 0 && d_quotes % 2 == 0);
+}
+
+/**
+ * @brief Check if the input is only spaces
+ * @return true if only space, false for not
+ */
+int	is_only_space(char *input)
+{
+	int	i;
+
+	i = 0;
+	while(input[i])
+	{
+		if (input[i] != ' ')
+			return (false);
+		i ++;
+	}
+	return (true);
 }
