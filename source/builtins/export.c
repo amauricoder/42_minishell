@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 16:06:49 by ismirand          #+#    #+#             */
-/*   Updated: 2024/09/04 15:40:21 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/05 10:56:26 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,13 @@ int	export(t_mini *mini, char **str)
 			i++;
 			continue ;
 		}
+		if (find_specific_char(str[i], '-', '='))
+			return (err_msg(mini, join_three(EXP, str[i], N_VAL, 0), 1, 1));
 		tmp = ft_split(str[i], '=');
 		exp = mini->env_d;
 		read_arg(str[i], tmp, exp);
-		export_add(mini, str[i], tmp[0], 0);
+		export_add(mini, str[i++], tmp[0], 0);
 		free_matriz(tmp);
-		i++;
 	}
 	return (mini->exst_printable);
 }
@@ -126,4 +127,17 @@ int	export_add_support(t_mini *mini, char *str, char *name, t_env *env)
 			break ;
 	}
 	return (0);
+}
+
+//search for to_find in the str until the char del
+//returns 0 if it doens't find and 1 if it finds
+int	find_specific_char(char *str, char to_find, char del)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i] && str[i] != del)
+		if (str[i] == to_find)
+			return (true);
+	return (false);
 }
