@@ -66,6 +66,7 @@ valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=
 
 make re && clear && valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell
 
+--leak-check=full --show-leak-kinds=all
 =====================================================================================
 
 ## TESTES EXPANSION

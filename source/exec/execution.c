@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:55:37 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 19:56:55 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/05 10:57:21 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	handle_exec_cmd(t_mini *mini_d, void *root)
 	else if (pid == 0)
 	{
 		signals_child();
+		if (check_is_directory(mini_d, root))
+			exit(free_in_execution(mini_d, 126));
 		if (treat_exec_exception(mini_d, root))
 			exit(free_in_execution(mini_d, 0));
 		if (execute_cmd(mini_d, root))
@@ -78,4 +80,20 @@ int	set_child_exit(int wstatus, t_mini *mini)
 	else
 		mini->exst_printable = wstatus / 256;
 	return (mini->exst_printable);
+}
+
+int	check_is_directory(t_mini *mini_d, void *root)
+{
+	struct stat	path_stat;
+
+	if (!((t_exec *)root)->args)
+		return (EXIT_SUCCESS);
+	if (stat(((t_exec *)root)->args[0], &path_stat)
+		== 0 && S_ISDIR(path_stat.st_mode))
+	{
+		return (err_msg(mini_d, ft_strjoin(((t_exec *)root)->args[0],
+					": Is a directory"), 126, 1));
+	}
+	else
+		return (EXIT_SUCCESS);
 }

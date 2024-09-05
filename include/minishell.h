@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 21:17:22 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/05 10:46:01 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,6 +330,7 @@ void	free_pipe(void *root);
 int		do_execution(t_mini *mini_d, void *root);
 int		handle_exec_cmd(t_mini *mini_d, void *root);
 int		set_child_exit(int wstatus, t_mini *mini);
+int		check_is_directory(t_mini *mini_d, void *root);
 
 //exec/exec_redir.c
 int		handle_redir_nodes(t_mini *mini_d, void *root);
