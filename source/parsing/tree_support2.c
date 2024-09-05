@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_support2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:58:41 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 18:31:12 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/05 11:58:06 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ t_token	*get_last_redir(t_token *node, int first_interaction)
  */
 t_token	*get_last_redir_aux(t_token *last)
 {
-	while (last && last->type != PIPE)
+	while (last && last->type && last->type != PIPE)
 	{
 		if (last->type == R_IN || last->type == R_OUT
 			|| last->type == D_R_OUT || last->type == HEREDOC)
@@ -118,3 +118,4 @@ t_token	*get_last_redir_aux(t_token *last)
 	}
 	return (NULL);
 }
+ 

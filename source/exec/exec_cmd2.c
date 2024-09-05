@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:18:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 21:17:22 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/05 12:06:19 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	is_cmd_valid(t_mini *mini_d, char *argument)
 	if (access(argument, X_OK) != -1)
 		res = 1;
 	i = -1;
-	while (path_env[++ i])
+	while (path_env && path_env[++ i])
 	{
 		possible_path = create_cmdpath(path_env[i], argument);
 		if (access(possible_path, X_OK) != -1)

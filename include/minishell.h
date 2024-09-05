@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/05 10:59:27 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/05 12:26:37 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@
 # define PWD_ERR_DIR "pwd: cannot access '': No such file or directory"
 # define CD_ERR_ARG "cd: too many arguments"
 # define CD_ERR_DIR "cd: no such file or directory"
-# define EXIT_ERR_ARG "exit: too many arguments"
-# define EXIT_ERR_NUM "exit: numeric argument required"
+# define EXIT_ERR_ARG "minishell: exit: too many arguments"
+# define EXIT_ERR_NUM "minishell: exit: numeric argument required"
 # define FORK_ERR "fork: error during fork"
 # define NO_CMD " : command not found"
 # define NO_DIR " : no such file or directory"

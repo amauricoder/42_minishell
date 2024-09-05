@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 16:41:52 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 18:29:08 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/05 11:50:41 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	*parse_exec(t_mini *mini, t_token *token)
 		id ++;
 		exec_node->args = get_cmd(have_command(token));
 		exec_node->type = WORD;
-		if (have_command(token)->type == ENV && have_command(token)->len == 0)
+		if (have_command(token) && have_command(token)->type == ENV
+			&& have_command(token)->len == 0)
 			exec_node->type = ENV;
 		exec_node->builtin = token->builtin;
 	}
