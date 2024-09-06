@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:58:41 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/06 13:29:33 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/06 13:44:49 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,21 +88,16 @@ t_token	*get_last_redir(t_token *node, int first_interaction)
 	{
 		while (last->next && last->type != PIPE)
 		{
-			if (last->next)
-				last->next->prev = last;
+			last->next->prev = last;
 			last = last->next;
 		}
-		if (last && last->prev)
-			last = last->prev;
+		last = last->prev;
 	}
 	else
 	{
 		if (last->type == R_IN || last->type == R_OUT
 			|| last->type == D_R_OUT || last->type == HEREDOC)
-		{
-			if (last && last->prev)
-				last = last->prev;
-		}
+			last = last->prev;
 	}
 	return (get_last_redir_aux(last));
 }
@@ -114,7 +109,6 @@ t_token	*get_last_redir(t_token *node, int first_interaction)
  */
 t_token	*get_last_redir_aux(t_token *last)
 {
-	printf("type %i \n", last->type);
 	while ((last && last->type) && (last->type != PIPE))
 	{
 		if (last->type == R_IN || last->type == R_OUT
