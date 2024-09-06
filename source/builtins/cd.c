@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 12:43:51 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 19:57:18 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/06 15:25:25 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 int	cd(t_mini *mini, char **str)
 {
 	char	*dir;
-	char	*last_dir;
 	char	cwd[1024];
 
 	dir = NULL;
-	last_dir = NULL;
 	if (str[1] && str[2])
 		return (err_msg(mini, ft_strjoin(D_CD, TOO_ARGS), 1, 1));
 	if (str[1] && !ft_strncmp(str[1], ".", 1) && !str[1][1])
@@ -28,6 +26,8 @@ int	cd(t_mini *mini, char **str)
 		return (EXIT_SUCCESS);
 	else if (str[1])
 	{
+		if (str[1][0] == '\0')
+			return (EXIT_SUCCESS);
 		dir = getcwd(cwd, sizeof(cwd));
 		if (safe_chdir(mini, str[1]) == -1)
 			return (EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 16:41:52 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/05 11:50:41 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:18:38 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,7 @@ void	*parse_exec(t_mini *mini, t_token *token)
 void	*parse_redir(t_mini *mini, t_token *token, void *root)
 {
 	t_token		*last;
-	int			id;
 
-	id = 1;
 	last = get_last_redir(token, 1);
 	while (last)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:32:23 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 14:20:17 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:19:03 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,8 @@ int	update_pwd_oldpwd(t_mini *mini, char *last_dir)
 {
 	char	cwd[1024];
 	char	*pwd;
-	char	*env;
 
 	pwd = getcwd(cwd, sizeof(cwd));
-	env = NULL;
 	if (!expand(mini, "PWD"))
 		export_add(mini, pwd, "PWD=", 1);
 	if (!expand(mini, "OLDPWD"))

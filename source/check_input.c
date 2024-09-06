@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:07:33 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/05 14:55:37 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:06:13 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	is_input_invalid(t_mini *mini, char *input)
 {
 	if (!is_quotes_closed(input) || is_quotes_closed(input) < 0)
 	{
+		treat_tabs(mini);
 		if (!is_quotes_closed(input) || is_redir_invalid(input)
 			|| is_pipe_last_or_first(input))
 			return (err_msg(mini, SYNTAX_ERR, 2, 0));
@@ -93,4 +94,14 @@ int	is_only_space_or_tab(char *input)
 		i ++;
 	}
 	return (true);
+}
+
+void	treat_tabs(t_mini *mini)
+{
+	int		i;
+
+	i = -1;
+	while (mini->input[++i])
+		if (mini->input[i] == '\t')
+			mini->input[i] = ' ';
 }

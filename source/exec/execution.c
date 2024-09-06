@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:55:37 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/05 17:43:16 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:23:40 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,27 +100,29 @@ int	check_is_directory(t_mini *mini_d, void *root)
 
 int	have_permission(t_mini *mini_d, void *root)
 {
-	struct stat info;
+	struct stat	info;
 
 	if (!((t_exec *)root)->args || !((t_exec *)root)->args[0])
 		return (1);
-    if (stat(((t_exec *)root)->args[0], &info) == -1) 
+	if (stat(((t_exec *)root)->args[0], &info) == -1)
 	{
-        if (errno == EACCES)
+		if (errno == EACCES)
 		{
-			err_msg(mini_d, ft_strjoin(((t_exec *)root)->args[0], P_DN), 126, 1);
-            return (0);
-        }
-        return (-1);
-    }
-    if (access(((t_exec *)root)->args[0], X_OK) != 0)
+			err_msg(mini_d,
+				ft_strjoin(((t_exec *)root)->args[0], P_DN), 126, 1);
+			return (0);
+		}
+		return (-1);
+	}
+	if (access(((t_exec *)root)->args[0], X_OK) != 0)
 	{
-    	 if (errno == EACCES)
+		if (errno == EACCES)
 		{
-			err_msg(mini_d, ft_strjoin(((t_exec *)root)->args[0], P_DN), 126, 1);
-            return (0);
-        }
-    	return (-1);
-    }
-    return (1);
+			err_msg(mini_d,
+				ft_strjoin(((t_exec *)root)->args[0], P_DN), 126, 1);
+			return (0);
+		}
+		return (-1);
+	}
+	return (1);
 }

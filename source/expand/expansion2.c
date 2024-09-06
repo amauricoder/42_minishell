@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:51:03 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 15:55:42 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:53:57 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ void	assemble_word_tokens(t_mini *mini_d)
 	while (tmp && tmp->next)
 	{
 		if ((tmp->type == WORD || tmp->type == ENV)
-			&& (tmp->next->type == WORD || tmp->next->type == ENV))
+			&& (tmp->next->type == WORD || tmp->next->type == ENV)
+			&& (tmp->next->len > 0))
 			assemble_word_tokens_aux(tmp);
 		else
 		{

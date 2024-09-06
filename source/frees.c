@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   frees.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 15:56:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 17:53:29 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:18:19 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	free_and_exit(t_mini *mini, int exit_nbr)
 {
-	t_exec	*temp;
-
-	temp = mini->root;
 	if (mini->token)
 	{
 		close(mini->stdfds[0]);

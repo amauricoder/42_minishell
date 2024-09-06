@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:13:07 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/04 18:27:44 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:20:53 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	*expand_heredoc(t_mini *mini_d, char *str)
 
 /**
  * @brief treat heredoc expection EOF"" for expansion
+ * state -> IN_DQUOTE = 2, IN_QUOTE = 1
 */
 void	heredoc_expand(t_mini *mini)
 {
@@ -57,8 +58,8 @@ void	heredoc_expand(t_mini *mini)
 			mini->token = mini->token->next;
 			while (mini->token->type == W_SPACE)
 				mini->token = mini->token->next;
-			if (mini->token->state == IN_DQUOTE
-				|| mini->token->state == IN_QUOTE)
+			if (mini->token->state == 2
+				|| mini->token->state == 1)
 				flag = 1;
 			while (mini->token->type != HEREDOC)
 				mini->token = mini->token->prev;

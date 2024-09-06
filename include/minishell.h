@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/05 17:43:00 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:14:06 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,6 +266,7 @@ int		is_argument_valid(int argc, char **env);
 int		is_input_invalid(t_mini *mini, char *input);
 int		is_quotes_closed(char *input);
 int		is_only_space_or_tab(char *input);
+void	treat_tabs(t_mini *mini);
 
 //check_input2.c
 int		is_pipe_last_or_first(char *input);

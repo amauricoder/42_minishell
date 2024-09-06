@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_support2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:58:41 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/06 13:44:49 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:23:56 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,4 +118,3 @@ t_token	*get_last_redir_aux(t_token *last)
 	}
 	return (NULL);
 }
-
