@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:55:37 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/05 10:57:21 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/05 17:43:16 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	handle_exec_cmd(t_mini *mini_d, void *root)
 	else if (pid == 0)
 	{
 		signals_child();
-		if (check_is_directory(mini_d, root))
+		if (check_is_directory(mini_d, root) || !have_permission(mini_d, root))
 			exit(free_in_execution(mini_d, 126));
 		if (treat_exec_exception(mini_d, root))
 			exit(free_in_execution(mini_d, 0));
@@ -96,4 +96,31 @@ int	check_is_directory(t_mini *mini_d, void *root)
 	}
 	else
 		return (EXIT_SUCCESS);
+}
+
+int	have_permission(t_mini *mini_d, void *root)
+{
+	struct stat info;
+
+	if (!((t_exec *)root)->args || !((t_exec *)root)->args[0])
+		return (1);
+    if (stat(((t_exec *)root)->args[0], &info) == -1) 
+	{
+        if (errno == EACCES)
+		{
+			err_msg(mini_d, ft_strjoin(((t_exec *)root)->args[0], P_DN), 126, 1);
+            return (0);
+        }
+        return (-1);
+    }
+    if (access(((t_exec *)root)->args[0], X_OK) != 0)
+	{
+    	 if (errno == EACCES)
+		{
+			err_msg(mini_d, ft_strjoin(((t_exec *)root)->args[0], P_DN), 126, 1);
+            return (0);
+        }
+    	return (-1);
+    }
+    return (1);
 }

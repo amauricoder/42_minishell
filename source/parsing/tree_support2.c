@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_support2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:58:41 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/05 14:55:54 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/05 18:12:00 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,21 @@ t_token	*get_last_redir(t_token *node, int first_interaction)
 	{
 		while (last->next && last->type != PIPE)
 		{
-			last->next->prev = last;
+			if (last->next)
+				last->next->prev = last;
 			last = last->next;
 		}
-		last = last->prev;
+		if (last && last->prev)
+			last = last->prev;
 	}
 	else
 	{
 		if (last->type == R_IN || last->type == R_OUT
 			|| last->type == D_R_OUT || last->type == HEREDOC)
-			last = last->prev;
+		{
+			if (last && last->prev)
+				last = last->prev;
+		}
 	}
 	return (get_last_redir_aux(last));
 }
@@ -109,7 +114,8 @@ t_token	*get_last_redir(t_token *node, int first_interaction)
  */
 t_token	*get_last_redir_aux(t_token *last)
 {
-	while (last && last->type && last->type != PIPE)
+	printf("type %i \n", last->type);
+	while ((last && last->type) && (last->type != PIPE))
 	{
 		if (last->type == R_IN || last->type == R_OUT
 			|| last->type == D_R_OUT || last->type == HEREDOC)
@@ -118,3 +124,4 @@ t_token	*get_last_redir_aux(t_token *last)
 	}
 	return (NULL);
 }
+

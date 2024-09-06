@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/05 14:51:03 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/05 17:43:00 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@
 # define NO_DIR " : no such file or directory"
 # define H_NOT "minishell: cd: HOME not set"
 # define OLDPWD_NOT "minishell: cd: OLDPWD not set"
-
+# define P_DN " : Permission denied"
 # define EXP "minishell: export: "
 # define N_VAL ": not a valid identifier"
 
@@ -332,6 +332,7 @@ int		do_execution(t_mini *mini_d, void *root);
 int		handle_exec_cmd(t_mini *mini_d, void *root);
 int		set_child_exit(int wstatus, t_mini *mini);
 int		check_is_directory(t_mini *mini_d, void *root);
+int		have_permission(t_mini *mini_d, void *root);
 
 //exec/exec_redir.c
 int		handle_redir_nodes(t_mini *mini_d, void *root);
