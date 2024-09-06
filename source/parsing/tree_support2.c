@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:58:41 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/05 14:55:54 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/06 13:25:09 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_token	*get_last_redir(t_token *node, int first_interaction)
 {
 	t_token	*last;
 
-	if (!node)
+	if (!node || !node->next)
 		return (NULL);
 	last = node;
 	if (first_interaction)
