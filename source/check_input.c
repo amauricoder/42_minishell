@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:07:33 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/06 14:06:13 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/08 18:33:30 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,30 @@ int	is_argument_valid(int argc, char **env)
 
 /**
  * @attention syntax error g_exit_status for syntax error = 2;
+ * @brief Check user input. 1 - if is only space or tab, return EXIT_FAILURE.
+ * If quotes are open -> ex ls "this is open' -> Return Err_Msg Syntax Err.
+ * If quotes are closed, transform tabs in spaces for outside quotes.
+ * Then, copy only the analizable part to a copy str and check for
+ * invalid redir OR invalid pipe. 
 */
 int	is_input_invalid(t_mini *mini, char *input)
 {
-	if (!is_quotes_closed(input) || is_quotes_closed(input) < 0)
-	{
-		treat_tabs(mini);
-		if (!is_quotes_closed(input) || is_redir_invalid(input)
-			|| is_pipe_last_or_first(input))
-			return (err_msg(mini, SYNTAX_ERR, 2, 0));
-	}
+	int		size;
+	char	*to_analize;
+
 	if (is_only_space_or_tab(input))
 		return (EXIT_FAILURE);
+	if (!is_quotes_closed(input))
+		return (err_msg(mini, SYNTAX_ERR, EXIT_FAILURE, 0));
+	treat_input_tabs(mini);
+	size = get_outquotes_size(mini);
+	to_analize = get_outquotes_str(mini, size);
+	if (is_redir_invalid(to_analize) || is_pipe_last_or_first(to_analize))
+	{
+		free(to_analize);
+		return (err_msg(mini, SYNTAX_ERR, 2, 0));
+	}
+	free(to_analize);
 	return (EXIT_SUCCESS);
 }
 
@@ -75,11 +87,13 @@ int	is_quotes_closed(char *input)
 	}
 	if (!s_quotes && !d_quotes)
 		return (-1);
-	return (s_quotes % 2 == 0 && d_quotes % 2 == 0);
+	if (s_quotes % 2 == 0 && d_quotes % 2 == 0)
+		return (true);
+	return (false);
 }
 
 /**
- * @brief Check if the input is only spaces
+ * @brief Check if the input is only spaces or tabs
  * @return true if only space, false for not
  */
 int	is_only_space_or_tab(char *input)
@@ -96,12 +110,27 @@ int	is_only_space_or_tab(char *input)
 	return (true);
 }
 
-void	treat_tabs(t_mini *mini)
+/**
+ * @brief Transform tabs in spaces for chars that are outsides "" or ''
+ */
+void	treat_input_tabs(t_mini *mini)
 {
 	int		i;
+	char	q_type;
 
-	i = -1;
-	while (mini->input[++i])
+	i = 0;
+	while (mini->input[i])
+	{
+		if (mini->input[i] == '\"' || mini->input[i] == '\'')
+		{
+			q_type = mini->input[i];
+			i ++;
+			while (mini->input[i] && mini->input[i] != q_type)
+				i ++;
+		}
 		if (mini->input[i] == '\t')
 			mini->input[i] = ' ';
+		if (mini->input[i] != '\0')
+			i ++;
+	}
 }

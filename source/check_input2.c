@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:23:23 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 16:30:17 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/08 18:34:02 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,68 @@ int	is_next_word_invalid(char *input)
 	}
 	free_matriz(arr);
 	return (false);
+}
+
+/**
+ * @attention Support function to is_input_invalid()
+ * @brief Get the size of the input outside quotes and d_quotes.
+ * Example: I will take this size, "Not this one", But this one also.
+ * Will return the value of ->I will the this size, , But this one also.
+ */
+int	get_outquotes_size(t_mini	*mini)
+{
+	int		i;
+	int		size;
+	char	q_type;
+
+	i = 0;
+	size = 0;
+	while (mini->input[i])
+	{
+		if (mini->input[i] == '"' || mini->input[i] == '\'')
+		{
+			q_type = mini->input[i];
+			i ++;
+			while (mini->input[i] && mini->input[i] != q_type)
+				i ++;
+		}
+		size ++;
+		if (mini->input[i] != '\0')
+			i ++;
+	}
+	return (size);
+}
+
+/**
+ * @attention Support function to is_input_invalid();
+ * @brief Gets the input outside quotes and d_quotes.
+ * 
+ */
+char	*get_outquotes_str(t_mini	*mini, int size)
+{
+	int		i;
+	int		j;
+	char	*to_analize;
+	char	q_type;
+
+	i = 0;
+	j = 0;
+	to_analize = malloc(sizeof(char) * (size + 1));
+	while (mini->input[i])
+	{
+		if (mini->input[i] == '\"' || mini->input[i] == '\'')
+		{
+			q_type = mini->input[i];
+			i ++;
+			while (mini->input[i] && mini->input[i] != q_type)
+				i ++;
+			i ++;
+		}
+		to_analize[j] = mini->input[i];
+		j ++;
+		if (mini->input[i] != '\0')
+			i ++;
+	}
+	to_analize[j] = '\0';
+	return (to_analize);
 }

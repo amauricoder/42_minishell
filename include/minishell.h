@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/06 14:14:06 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/08 18:33:30 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,12 +266,14 @@ int		is_argument_valid(int argc, char **env);
 int		is_input_invalid(t_mini *mini, char *input);
 int		is_quotes_closed(char *input);
 int		is_only_space_or_tab(char *input);
-void	treat_tabs(t_mini *mini);
+void	treat_input_tabs(t_mini *mini);
 
 //check_input2.c
 int		is_pipe_last_or_first(char *input);
 int		is_redir_invalid(char *input);
 int		is_next_word_invalid(char *input);
+int		get_outquotes_size(t_mini	*mini);
+char	*get_outquotes_str(t_mini	*mini, int size);
 
 //signals.c
 void	signals_init(void);
