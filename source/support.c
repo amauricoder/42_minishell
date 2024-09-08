@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:02:42 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/03 20:14:41 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/08 19:31:00 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ int	err_msg(t_mini *d, char *str, int ev, int fr)
 	if (!ft_strncmp(str, NO_CMD, ft_strlen(NO_CMD))
 		|| !ft_strncmp(str, SYNTAX_ERR, ft_strlen(SYNTAX_ERR)))
 		write(2, "minishell : ", 12);
+	if (str[0] == ' ' && ft_strlen(str) == 20)
+		write(2, "''", 2);
 	ft_putendl_fd(str, 2);
 	if (fr)
 		free(str);
