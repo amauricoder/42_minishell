@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 16:41:52 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/06 14:18:38 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/08 20:02:59 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,11 @@ void	*do_parsing(t_mini *mini_d, t_token *token)
 		return (root);
 }
 
-//Function to start the construction of the tree
-void	*parse_exec(t_mini *mini, t_token *token)
+/**
+ * @brief Start the creation of the root of the three
+ * @param tkn Token
+ */
+void	*parse_exec(t_mini *mini, t_token *tkn)
 {
 	t_exec		*exec_node;
 	int			id;
@@ -37,24 +40,24 @@ void	*parse_exec(t_mini *mini, t_token *token)
 
 	exec_node = NULL;
 	id = 1;
-	if (have_command(token))
+	if (have_command(tkn))
 	{
-		if (!ft_strncmp(token->content, " ", 1) && token->next)
-			token = token->next;
+		if (!ft_strncmp(tkn->content, " ", 1) && !tkn->content[1] && tkn->next)
+			tkn = tkn->next;
 		exec_node = ft_calloc(1, sizeof(t_exec));
 		exec_node->id = id;
 		id ++;
-		exec_node->args = get_cmd(have_command(token));
+		exec_node->args = get_cmd(have_command(tkn));
 		exec_node->type = WORD;
-		if (have_command(token) && have_command(token)->type == ENV
-			&& have_command(token)->len == 0)
+		if (have_command(tkn) && have_command(tkn)->type == ENV
+			&& have_command(tkn)->len == 0)
 			exec_node->type = ENV;
-		exec_node->builtin = token->builtin;
+		exec_node->builtin = tkn->builtin;
 	}
 	else
 		exec_node = NULL;
 	root = exec_node;
-	root = parse_redir(mini, token, root);
+	root = parse_redir(mini, tkn, root);
 	return (root);
 }
 
