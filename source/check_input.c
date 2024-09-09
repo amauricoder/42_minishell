@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:07:33 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/08 18:33:30 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/09 15:38:48 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	is_input_invalid(t_mini *mini, char *input)
 	if (is_only_space_or_tab(input))
 		return (EXIT_FAILURE);
 	if (!is_quotes_closed(input))
-		return (err_msg(mini, SYNTAX_ERR, EXIT_FAILURE, 0));
+		return (err_msg(mini, SYNTAX_ERR, 2, 0));
 	treat_input_tabs(mini);
 	size = get_outquotes_size(mini);
 	to_analize = get_outquotes_str(mini, size);

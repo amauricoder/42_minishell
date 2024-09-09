@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:18:15 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/05 12:06:19 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/09 16:46:23 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,27 @@ int	is_cmd_valid(t_mini *mini_d, char *argument)
 	free_matriz(path_env);
 	free_matriz(envs);
 	return (res);
+}
+
+int	execute_buildins(t_mini *mini, t_exec *exec_node)
+{
+	if (exec_node->builtin)
+	{
+		if (exec_node->builtin == ECHO)
+			return (mini->exst_printable = echo(exec_node->args));
+		if (exec_node->builtin == PWD)
+			return (mini->exst_printable = pwd(mini, exec_node->args));
+		if (exec_node->builtin == CD)
+			return (mini->exst_printable = cd(mini, exec_node->args));
+		if (exec_node->builtin == EXIT)
+			exit_read(mini, exec_node->args);
+		if (exec_node->builtin == EXPORT)
+			return (mini->exst_printable = export(mini, exec_node->args));
+		if (exec_node->builtin == B_ENV)
+			return (mini->exst_printable
+				= env(mini, mini->env_d, exec_node->args));
+		if (exec_node->builtin == UNSET)
+			return (mini->exst_printable = unset(mini, exec_node->args));
+	}
+	return (EXIT_FAILURE);
 }

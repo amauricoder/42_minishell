@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/08 18:33:30 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/09 16:47:08 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@
 /*************************/
 typedef enum e_token
 {
-	WORD,
+	WORD = 1,
 	W_SPACE,
 	D_QUOTE,
 	S_QUOTE,
@@ -96,7 +96,8 @@ typedef enum e_token
 	D_R_OUT, //>>
 	R_IN, //<
 	HEREDOC, //<<
-	FILE_NAME
+	FILE_NAME,
+	SPACE_EXCEP
 }	t_token_type;
 
 typedef enum e_tstate
@@ -344,16 +345,17 @@ int		exec_redir_out(t_mini *mini_d, t_redir *node);
 
 //exec/exec_cmd.c
 int		execute_cmd(t_mini *mini_d, t_exec *exec_nd);
+void	execute_cmd_aux(char **path_env, char **envs, t_exec *exec_nd);
 char	**find_path_env(t_mini	*mini_d);
 char	**get_env_matriz(t_mini *mini_d);
 char	*create_cmdpath(char *possible_path, char *command);
-int		execute_buildins(t_mini *mini, t_exec *exec_node);
 
 //exec/exec_cmd2.c
 int		treat_exec_exception(t_mini *mini_d, t_exec *exec_node);
 int		check_and_handle_equal_arg(t_exec *exec_node);
 void	move_args_left(t_exec *exec_nd, int *j);
 int		is_cmd_valid(t_mini *mini_d, char *argument);
+int		execute_buildins(t_mini *mini, t_exec *exec_node);
 
 //exec/exec_pipe.c
 int		handle_pipe(t_mini *mini_d, void *root);

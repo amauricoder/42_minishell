@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:51:03 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/06 14:53:57 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/09 16:36:38 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	clean_token(t_mini *mini_d)
 		free(mini_d->token->content);
 		free(mini_d->token);
 		mini_d->token = tmp;
+		mini_d->token->prev = NULL;
 	}
 	prev = mini_d->token;
 	tmp = mini_d->token;

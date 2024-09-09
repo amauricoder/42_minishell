@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:40:12 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 16:36:25 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/09 16:39:35 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ t_token	*init_token(char *content, int type, int id)
 	new_token->next = NULL;
 	new_token->prev = NULL;
 	new_token->type = type;
+	if (content[0] == ' ' && ft_strlen(content) == 1)
+		new_token->type = SPACE_EXCEP;
 	new_token->head = NULL;
 	new_token->tail = NULL;
 	return (new_token);
