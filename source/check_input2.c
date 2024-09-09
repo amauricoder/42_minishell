@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:23:23 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/08 18:34:02 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/09 12:13:45 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,22 +139,22 @@ char	*get_outquotes_str(t_mini	*mini, int size)
 
 	i = 0;
 	j = 0;
-	to_analize = malloc(sizeof(char) * (size + 1));
+	to_analize = ft_calloc(sizeof(char), (size + 1));
 	while (mini->input[i])
 	{
 		if (mini->input[i] == '\"' || mini->input[i] == '\'')
 		{
-			q_type = mini->input[i];
-			i ++;
+			q_type = mini->input[i ++];
 			while (mini->input[i] && mini->input[i] != q_type)
 				i ++;
-			i ++;
+			if (mini->input[i] == q_type)
+				i ++;
 		}
-		to_analize[j] = mini->input[i];
-		j ++;
+		if (mini->input[i] == '\'' || mini->input[i] == '\"')
+			continue ;
+		to_analize[j ++] = mini->input[i];
 		if (mini->input[i] != '\0')
 			i ++;
 	}
-	to_analize[j] = '\0';
 	return (to_analize);
 }
