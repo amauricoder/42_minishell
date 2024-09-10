@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:13:07 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/06 14:20:53 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:01:06 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	heredoc_expand(t_mini *mini)
 		if (mini->token->type == HEREDOC)
 		{
 			mini->token = mini->token->next;
-			while (mini->token->type == W_SPACE)
+			while (mini->token->type == W_SPACE
+				|| mini->token->type == SPACE_EXCEP)
 				mini->token = mini->token->next;
 			if (mini->token->state == 2
 				|| mini->token->state == 1)
