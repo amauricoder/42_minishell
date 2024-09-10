@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:23:23 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/09 12:13:45 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/10 16:45:21 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,17 @@ int	is_next_word_invalid(char *input)
 	}
 	while (arr[0][i])
 	{
+		if (arr[0][i] == '\"' || arr[0][i] == '\'')
+		{
+			i ++ ;
+			while ((arr[0][i]) && (arr[0][i] != '\"' || arr[0][i] != '\''))
+				i ++ ;
+			if ((arr[0][i]) == '\0')
+				break ;
+			i ++ ;
+		}
+		if (arr[0][i] == '\0' || arr[0][i] == '\"' || arr[0][i] == '\'')
+			break ;
 		if (arr[0][0] == '|' || arr[0][0] == '<' || arr[0][0] == '>')
 		{
 			free_matriz(arr);
