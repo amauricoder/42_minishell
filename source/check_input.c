@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:07:33 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/10 16:30:47 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/11 20:33:09 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,32 @@ int	is_argument_valid(int argc, char **env)
 	}
 	return (true);
 }
+void	exclude_quote_excess(t_mini *mini)
+{
+	int i;
+	int j;
+    int len = strlen(mini->input);
+    char *new_input = (char *)malloc(len + 1); // Allocate memory for the new string
+
+    if (!new_input)
+       return ;
+    i = 0;
+    j = 0;
+    while (i < len)
+    {
+        if (i > 0 && ft_isalpha(mini->input[i - 1]) && mini->input[i] == '\"' && mini->input[i + 1] == '\"')
+        {
+            new_input[j++] = ' '; // Replace "" with a space
+            i += 2; // Skip the double quotes
+        }
+        else
+            new_input[j++] = mini->input[i++];
+    }
+    new_input[j] = '\0'; // Null-terminate the new string
+
+    ft_strlcpy(mini->input, new_input, strlen(mini->input) + 1ckl); // Copy the new string back to the input
+    free(new_input); // Free the allocated memory
+}
 
 /**
  * @attention syntax error g_exit_status for syntax error = 2;
@@ -39,23 +65,25 @@ int	is_argument_valid(int argc, char **env)
  * Then, copy only the analizable part to a copy str and check for
  * invalid redir OR invalid pipe. 
 */
-int	is_input_invalid(t_mini *mini, char *input)
+int	is_input_invalid(t_mini *mini)
 {
 	int		size;
 	char	*to_analize;
 
-	if (is_only_space_or_tab(input))
+	add_history(mini->input);
+	if (is_only_space_or_tab(mini->input))
 		return (EXIT_FAILURE);
-	if (!is_quotes_closed(input))
+	if (!is_quotes_closed(mini->input))
 		return (err_msg(mini, SYNTAX_ERR, 2, 0));
 	treat_input_tabs(mini);
 	size = get_outquotes_size(mini);
 	to_analize = get_outquotes_str(mini, size);
-	if (is_redir_invalid(input) || is_pipe_last_or_first(to_analize))
+	if (is_redir_invalid(mini->input) || is_pipe_last_or_first(to_analize))
 	{
 		free(to_analize);
 		return (err_msg(mini, SYNTAX_ERR, 2, 0));
 	}
+	exclude_quote_excess(mini);
 	free(to_analize);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/09 12:00:37 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/11 20:29:17 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,8 @@ int	main(int argc, char **argv, char **envp)
 		prompt_and_input(&mini_d);
 		if (!mini_d.input)
 			break ;
-		else if (is_input_invalid(&mini_d, mini_d.input))
-		{
-			add_history(mini_d.input);
+		else if (is_input_invalid(&mini_d))
 			continue ;
-		}
 		else if (ft_strlen(mini_d.input) > 0)
 			run_minishell(&mini_d);
 		update_exit_status(&mini_d);
