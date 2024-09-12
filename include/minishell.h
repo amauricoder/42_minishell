@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/11 20:13:15 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:47:54 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,14 +268,17 @@ int		is_input_invalid(t_mini *mini);
 int		is_quotes_closed(char *input);
 int		is_only_space_or_tab(char *input);
 void	treat_input_tabs(t_mini *mini);
-void	exclude_quote_excess(t_mini *mini);
 
 //check_input2.c
 int		is_pipe_last_or_first(char *input);
 int		is_redir_invalid(char *input);
-int		is_next_word_invalid(char *input);
 int		get_outquotes_size(t_mini	*mini);
 char	*get_outquotes_str(t_mini	*mini, int size);
+
+//check_input3.c
+void	exclude_quote_excess(t_mini *d);
+int		is_next_word_invalid(char *input);
+bool	check_first_word_invalid(char *word);
 
 //signals.c
 void	signals_init(void);

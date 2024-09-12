@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:07:33 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/11 20:33:09 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:45:06 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,32 +29,6 @@ int	is_argument_valid(int argc, char **env)
 		return (false);
 	}
 	return (true);
-}
-void	exclude_quote_excess(t_mini *mini)
-{
-	int i;
-	int j;
-    int len = strlen(mini->input);
-    char *new_input = (char *)malloc(len + 1); // Allocate memory for the new string
-
-    if (!new_input)
-       return ;
-    i = 0;
-    j = 0;
-    while (i < len)
-    {
-        if (i > 0 && ft_isalpha(mini->input[i - 1]) && mini->input[i] == '\"' && mini->input[i + 1] == '\"')
-        {
-            new_input[j++] = ' '; // Replace "" with a space
-            i += 2; // Skip the double quotes
-        }
-        else
-            new_input[j++] = mini->input[i++];
-    }
-    new_input[j] = '\0'; // Null-terminate the new string
-
-    ft_strlcpy(mini->input, new_input, strlen(mini->input) + 1ckl); // Copy the new string back to the input
-    free(new_input); // Free the allocated memory
 }
 
 /**

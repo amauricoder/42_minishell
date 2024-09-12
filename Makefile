@@ -6,7 +6,7 @@
 #    By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/17 16:41:12 by aconceic          #+#    #+#              #
-#    Updated: 2024/09/09 12:17:42 by aconceic         ###   ########.fr        #
+#    Updated: 2024/09/12 16:45:23 by aconceic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ OBJ = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 SRC_DIR = ./source/
 
 SRC = prompt.c frees.c frees2.c lexing/lexing.c lexing/lexing_support.c\
-		lexing/token.c support.c check_input.c check_input2.c signals.c signals2.c\
+		lexing/token.c support.c check_input.c check_input2.c check_input3.c signals.c signals2.c\
 		expand/expansion.c expand/expansion2.c expand/expansion_support.c\
 		parsing/parsing.c parsing/tree_support.c parsing/tree_free.c\
 		parsing/tree_support2.c env/env.c init_values.c builtins/echo.c\

@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:23:23 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/10 16:45:21 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:48:20 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,47 +63,6 @@ int	is_redir_invalid(char *inpt)
 		i ++;
 	}
 	return (is_invalid);
-}
-
-/**
- * @brief Check to see if the next word after ">" or ">>"
- * or "<<" or "<" is invalid.
- * @return true if is a invalid word, false otherwise.
- */
-int	is_next_word_invalid(char *input)
-{
-	char	**arr;
-	int		i;
-
-	arr = ft_split(input, ' ');
-	i = 0;
-	if (!arr[0])
-	{
-		free_matriz(arr);
-		return (true);
-	}
-	while (arr[0][i])
-	{
-		if (arr[0][i] == '\"' || arr[0][i] == '\'')
-		{
-			i ++ ;
-			while ((arr[0][i]) && (arr[0][i] != '\"' || arr[0][i] != '\''))
-				i ++ ;
-			if ((arr[0][i]) == '\0')
-				break ;
-			i ++ ;
-		}
-		if (arr[0][i] == '\0' || arr[0][i] == '\"' || arr[0][i] == '\'')
-			break ;
-		if (arr[0][0] == '|' || arr[0][0] == '<' || arr[0][0] == '>')
-		{
-			free_matriz(arr);
-			return (true);
-		}
-		i ++;
-	}
-	free_matriz(arr);
-	return (false);
 }
 
 /**

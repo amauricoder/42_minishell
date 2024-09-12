@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:10:43 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/09 16:41:46 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:20:43 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	run_minishell(t_mini *mini_d)
 		mini_d->exst_printable = g_exit_status;
 		g_exit_status = 0;
 	}
-	add_history(mini_d->input);
 	do_lexing(mini_d);
 	find_expansion(mini_d);
 	define_builtins(mini_d);
