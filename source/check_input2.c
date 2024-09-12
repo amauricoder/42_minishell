@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:23:23 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/12 20:50:23 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/12 21:17:07 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int	is_redir_invalid_aux(char *inpt, int i, int *is_invalid)
 {
 	if (!ft_strncmp(&inpt[i], ">>", 2) || !ft_strncmp(&inpt[i], "<<", 2))
 	{
+		if (inpt[i + 2] == '>' || inpt[i + 2] == '<')
+			return (true);
 		if (inpt[i + 2])
 			is_invalid += is_next_word_invalid(&inpt[i + 2]);
 		else
