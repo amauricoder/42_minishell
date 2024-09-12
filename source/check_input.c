@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:07:33 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/12 17:16:04 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/12 20:04:34 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,15 @@ int	is_argument_valid(int argc, char **env)
 */
 int	is_input_invalid(t_mini *mini)
 {
-	int		size;
-	char	*to_analize;
-
 	add_history(mini->input);
 	if (is_only_space_or_tab(mini->input))
 		return (EXIT_FAILURE);
 	if (!is_quotes_closed(mini->input))
 		return (err_msg(mini, SYNTAX_ERR, 2, 0));
 	treat_input_tabs(mini);
-	size = get_outquotes_size(mini);
-	to_analize = get_outquotes_str(mini, size);
 	if (is_redir_invalid(mini->input) || is_pipe_invalid(mini->input))
-	{
-		free(to_analize);
 		return (err_msg(mini, SYNTAX_ERR, 2, 0));
-	}
 	exclude_quote_excess(mini);
-	free(to_analize);
 	return (EXIT_SUCCESS);
 }
 

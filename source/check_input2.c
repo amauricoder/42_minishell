@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:23:23 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/12 18:02:00 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/12 20:50:23 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,12 @@ int	is_pipe_invalid(char *input)
 {
 	int	i;
 
-	if (input[0] == '|')
+	i = ft_strlen(input) - 1;
+	if (input[0] == '|' || input[i] == '|')
 		return (true);
-	i = 0;
-	while (input[i])
-		i++;
-	i--;
 	while (i >= 0 && (input[i] == ' ' || input[i] == '\t'))
 		i--;
-	if (i >= 0 && input[i] == '|')
+	if (i >= 0 && input[i] == '|' && !is_quoted(input, &i))
 		return (true);
 	if (is_pipe_invalid_aux(input))
 		return (true);
@@ -48,16 +45,19 @@ int	is_pipe_invalid_aux(char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '|')
+		if (!is_quoted(input, &i))
 		{
-			i ++;
-			while (input[i] == ' ' || input[i] == '\t')
-				i ++;
 			if (input[i] == '|')
-				return (true);
+			{
+				i ++;
+				while (input[i] == ' ' || input[i] == '\t')
+					i ++;
+				if (input[i] == '|')
+					return (true);
+				continue ;
+			}
 		}
-		else
-			i++;
+		i++;
 	}
 	return (false);
 }
@@ -76,85 +76,55 @@ int	is_redir_invalid(char *inpt)
 	is_invalid = 0;
 	while (inpt[i])
 	{
-		if (!ft_strncmp(&inpt[i], ">>", 2) || !ft_strncmp(&inpt[i], "<<", 2))
-		{
-			if (inpt[i + 2])
-				is_invalid += is_next_word_invalid(&inpt[i + 2]);
-			else
+		if (!is_quoted(inpt, &i))
+			if (is_redir_invalid_aux(inpt, i, &is_invalid))
 				return (true);
-		}
-		else if (!ft_strncmp(&inpt[i], ">", 1) || !ft_strncmp(&inpt[i], "<", 1))
-		{
-			if (inpt[i + 1])
-				is_invalid += is_next_word_invalid(&inpt[i + 1]);
-			else
-				return (true);
-		}
 		i ++;
 	}
 	return (is_invalid);
 }
 
-/**
- * @attention Support function to is_input_invalid()
- * @brief Get the size of the input outside quotes and d_quotes.
- * Example: I will take this size, "Not this one", But this one also.
- * Will return the value of ->I will the this size, , But this one also.
- */
-int	get_outquotes_size(t_mini	*mini)
+int	is_redir_invalid_aux(char *inpt, int i, int *is_invalid)
 {
-	int		i;
-	int		size;
-	char	q_type;
-
-	i = 0;
-	size = 0;
-	while (mini->input[i])
+	if (!ft_strncmp(&inpt[i], ">>", 2) || !ft_strncmp(&inpt[i], "<<", 2))
 	{
-		if (mini->input[i] == '"' || mini->input[i] == '\'')
-		{
-			q_type = mini->input[i];
-			i ++;
-			while (mini->input[i] && mini->input[i] != q_type)
-				i ++;
-		}
-		size ++;
-		if (mini->input[i] != '\0')
-			i ++;
+		if (inpt[i + 2])
+			is_invalid += is_next_word_invalid(&inpt[i + 2]);
+		else
+			return (true);
 	}
-	return (size);
+	else if (!ft_strncmp(&inpt[i], ">", 1) || !ft_strncmp(&inpt[i], "<", 1))
+	{
+		if (inpt[i + 1])
+			is_invalid += is_next_word_invalid(&inpt[i + 1]);
+		else
+			return (true);
+	}
+	return (false);
 }
 
 /**
- * @attention Support function to is_input_invalid();
- * @brief Gets the input outside quotes and d_quotes.
- * 
- */
-char	*get_outquotes_str(t_mini	*mini, int size)
+ * @brief Ignore blocks of str inside "" and ''
+ * return false when the block end, return true if not
+*/
+int	is_quoted(char *input, int *i)
 {
-	int		i;
-	int		j;
-	char	*to_analize;
-	char	q_type;
+	int	is_invalid;
+	int	in_single_quote;
+	int	in_double_quote;
 
-	i = 0;
-	j = 0;
-	to_analize = ft_calloc(sizeof(char), (size + 1));
-	while (mini->input[i])
+	is_invalid = 0;
+	in_single_quote = 0;
+	in_double_quote = 0;
+	while (input[*i])
 	{
-		if (mini->input[i] == '\"' || mini->input[i] == '\'')
-		{
-			q_type = mini->input[i ++];
-			while (mini->input[i] && mini->input[i] != q_type)
-				i ++;
-			if (mini->input[i] == q_type)
-				i ++;
-		}
-		if (mini->input[i] == '\'' || mini->input[i] == '\"')
-			continue ;
-		to_analize[j ++] = mini->input[i];
-		if (mini->input[i] != '\0')
-			i ++;
+		if (input[*i] == '\'' && !in_double_quote)
+			in_single_quote = !in_single_quote;
+		if (input[*i] == '"' && !in_single_quote)
+			in_double_quote = !in_double_quote;
+		if (!in_single_quote && !in_double_quote)
+			return (false);
+		(*i)++;
 	}
-	return (to_analize);
+	return (true);
 }

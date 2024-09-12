@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/12 18:49:58 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/12 20:50:41 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,8 +272,8 @@ void	treat_input_tabs(t_mini *mini);
 int		is_pipe_invalid(char *input);
 int		is_pipe_invalid_aux(char *input);
 int		is_redir_invalid(char *input);
-int		get_outquotes_size(t_mini	*mini);
-char	*get_outquotes_str(t_mini	*mini, int size);
+int		is_redir_invalid_aux(char *inpt, int i, int *is_invalid);
+int		is_quoted(char *input, int *i);
 
 //check_input3.c
 void	exclude_quote_excess(t_mini *d);
