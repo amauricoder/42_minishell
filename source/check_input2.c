@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:23:23 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/12 16:48:20 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/12 18:02:00 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,51 @@
 
 /**
  * @brief Check if there is a pipe as last characther
+ * Return TRUE for invalid (YES! IS INVALID)
+ * and FALSE for valid(NO, IS NOT INVALID).
 */
-int	is_pipe_last_or_first(char *input)
+int	is_pipe_invalid(char *input)
+{
+	int	i;
+
+	if (input[0] == '|')
+		return (true);
+	i = 0;
+	while (input[i])
+		i++;
+	i--;
+	while (i >= 0 && (input[i] == ' ' || input[i] == '\t'))
+		i--;
+	if (i >= 0 && input[i] == '|')
+		return (true);
+	if (is_pipe_invalid_aux(input))
+		return (true);
+	return (false);
+}
+
+/**
+ * @brief Check this situation ls |   | wc
+ * This is syntax error. Return TRUE for invalid (YES! IS INVALID)
+ *  and FALSE for valid(NO, IS NOT INVALID).
+ */
+int	is_pipe_invalid_aux(char *input)
 {
 	int	i;
 
 	i = 0;
-	if (input[0] == '|')
-		return (true);
 	while (input[i])
-		i ++;
-	i --;
-	while (i >= 0 && (input[i] == ' ' || input[i] == '\t'))
-		i --;
-	if (i >= 0 && input[i] == '|')
-		return (true);
+	{
+		if (input[i] == '|')
+		{
+			i ++;
+			while (input[i] == ' ' || input[i] == '\t')
+				i ++;
+			if (input[i] == '|')
+				return (true);
+		}
+		else
+			i++;
+	}
 	return (false);
 }
 

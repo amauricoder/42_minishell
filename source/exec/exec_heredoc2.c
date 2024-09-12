@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:13:07 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/10 17:01:06 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/12 18:51:13 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ void	heredoc_expand(t_mini *mini)
 		if (mini->token->type == HEREDOC)
 		{
 			mini->token = mini->token->next;
-			while (mini->token->type == W_SPACE
-				|| mini->token->type == SPACE_EXCEP)
+			while (mini->token->type == W_SPACE)
 				mini->token = mini->token->next;
 			if (mini->token->state == 2
 				|| mini->token->state == 1)

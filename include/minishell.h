@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:14:55 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/12 16:47:54 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/12 18:49:58 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,7 @@ typedef enum e_token
 	D_R_OUT, //>>
 	R_IN, //<
 	HEREDOC, //<<
-	FILE_NAME,
-	SPACE_EXCEP
+	FILE_NAME
 }	t_token_type;
 
 typedef enum e_tstate
@@ -270,7 +269,8 @@ int		is_only_space_or_tab(char *input);
 void	treat_input_tabs(t_mini *mini);
 
 //check_input2.c
-int		is_pipe_last_or_first(char *input);
+int		is_pipe_invalid(char *input);
+int		is_pipe_invalid_aux(char *input);
 int		is_redir_invalid(char *input);
 int		get_outquotes_size(t_mini	*mini);
 char	*get_outquotes_str(t_mini	*mini, int size);

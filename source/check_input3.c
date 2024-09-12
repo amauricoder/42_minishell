@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 16:44:37 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/12 16:50:18 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/12 18:32:42 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 /**
  * @brief Exclude "" and '' in cases where they are followed by a letter.
+ * We do this to avoid problems during Tokenization and parsing
  */
 void	exclude_quote_excess(t_mini *d)
 {
@@ -32,7 +33,7 @@ void	exclude_quote_excess(t_mini *d)
 				&& ((d->input[i] == '\"' && d->input[i + 1] == '\"')
 					|| (d->input[i] == '\'' && d->input[i + 1] == '\'')))
 			{
-				new_input[j++] = ' ';
+				new_input[j++] = '\0';
 				i += 2;
 			}
 		}
@@ -46,6 +47,7 @@ void	exclude_quote_excess(t_mini *d)
 
 /**
  * @brief Helper function to check if the first word contains invalid characters.
+ * takes in consideration if is in quotes or not
  */
 bool	check_first_word_invalid(char *word)
 {

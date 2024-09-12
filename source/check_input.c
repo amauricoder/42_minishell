@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 09:07:33 by aconceic          #+#    #+#             */
-/*   Updated: 2024/09/12 16:45:06 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/12 17:16:04 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	is_input_invalid(t_mini *mini)
 	treat_input_tabs(mini);
 	size = get_outquotes_size(mini);
 	to_analize = get_outquotes_str(mini, size);
-	if (is_redir_invalid(mini->input) || is_pipe_last_or_first(to_analize))
+	if (is_redir_invalid(mini->input) || is_pipe_invalid(mini->input))
 	{
 		free(to_analize);
 		return (err_msg(mini, SYNTAX_ERR, 2, 0));
