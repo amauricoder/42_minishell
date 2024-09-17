@@ -3,30 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:28:01 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/22 16:14:41 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/09 16:48:17 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	execute_cmd(t_mini *mini_d, void *root)
+// < inacessible_file | cat -e > output
+// erro quando se coloca apenas um redirect e | 
+int	execute_cmd(t_mini *mini_d, t_exec *exec_nd)
 {
-	t_exec	*exec_nd;
 	char	**path_env;
 	char	**envs;
+
+	if (!exec_nd->args)
+		return (err_msg(mini_d, ft_strjoin("''", NO_CMD), 127, 1));
+	path_env = find_path_env(mini_d);
+	envs = get_env_matriz(mini_d);
+	if (access(exec_nd->args[0], X_OK) != -1)
+		execve(exec_nd->args[0], exec_nd->args, envs);
+	if (path_env)
+		execute_cmd_aux(path_env, envs, exec_nd);
+	else
+		if (access(exec_nd->args[0], X_OK) != -1)
+			execve(exec_nd->args[0], exec_nd->args, envs);
+	free_matriz(envs);
+	if (path_env == NULL)
+		return (err_msg(mini_d, ft_strjoin(exec_nd->args[0], NO_DIR), 127, 1));
+	free_matriz(path_env);
+	return (err_msg(mini_d, ft_strjoin(exec_nd->args[0], NO_CMD), 127, 1));
+}
+
+void	execute_cmd_aux(char **path_env, char **envs, t_exec *exec_nd)
+{
 	char	*possible_path;
 	int		i;
 
-	exec_nd = root;
-	envs = get_env_matriz(mini_d);
-	path_env = find_path_env(mini_d);
-	if (path_env == NULL)
-		return (err_msg(mini_d, ft_strjoin(exec_nd->args[0], NO_DIR), 127, 1));
-	if (access(exec_nd->args[0], X_OK) != -1)
-		execve(exec_nd->args[0], exec_nd->args, envs);
 	i = -1;
 	while (path_env[++ i])
 	{
@@ -35,9 +50,6 @@ int	execute_cmd(t_mini *mini_d, void *root)
 			execve(possible_path, exec_nd->args, envs);
 		free(possible_path);
 	}
-	free_matriz(path_env);
-	free_matriz(envs);
-	return (err_msg(mini_d, ft_strjoin(exec_nd->args[0], NO_CMD), 127, 1));
 }
 
 /**
@@ -115,29 +127,4 @@ char	*create_cmdpath(char *possible_path, char *command)
 	path = ft_strjoin(temp, command);
 	free(temp);
 	return (path);
-}
-
-int	execute_buildins(t_mini *mini, void *root)
-{
-	t_exec	*exec_node;
-
-	exec_node = (t_exec *)root;  //Function under construction. This comment is here just because norminette will remaind me to correct this shit
-	if (exec_node->builtin)
-	{
-		if (exec_node->builtin == ECHO)
-			return (echo(exec_node->args));
-		if (exec_node->builtin == PWD)
-			return (pwd(mini, exec_node->args));
-		if (exec_node->builtin == CD)
-			return (cd(mini, exec_node->args));
-		if (exec_node->builtin == EXIT)
-			exit_read(mini, exec_node->args); // esssa tem que retornar valor
-		if (exec_node->builtin == EXPORT)
-			return (export(mini, exec_node->args));
-		if (exec_node->builtin == B_ENV)
-			env(mini->env_d);//aqui tbm tem que retornar valor
-		if (exec_node->builtin == UNSET)
-			return (unset(mini, exec_node->args));
-	}
-	return (EXIT_FAILURE);
 }

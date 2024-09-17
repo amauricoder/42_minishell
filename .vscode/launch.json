@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/isabella/minishell/source/lexing",
-      "program": "/home/isabella/minishell/source/lexing/build/Debug/outDebug",
+      "cwd": "/home/aconceic/Documents/42_Git/minishell",
+      "program": "/home/aconceic/Documents/42_Git/minishell/minishell",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:58:41 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 16:59:15 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/09 16:01:07 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,41 @@ t_token	*get_last_or_pipe(t_token *to_advance)
  */
 char	**get_cmd(t_token *token)
 {
-	t_token	*current;
+	t_token	*cur;
 	char	**args;
 	int		i;
+	int		is_env;
 
-	current = token;
-	args = NULL;
+	cur = token;
+	is_env = 0;
 	i = get_qt_cmd_tokens(token);
 	if (i == 0)
 		return (NULL);
 	args = ft_calloc(i + 1, sizeof(char *));
 	i = -1;
-	while (current && current->type != PIPE)
+	while (cur && cur->type != PIPE)
 	{
-		if (current->type == WORD || current->type == ENV)
-			args[++ i] = ft_strdup(current->content);
-		current = current->next;
+		if ((cur->type == WORD) || (cur->type == ENV && cur->len > 0))
+		{
+			if (cur->type == ENV)
+				is_env = 1;
+			args[++ i] = ft_strdup(cur->content);
+		}
+		cur = cur->next;
 	}
+	if (!args[1] && is_env)
+		args = split_env_variable(args);
+	return (args);
+}
+
+char	**split_env_variable(char	**args)
+{
+	char	*tmp;
+
+	tmp = ft_strdup(args[0]);
+	free_matriz(args);
+	args = ft_split(tmp, ' ');
+	free(tmp);
 	return (args);
 }
 
@@ -63,7 +81,7 @@ t_token	*get_last_redir(t_token *node, int first_interaction)
 {
 	t_token	*last;
 
-	if (!node)
+	if (!node || !node->next)
 		return (NULL);
 	last = node;
 	if (first_interaction)
@@ -91,7 +109,7 @@ t_token	*get_last_redir(t_token *node, int first_interaction)
  */
 t_token	*get_last_redir_aux(t_token *last)
 {
-	while (last && last->type != PIPE)
+	while ((last && last->type) && (last->type != PIPE))
 	{
 		if (last->type == R_IN || last->type == R_OUT
 			|| last->type == D_R_OUT || last->type == HEREDOC)

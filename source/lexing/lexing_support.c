@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 10:59:36 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/20 16:55:12 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/12 18:49:40 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,12 @@ int	create_token(t_mini *mini_d, char *input, int state, int len)
 	new_token->tail = set_token_tail(mini_d);
 	id ++;
 	free(content);
+	return (EXIT_SUCCESS);
+}
+
+int	create_empty_token(t_mini *mini_d, char *input, int *state, int len)
+{
+	mini_d->token_type = WORD;
+	create_token(mini_d, input, *state, len);
 	return (EXIT_SUCCESS);
 }

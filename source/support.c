@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:02:42 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 16:27:57 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/12 18:50:35 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,15 +97,45 @@ int	err_msg(t_mini *d, char *str, int ev, int fr)
 	if (!str)
 	{
 		perror("minishell ");
-		d->exit_status = ev;
+		d->exst_printable = ev;
 		return (ev);
 	}
 	if (!ft_strncmp(str, NO_CMD, ft_strlen(NO_CMD))
 		|| !ft_strncmp(str, SYNTAX_ERR, ft_strlen(SYNTAX_ERR)))
 		write(2, "minishell : ", 12);
+	if (str[0] == ' ' && ft_strlen(str) == 20)
+		write(2, "''", 2);
 	ft_putendl_fd(str, 2);
 	if (fr)
 		free(str);
-	d->exit_status = ev;
+	d->exst_printable = ev;
 	return (ev);
+}
+
+/**
+ * @brief Concatenate 3 strings
+ * flag = 1 -> free s1, flag = 2 -> free s2, flag = 3 -> free s3
+ * flag = 4 -> free s1 and s2, flag = 5 -> free s1 and s3,
+ * flag = 6 -> free s2 and s3
+ */
+char	*join_three(char *s1, char *s2, char *s3, int flag)
+{
+	char	*tmp;
+	char	*s2_new;
+	char	*ret;
+
+	ret = ft_strjoin("\"", s2);
+	s2_new = ft_strjoin(ret, "\"");
+	free(ret);
+	tmp = ft_strjoin(s1, s2_new);
+	free(s2_new);
+	ret = ft_strjoin(tmp, s3);
+	free(tmp);
+	if (flag == 1 || flag == 4 || flag == 5)
+		free(s1);
+	if (flag == 2 || flag == 4 || flag == 6)
+		free(s2);
+	if (flag == 3 || flag == 5 || flag == 6)
+		free(s3);
+	return (ret);
 }

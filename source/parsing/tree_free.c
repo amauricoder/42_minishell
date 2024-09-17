@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:55:52 by aconceic          #+#    #+#             */
-/*   Updated: 2024/07/18 16:30:52 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:52:17 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ void	free_redir(void *root)
 	t_redir	*redir;
 
 	redir = (t_redir *)root;
+	if (redir->hd_tmp)
+		free(redir->hd_tmp);
+	if (redir->hd_fd != -1)
+		close(redir->hd_fd);
 	free_tree(redir->down);
 	free(redir->fname);
 	free(redir);
@@ -49,7 +53,7 @@ void	free_tree(void *root)
 	if (!root)
 		return ;
 	type = *((int *)root);
-	if (type == WORD)
+	if (type == WORD || type == ENV)
 		free_exec(root);
 	else if (type == R_IN || type == R_OUT
 		|| type == D_R_OUT || type == HEREDOC)

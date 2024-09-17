@@ -6,7 +6,7 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 16:18:44 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/19 16:40:57 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/09 15:50:52 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * ex. wc -> this is a node->type = WORD || $USER -> this is a node->type = ENV
  * Both can be possible commands.
  */
-int	have_command(t_token *node)
+t_token	*have_command(t_token *node)
 {
 	t_token	*current;
 
@@ -25,10 +25,12 @@ int	have_command(t_token *node)
 	while (current)
 	{
 		if (current->type == WORD || current->type == ENV)
-			return (true);
+			return (current);
+		if (current->next && current->next->type == PIPE)
+			break ;
 		current = current->next;
 	}
-	return (false);
+	return (NULL);
 }
 
 /**
@@ -38,17 +40,25 @@ int	have_command(t_token *node)
  * @param id Id for future debug possibilities
  * @param node token node that we will get the name of the file.  
  */
-t_redir	*create_redir_node(void *down, int id, t_token *node)
+t_redir	*create_redir_node(t_mini *d, void *down, t_token *node)
 {
 	t_redir	*redir;
 
 	redir = ft_calloc(1, sizeof(t_redir));
-	redir->id = id;
-	id ++;
 	redir->fname = get_redir_name(node);
 	redir->len = ft_strlen(redir->fname);
 	redir->down = down;
 	redir->type = node->type;
+	redir->id = 0;
+	redir->hd_tmp = NULL;
+	redir->hd_ex = 0;
+	redir->hd_fd = -1;
+	if (redir->type == HEREDOC)
+	{
+		redir->id = d->qt_heredocs ++;
+		redir->hd_tmp = get_heredoc_name(d, d->qt_heredocs, 0);
+		redir->hd_ex = node->expand_heredoc;
+	}
 	return (redir);
 }
 
@@ -89,7 +99,8 @@ int	get_qt_cmd_tokens(t_token *token)
 	current = token;
 	while (current && current->type != PIPE)
 	{
-		if (current->type == WORD || current->type == ENV)
+		if ((current->type == WORD)
+			|| (current->type == ENV && current->len > 0))
 			i ++;
 		current = current->next;
 	}

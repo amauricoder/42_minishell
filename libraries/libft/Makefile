@@ -1,6 +1,6 @@
 
 ##### Compilation #####
-CC = cc
+CC = cc -g
 CFLAGS = -Wall -Werror -Wextra
 
 ##### Commands #####

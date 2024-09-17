@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:40:18 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/15 22:55:39 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:53:12 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@ int	find_expansion(t_mini	*mini_d)
 		if (mini_d->token->state != 1
 			&& check_dollar(mini_d->token->content))
 		{
-			expand_dollar(mini_d ,mini_d->token, 0);
+			expand_dollar(mini_d, mini_d->token, 0);
 			free_matriz(expanded_envs);
 		}
 		mini_d->token = mini_d->token->next;
 	}
 	mini_d->token = token_head;
+	heredoc_expand(mini_d);
 	clean_token(mini_d);
 	assemble_word_tokens(mini_d);
 	update_word_to_file(mini_d);
@@ -111,8 +112,8 @@ char	*env_expanded(t_mini *mini_d, char *cont)
 	char	*env_expanded;
 
 	i = 0;
-	if (cont[1] == '?')
-		return (ft_itoa(mini_d->exit_status));
+	if (cont && cont[0] && cont[1] && cont[1] == '?')
+		return (ft_itoa(mini_d->exst_printable));
 	if (cont[i] == '$' && ft_isdigit(cont[i + 1]) && cont[i + 1] != '0')
 		return (ft_strdup(&cont[i + 2]));
 	else if (cont[i] == '$' && ft_isdigit(cont[i + 1]) && cont[i + 1] == '0')
@@ -126,68 +127,9 @@ char	*env_expanded(t_mini *mini_d, char *cont)
 	tmp = ft_substr(cont, 1, i);
 	if (ft_getenv(mini_d, tmp))
 	{
-		env_expanded = ft_strdup(getenv(tmp));
+		env_expanded = ft_strdup(expand(mini_d, tmp));
 		free(tmp);
 		return (env_expanded);
 	}
 	return (free(tmp), ft_strdup(""));
-}
-
-/**
- * @attention Secondary function for find_expansion()
- * @brief Cleans the excess of white spaces token
-*/
-void	clean_token(t_mini *mini_d)
-{
-	t_token	*tmp;
-	t_token	*prev;
-
-	while (mini_d->token &&mini_d->token->type == W_SPACE) // changes here because we need the NULL **tmp->len == 0 ||**
-	{
-		tmp = mini_d->token->next;
-		free(mini_d->token->content);
-		free(mini_d->token);
-		mini_d->token = tmp;
-	}
-	prev = mini_d->token;
-	tmp = mini_d->token;
-	while (tmp)
-	{
-		if ((tmp->type == W_SPACE && prev->type == W_SPACE)) // changes here because we need the NULL **tmp->len == 0 ||** 
-		{
-			prev->next = tmp->next;
-			free(tmp->content);
-			free(tmp);
-			tmp = prev;
-		}
-		prev = tmp;
-		tmp = tmp->next;
-	}
-}
-
-//amauri > $po TEST
-//This is to update the type from word to file if find a redirect
-void	update_word_to_file(t_mini *mini_d)
-{
-	t_token *head;
-	
-	head = mini_d->token;
-	while(mini_d->token)
-	{
-		if (mini_d->token->type == R_IN || mini_d->token->type == R_OUT
-			|| mini_d->token->type == D_R_OUT || mini_d->token->type == HEREDOC)
-		{
-			if ((mini_d->token->len == 1 || mini_d->token->len == 2)
-				&& (mini_d->token->next))
-			{
-				while ((mini_d->token->next->next) &&
-					(mini_d->token->next->type != WORD
-					&& mini_d->token->next->type != ENV))
-					mini_d->token = mini_d->token->next;	
-				mini_d->token->next->type = FILE_NAME;
-			}
-		}
-		mini_d->token = mini_d->token->next;
-	}
-	mini_d->token = head;
 }

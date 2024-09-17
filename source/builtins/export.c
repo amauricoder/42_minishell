@@ -6,7 +6,7 @@
 /*   By: ismirand <ismirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 16:06:49 by ismirand          #+#    #+#             */
-/*   Updated: 2024/08/23 10:34:23 by ismirand         ###   ########.fr       */
+/*   Updated: 2024/09/05 10:56:26 by ismirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,25 @@ int	export(t_mini *mini, char **str)
 
 	i = 1;
 	tmp = str;
-	if (!str[1])
+	if (str[0][6] == '\0' && !str[1])
 		return (print_export(mini));
 	while (str[i])
 	{
-		//ve se o primeiro char é num ou um char especial
 		if (!ft_isalpha(str[i][0]))
 		{
-			err_msg(mini, EXP_ERR, 1, 0);
+			err_msg(mini, join_three(EXP, str[i], N_VAL, 0), 1, 1);
 			i++;
 			continue ;
 		}
-		tmp = ft_split(str[i], '=');//e so pra ver se tem igual ou nao
+		if (find_specific_char(str[i], '-', '='))
+			return (err_msg(mini, join_three(EXP, str[i], N_VAL, 0), 1, 1));
+		tmp = ft_split(str[i], '=');
 		exp = mini->env_d;
 		read_arg(str[i], tmp, exp);
-		export_add(mini, str[i], tmp[0]);
+		export_add(mini, str[i++], tmp[0], 0);
 		free_matriz(tmp);
-		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (mini->exst_printable);
 }
 
 void	read_arg(char *str, char **tp, t_env *exp)
@@ -72,7 +72,8 @@ void	read_arg(char *str, char **tp, t_env *exp)
 	}
 }
 
-void	export_add(t_mini *mini, char *str, char *name)
+//flag 1 -> tem que ser add na env tbm
+void	export_add(t_mini *mini, char *str, char *name, int flag)
 {
 	t_env	*exp_cpy;
 	t_env	*env;
@@ -81,10 +82,16 @@ void	export_add(t_mini *mini, char *str, char *name)
 	exist = 0;
 	exp_cpy = mini->export;
 	env = ft_calloc(sizeof(t_env), 1);
-	env->name = ft_strdup(str);
+	if (flag)
+	{
+		env->name = ft_strjoin(name, str);
+		env_add_one(mini, name, str);
+	}
+	else
+		env->name = ft_strdup(str);
 	env->next = NULL;
 	exist = export_add_support(mini, str, name, env);
-	if (!exist) //se ainda nao tinha, adiciona no final
+	if (!exist)
 	{
 		mini->export->next = ft_calloc(sizeof(t_env), 1);
 		mini->export = mini->export->next;
@@ -93,36 +100,44 @@ void	export_add(t_mini *mini, char *str, char *name)
 		free_env(env);
 	}
 	mini->export = lst_sort(exp_cpy);
-//	mini->export = exp_cpy;
 }
 
 int	export_add_support(t_mini *mini, char *str, char *name, t_env *env)
 {
 	while (mini->export)
 	{
-		//caso += -> retorna adicionado
 		if (!ft_strncmp(&mini->export->name[11], str, ft_strlen(name) - 1)
 			&& str[ft_strlen(name) - 1] == '+')
 		{
 			env->name = exp_join(mini->export->name, str, env);
 			mini->export->name = env_to_export(env);
-			//mini->export = exp_cpy;
 			free_env(env);
 			return (1);
 		}
-		//caso = se ja houver -> substitui
 		else if (!ft_strncmp(&mini->export->name[11], str, ft_strlen(name)))
 		{
 			free(mini->export->name);
 			mini->export->name = env_to_export(env);
-			//mini->export = exp_cpy;
 			free_env(env);
 			return (1);
 		}
 		if (mini->export->next)
 			mini->export = mini->export->next;
 		else
-			break;
+			break ;
 	}
 	return (0);
+}
+
+//search for to_find in the str until the char del
+//returns 0 if it doens't find and 1 if it finds
+int	find_specific_char(char *str, char to_find, char del)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i] && str[i] != del)
+		if (str[i] == to_find)
+			return (true);
+	return (false);
 }

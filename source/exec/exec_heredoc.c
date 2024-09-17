@@ -6,57 +6,98 @@
 /*   By: aconceic <aconceic@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:54:54 by aconceic          #+#    #+#             */
-/*   Updated: 2024/08/20 18:47:23 by aconceic         ###   ########.fr       */
+/*   Updated: 2024/09/09 16:42:37 by aconceic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../include/minishell.h"
+#include "../../include/minishell.h"
 
-int		handle_heredoc(t_mini *mini_d, void *root)
+int	treat_heredocs(t_mini *mini, void *root)
 {
-	t_redir *hd_node;
-	char	*line;
-	int		hd_fd;
+	int	pid;
+	int	status;
 
-	hd_node = root;
-	hd_fd = open("/tmp/heredoc.tmp", O_CREAT | O_WRONLY | O_TRUNC, 0744);
-	if (hd_fd < 0)
-		err_msg(mini_d, NULL, EXIT_FAILURE, 0);
-	while(1)
+	status = 0;
+	signal(SIGINT, SIG_IGN);
+	pid = fork();
+	if (pid < 0)
+		return (err_msg(mini, FORK_ERR, EXIT_FAILURE, 0));
+	if (pid == 0)
 	{
-		write(STDOUT_FILENO, "> ", 2);
-		line = get_next_line(mini_d->stdfds[0]);
-		if (!line)
-			break;
-		if (!ft_strncmp(line, hd_node->fname, ft_strlen(hd_node->fname))
-			&& ft_strlen(line) - 1 == ft_strlen(hd_node->fname))
-			break;
-		write(hd_fd, line, ft_strlen(line));
-		free(line);
+		g_exit_status = 0;
+		update_sig_heredoc();
+		open_heredocs(mini, root);
+		free_in_execution(mini, EXIT_SUCCESS);
+		exit(g_exit_status);
 	}
-	get_next_line(-3);
-	close(hd_fd);
-	if (line)
-		free(line);
-	redirect_heredoc(mini_d);
-	if (hd_node->down)
-		do_execution(mini_d, hd_node->down);
-	unlink("/tmp/heredoc.tmp");
-	return (EXIT_SUCCESS);
+	waitpid(pid, &status, 0);
+	signals_init();
+	return (status / 256);
 }
 
-int	redirect_heredoc(t_mini *mini_d)
+void	open_heredocs(t_mini *mini, void *root)
 {
-	int	tmp_fd;
-	
-	tmp_fd = open("/tmp/heredoc.tmp", O_RDONLY);
-	if (tmp_fd == -1)
-		return (err_msg(mini_d, NULL, EXIT_FAILURE, 0));
-	if (dup2(tmp_fd, STDIN_FILENO) == -1)
+	t_redir	*nd;
+
+	if (!root)
+		return ;
+	nd = (t_redir *)root;
+	if (nd->type == HEREDOC)
 	{
-		close(tmp_fd);
-		return (err_msg(mini_d, NULL, EXIT_FAILURE, 0));	
+		handle_heredoc(mini, nd);
 	}
-	close(tmp_fd);
-	return(EXIT_SUCCESS);
+	else if (nd->type == PIPE)
+	{
+		open_heredocs(mini, ((t_pipe *)nd)->left);
+		open_heredocs(mini, ((t_pipe *)nd)->right);
+	}
+	if (nd->type == HEREDOC || nd->type == R_IN
+		|| nd->type == D_R_OUT || nd->type == R_OUT)
+		open_heredocs(mini, nd->down);
+}
+
+int	handle_heredoc(t_mini *mini_d, t_redir *hd_node)
+{
+	hd_node->hd_fd = open(hd_node->hd_tmp, O_CREAT | O_WRONLY | O_TRUNC, 0744);
+	while (g_exit_status != 130)
+	{
+		if (write_on_heredoc(mini_d, hd_node->hd_fd, hd_node))
+			break ;
+	}
+	get_next_line(-3);
+	return (close(hd_node->hd_fd));
+}
+
+/**
+ * @param d main struc
+ * @param fd hredoc fd
+ * @param nd node
+ * @param line user input
+ */
+int	write_on_heredoc(t_mini *d, int fd, t_redir *nd)
+{
+	char	*new_line;
+	char	*expanded_line;
+	char	*line;
+
+	line = readline(">");
+	if (!line)
+		return (1);
+	if (!ft_strncmp(line, nd->fname, ft_strlen(nd->fname))
+		&& ft_strlen(line) == ft_strlen(nd->fname))
+		return (free(line), 1);
+	if (!nd->hd_ex)
+	{
+		new_line = ft_strtrim(line, "\n");
+		expanded_line = expand_heredoc(d, new_line);
+		if (expanded_line)
+		{
+			write(fd, expanded_line, ft_strlen(expanded_line));
+			free(expanded_line);
+		}
+	}
+	else
+		write(fd, line, ft_strlen(line));
+	write(fd, "\n", 1);
+	return (free(line), 0);
 }
