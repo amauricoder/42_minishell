@@ -28,6 +28,7 @@ Special thanks to [Isabella Miranda](https://github.com/bellamiranda), my partne
 ## Introduction
 
 This Project is about to recreate your own implementation of a shell based on bash shell.
+
 [What is a shell](https://www.datacamp.com/blog/what-is-shell?dc_referrer=https%3A%2F%2Fwww.google.com%2F)
 
 We needed to recreate some specifics behaviours of bash shell:
@@ -43,6 +44,7 @@ should expand to their values.
 foreground pipeline
 - Handle ctrl-C, ctrl-D and ctrl-\ which should behave like in bash.
 - Implements some builtins
+
 For the complete list of requiremets and limitations, read the [subject](subject/en.subject.pdf).
 >The code was written according to the 42 norm guidelines(norminette). <br>
 [View Norm](42_norm/en.norm.pdf)
@@ -64,7 +66,7 @@ This will compile an executable program called minishell.
 	./minishell
 ```
 
-Optional - If you have valgrind installed, you can use the command above to detect leaks.
+Optional - If you have valgrind installed, you can use the command below to detect leaks.
 ```
   valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell
 ```
@@ -100,7 +102,7 @@ This project recreates a simplified version of Bash with some basic functionalit
   - **Commands:** e.g., `ls`, `echo`, `cat`
   - **Arguments:** e.g., `-l`, `/home/user`
   - **Operators:** e.g., `|`, `>`, `>>`, `<<`
-  - **Separators:** e.g., spaces, semicolons
+  - **Separators:** e.g., spaces
 
 **Purpose:** Tokenization breaks down the input string into meaningful units, or "tokens," that the shell can process individually. These tokens represent different parts of the command, such as commands, arguments, options, and special characters.
 
