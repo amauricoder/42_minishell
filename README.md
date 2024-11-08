@@ -1,6 +1,4 @@
-# 42_minishell
-Repository of the project minishell from 42 Porto.
-
+# Minishell
 <!-- ![Banner](minishell.png "minishell banner") -->
 
 ## Table of contents
@@ -10,6 +8,7 @@ Repository of the project minishell from 42 Porto.
 - [Usage](#usage)
 - [Example of usage](#example-of-usage)
 - [Overview](#overview)
+- [License](#license)
 
 ## Sources and Acknowledgments
 I would like to share the key resources that helped me to construct this project. My sincere thanks go out to everyone who has shared their knowledge freely with the community.
@@ -25,8 +24,6 @@ I would like to share the key resources that helped me to construct this project
 
 And I would like to thank by peers from 42 Porto, who helped me a lot during all the process of this complex project. Thank you all. Sharing knowledge make us better.
 Special thanks to [Isabella Miranda](https://github.com/bellamiranda), my partner throughout this project, who co-constructed this minishell with me.
-
----
 
 ## Introduction
 
@@ -47,8 +44,8 @@ foreground pipeline
 - Handle ctrl-C, ctrl-D and ctrl-\ which should behave like in bash.
 - Implements some builtins
 For the complete list of requiremets and limitations, read the [subject](subject/en.subject.pdf).
-
----
+>The code was written according to the 42 norm guidelines(norminette). <br>
+[View Norm](42_norm/en.norm.pdf)
 
 ## Usage
 1 - In your terminal, clone the repository from github
@@ -70,7 +67,7 @@ This will compile an executable program called minishell.
 ## Example of Usage
 **Click on the image below to watch on Youtube an exaple of usage of this project**
 
-[![Watch the video](minishell.g)](https://www.youtube.com/watch?v=urz76d7-Gq4)
+[![Watch the video](video_ss.PNG)](https://youtu.be/9arIs9rZsGE)
 
 ---
 
@@ -162,4 +159,4 @@ This process is done after the parsing and before the execution.
 Doing this way, are able to recreate the heredoc with some edge cases, like pressing ctrl + c during multiple heredocs and getting the correct exit code.
 
 ## License
-[LICENTE](LICENSE)
+[LICENSE](LICENSE)
