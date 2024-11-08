@@ -64,6 +64,10 @@ This will compile an executable program called minishell.
 	./minishell
 ```
 
+Optional - If you have valgrind installed, you can use the command above to detect leaks.
+```
+  valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell
+```
 ## Example of Usage
 **Click on the image below to watch on Youtube an exaple of usage of this project**
 
