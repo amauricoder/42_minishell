@@ -1,6 +1,9 @@
 # Minishell
 <!-- ![Banner](minishell.png "minishell banner") -->
 
+A project about creating a shell, based on bash shell, recreating the basic functions.
+
+Click [HERE](https://youtu.be/9arIs9rZsGE) to see the project running.
 ## Table of contents
 
 - [Sources and Acknowledgments](#sources-and-acknowledgments)
